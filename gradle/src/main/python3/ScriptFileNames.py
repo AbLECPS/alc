@@ -1,0 +1,6 @@
+script_dir_name = "script"
+script_file_name = "script.py"
+script_stderr_file_name = "stderr"
+script_stdout_file_name = "stdout"
+failing_task_path_file_name = "failing_task_path"
+exceptions_file_name = "exceptions"

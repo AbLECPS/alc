@@ -1,0 +1,5 @@
+with {{ parent_job }}.add_transform(
+    "{{ job_name }}", {{ previous_job_name_list }}, {{ next_job_name_list }}, {{ function }}
+) as {{ var_name }}:
+    {{ var_name }}{% for call in call_list %} \
+        .{{ call | indent(8) }}{% endfor %}

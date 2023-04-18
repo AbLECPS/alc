@@ -1,0 +1,2 @@
+with {{ parent_job_name }}.add_while_loop("{{ loop_name }}", {{ previous_job_name_list }}, {{ next_job_name_list }}, {{ condition }}{% if parameter_function %}, {{ parameter_function }}{% endif %}) as {{ loop_var }}:
+{{ job_list|join("\n\n")|indent(4, first=True) }}

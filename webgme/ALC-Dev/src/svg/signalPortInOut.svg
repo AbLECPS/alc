@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="10"
+   height="10"
+   borderopacity="1"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="signalPortInOut.svg">
+  <metadata
+     id="metadata24">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs22" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview20"
+     showgrid="false"
+     inkscape:zoom="23.6"
+     inkscape:cx="5"
+     inkscape:cy="5"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <g
+     id="g4"
+     style="fill:none">
+    <title
+       id="title6">background</title>
+    <rect
+       fill="green"
+       id="canvas_background"
+       height="402"
+       width="582"
+       y="-1"
+       x="-1"
+       style="fill:none" />
+  </g>
+  <rect
+     id="svg_4"
+     height="9"
+     width="8.875"
+     y="0.5"
+     x="0.5625"
+     style="fill:#ffffff;stroke:#228B22;stroke-width:0.5;fill-opacity:1" />
+  <line
+     stroke-opacity="null"
+     fill-opacity="null"
+     x1="1.538836"
+     y1="5"
+     x2="8.4611645"
+     y2="5"
+     id="svg_8"
+     stroke-linejoin="undefined"
+     stroke-linecap="undefined"
+     style="fill:none;stroke:#228B22;stroke-width:1.5" />
+  <line
+     stroke-linecap="undefined"
+     stroke-linejoin="undefined"
+     id="svg_2"
+     y2="4.7890182"
+     x2="2.1249754"
+     y1="2.6484828"
+     x1="3.5000246"
+     fill-opacity="null"
+     stroke-opacity="null"
+     style="fill:none;stroke:#228B22;stroke-width:1.5" />
+  <line
+     stroke-linecap="undefined"
+     stroke-linejoin="undefined"
+     id="svg_5"
+     y2="7.2240543"
+     x2="3.8429272"
+     y1="5.2134466"
+     x1="2.0945718"
+     fill-opacity="null"
+     stroke-opacity="null"
+     style="fill:none;stroke:#228B22;stroke-width:1.5" />
+  <line
+     stroke-linecap="undefined"
+     stroke-linejoin="undefined"
+     id="svg_6"
+     y2="4.865314"
+     x2="7.8887248"
+     y1="2.6346869"
+     x1="6.4237742"
+     fill-opacity="null"
+     stroke-opacity="null"
+     style="fill:none;stroke:#228B22;stroke-width:1.5" />
+  <line
+     stroke-linecap="undefined"
+     stroke-linejoin="undefined"
+     id="svg_7"
+     y2="5.1962094"
+     x2="7.8606582"
+     y1="7.2412906"
+     x1="6.2643409"
+     fill-opacity="null"
+     stroke-opacity="null"
+     style="fill:none;stroke:#228B22;stroke-width:1.5" />
+</svg>

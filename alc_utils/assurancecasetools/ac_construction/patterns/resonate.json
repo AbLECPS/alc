@@ -1,0 +1,217 @@
+{
+  "name": "resonate",
+  "parameters": {
+    "formal_parameters": [
+      {
+        "id": "A",
+        "type": ["Hazard"]
+      },
+      {
+        "id": "B",
+        "type": ["DRM"]
+      },
+      {
+        "id": "C",
+        "type": ["TopFn", "PrimitiveFn"]
+      },
+      {
+        "id": "D",
+        "type": ["BowtieEvent"]
+      },
+      {
+        "id": "E",
+        "type": ["btd_consequence.risk_est"]
+      }
+    ],
+    "edges": [
+      {
+        "source": "A",
+        "dest": "B",
+        "type": "multiplicity",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "B",
+        "dest": "C",
+        "type": "multiplicity",
+        "multiplicity": "(0, inf)"
+      },
+      {
+        "source": "B",
+        "dest": "D",
+        "type": "multiplicity",
+        "multiplicity": "(1, inf)"
+      },
+      {
+        "source": "D",
+        "dest": "E",
+        "type": "multiplicity",
+        "multiplicity": "(1, 1)"
+      }
+    ]
+  },
+  "nodes": {
+    "outlines": [
+      {
+        "id": "S1",
+        "type": "Strategy",
+        "desc": "Apply ReSonAte to estimate level of risk from hazard condition {A} with BTD {B}.",
+        "undeveloped": false,
+        "formal_parameters": [
+          "A", "B"
+        ]
+      },
+      {
+        "id": "A1",
+        "type": "Assumption",
+        "desc": "Required function {C} is available.",
+        "undeveloped": false,
+        "formal_parameters": ["C"]
+      },
+      {
+        "id": "G2",
+        "type": "Goal",
+        "desc": "BowTie Diagram {B} accurately describes possible hazard propagation paths.",
+        "undeveloped": false,
+        "formal_parameters": [
+          "B"
+        ]
+      },
+      {
+        "id": "G3",
+        "type": "Goal",
+        "desc": "All identified threats are represented in BTD.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "G4",
+        "type": "Goal",
+        "desc": "Possible hazard propagation paths are correctly captured in the BTD.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "G5",
+        "type": "Goal",
+        "desc": "Barriers in the BTD accurately describe their respective control/mitigation action.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "G6",
+        "type": "Goal",
+        "desc": "All non-negligible threats have been identified.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "G7",
+        "type": "Goal",
+        "desc": "Quantitative risk estimates are accurate and below acceptable threshold.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "G8",
+        "type": "Goal",
+        "desc": "Dataset used for conditional probability estimate is accurate representation of expected operational states.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "G9",
+        "type": "Goal",
+        "desc": "State probability distribution used for risk estimation is accurate representation of expected vehicle states.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "G10",
+        "type": "Goal",
+        "desc": "Estimated probability of {D} is below allowable threshold for severity class.",
+        "undeveloped": false,
+        "formal_parameters": [
+          "D"
+        ]
+      },
+      {
+        "id": "E1",
+        "type": "solution",
+        "desc": "Estimated risk level of {E}",
+        "undeveloped": false,
+        "formal_parameters": [
+          "E"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "S1",
+        "dest": "G2",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "S1",
+        "dest": "A1",
+        "type": "InContextOf",
+        "multiplicity": "(1, inf)"
+      },
+      {
+        "source": "S1",
+        "dest": "G7",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G2",
+        "dest": "G3",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G2",
+        "dest": "G4",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G2",
+        "dest": "G5",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G2",
+        "dest": "G6",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G7",
+        "dest": "G8",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G7",
+        "dest": "G9",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G7",
+        "dest": "G10",
+        "type": "SupportedBy",
+        "multiplicity": "(1, inf)"
+      },
+      {
+        "source": "G10",
+        "dest": "E1",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      }
+    ]
+  }
+}

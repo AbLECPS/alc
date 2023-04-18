@@ -1,0 +1,137 @@
+#!/usr/bin/env python
+"""
+@package {{packageName}}
+@file {{componentName}}_impl.py
+"""
+import rospy
+import tf
+import actionlib
+{% for pkg_type, cls_type in msgimports%}
+from {{pkg_type}}.msg import {{cls_type}}
+{% endfor %}
+{% for pkg_type, cls_type, name,topic in serviceServers%}
+from {{pkg_type}}.srv import {{cls_type}}, {{cls_type}}Response
+{% endfor %}
+{% for pkg_type, cls_type, name,topic in serviceClients%}
+from {{pkg_type}}.srv import {{cls_type}}, {{cls_type}}Request
+{% endfor %}
+{% for pkg_type, cls_type, name,topic in actionServers%}
+from {{pkg_type}}.msg import {{cls_type}}Feedback, {{cls_type}}Result
+{% endfor %}
+{% for pkg_type, cls_type, name,topic in actionClients%}
+from {{pkg_type}}.msg import {{cls_type}}Goal, {{cls_type}}Feedback, {{cls_type}}Result
+{% endfor %}
+# protected region user include package begin #
+{% if pcode['# protected region user include package begin #'] %}
+{{pcode['# protected region user include package begin #']}}
+{% endif %}
+# protected region user include package end #
+class {{componentName}}Implementation(object):
+    """
+    Class to contain Developer implementation.
+    """
+    def __init__(self):
+        """
+        Definition and initialisation of class attributes
+        """
+        {% for name,value in params%}
+        self.{{name}} = {{value}}
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in subscribers%}
+        self.in_{{name}} = {{cls_type}}()
+        self.in_{{name}}_updated = bool()
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in publishers%}
+        self.out_{{name}} = {{cls_type}}()
+        self.out_{{name}}_active = bool()
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in serviceClients%}
+        self.client_{{name}} = None
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in actionServers%}
+        self.as_{{name}} = None
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in actionClients%}
+        self.ac_{{name}} = None
+        {% endfor %}
+        # protected region user member variables begin #
+{% if pcode['# protected region user member variables begin #'] %}
+{{pcode['# protected region user member variables begin #']}}
+{% endif %}
+        # protected region user member variables end #
+
+    {% for pkg_type, cls_type, name,topic in serviceServers%}
+    def callback_{{name}}(self, req):
+        """
+        @brief callback of service {{name}}
+        @param self The object
+        @param req({{cls_type}}) input parameter
+        @return ({{cls_type}}Response) service output
+        """
+        result = {{cls_type}}Response()
+        # protected region user implementation of service callback for {{name}} begin #
+{% if pcode['# protected region user implementation of service callback for '+name+' begin #'] %}
+{{pcode['# protected region user implementation of service callback for '+name+' begin #']}}
+{% endif %}
+        # protected region user implementation of service callback for {{name}} end #
+        return result
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in actionServers%}
+    def callback_{{name}}(self, goal):
+        """
+        @brief callback of service {name}
+        @param self The object
+        @param goal({{cls_type}}) goal provided
+        @return ({{cls_type}}Response) action output
+        @warning may send some feedback during the task execution
+        """
+        feedback = {{cls_type}}Feedback()
+        result  = {{cls_type}}Result()
+        # protected region user implementation of action callback for {{name}} begin #
+{% if pcode['# protected region user implementation of action callback for '+name+' begin #'] %}
+{{pcode['# protected region user implementation of action callback for '+name+' begin #']}}
+{% endif %}
+        # protected region user implementation of action callback for {{name}} end #
+        return result
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in subscribers%}
+    def callback_{{name}}(self, msg):
+        """
+        callback at reception of message on topic {{name}}
+        """
+        self.in_{{name}} = msg
+        self.in_{{name}}_updated = True
+        # protected region user implementation of subscriber callback for {{name}} begin #
+{% if pcode['# protected region user implementation of subscriber callback for '+name+' begin #'] %}
+{{pcode['# protected region user implementation of subscriber callback for '+name+' begin #']}}
+{% endif %}
+        # protected region user implementation of subscriber callback for {{name}} end #
+        pass
+    {% endfor %}
+    def activate_all_output(self):
+        """
+        activate all defined output
+        """
+        {% for pkg_type, cls_type, name,topic in publishers%}
+        self.out_{{name}}_active = True
+        {% endfor %}
+        pass
+    def set_all_input_read(self):
+        """
+        set related flag to state that input has been read
+        """
+        {% for pkg_type, cls_type, name,topic in subscribers%}
+        self.in_{{name}}_updated = False
+        {% endfor %}
+        pass
+    def update(self):
+        # protected region user implementation of update begin #
+{% if pcode['# protected region user implementation of update begin #'] %}
+{{pcode['# protected region user implementation of update begin #']}}
+{% endif %}
+        # protected region user implementation of update end #
+# protected region user additional functions begin #
+{% if pcode['# protected region user additional functions begin #'] %}
+{{pcode['# protected region user additional functions begin #']}}
+{% endif %}
+# protected region user additional functions end #

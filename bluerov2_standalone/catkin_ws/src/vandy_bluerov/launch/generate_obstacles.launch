@@ -1,0 +1,151 @@
+<!--
+File:         generate_obstacles.launch
+Description:  Generates random obstacles
+-->
+
+<launch>
+  
+  <!-- Random Seed for ROS Nodes and Gazebo Plugins -->
+  <arg name="random_seed" default="0"/>
+  
+  <!-- Randomly generate boxes for fish to avoid -->
+  <arg name="enable_obstacles" default="false"/>
+  <arg name="enable_debris" default="false"/>
+  <arg name="enable_dynamic_obstacles" default="false"/>
+
+  <arg name="initial_spawn_time" default="-1.0"/>
+  <arg name="fixed_spawn_interval" default="-1.0"/>
+  <arg name="lambda_low" default="30" />
+  <arg name="lambda_high" default="60" />
+  <arg name="lambda_low_static" default="30" />
+  <arg name="lambda_high_static" default="60" />
+  <arg name="avg_uuv_speed" default="0.9" />
+  <arg name="box_distance_static" default="65" />
+  <arg name="box_distance_x" default="40" />
+  <arg name="box_distance_y" default="25" />
+  <arg name="box_velocity_x" default="0.0" />
+  <arg name="box_velocity_y" default="-2.5" />
+  <arg name="box_max_cnt" default="10" />
+  <arg name="box_size_x" default="10" />
+  <arg name="box_size_y" default="10" />
+  <arg name="box_size_z" default="10" />
+  <arg name="enable_wall" default="False" />
+  <arg name="enable_random" default="False" />
+  <arg name="obstacle_filename_static" default="''" />
+  <arg name="obstacle_filename_dynamic" default="''" />
+  <arg name="enable_fishnet" default="False" />
+  <arg name="box_distance_variance" default="0" />
+  <arg name="random_box_density" default="1" />
+
+
+
+  <group if="$(arg enable_fishnet)">
+    <node pkg="vandy_bluerov" name="spawn_fishnet" type="spawn_fishnet.py"
+      output="screen">
+      <rosparam subst_value="true">
+        random_seed: $(arg random_seed)
+        lambda_low: $(arg lambda_low_static)  <!-- Seconds. Low end of interval a random poisson lambda is chosen -->
+        lambda_high: $(arg lambda_high_static)  <!-- Seconds. High end of interval a random poisson lambda is chosen -->
+        sdf: true  <!-- Specify box mesh file type. Select 'false' for urdf -->
+        box_distance: $(arg box_distance_static)  <!-- Meters. How far from the vehicle do you want boxes to spawn? -->
+        enable_obstacles: $(arg enable_obstacles)
+        timeout: 15 <!-- Seconds -->
+        enable_debris: $(arg enable_debris)
+        num_obstacles: $(arg box_max_cnt)
+        box_size_x: $(arg box_size_x) <!-- if 0 then random from 0.5 to 5m -->
+        box_size_y: $(arg box_size_y) <!-- if 0 then random from 0.5 to 5m -->
+        box_size_z: $(arg box_size_z) <!-- if 0 then random from 0.5 to 5m -->
+        enable_random: $(arg enable_random)
+        enable_wall: $(arg enable_wall)
+        obstacle_filename: $(arg obstacle_filename_static)
+        initial_spawn_time: $(arg initial_spawn_time)
+        fixed_spawn_interval: $(arg fixed_spawn_interval)
+      </rosparam>
+    </node>
+  </group>
+
+  <group if="$(arg enable_obstacles)">
+    <node pkg="vandy_bluerov" name="obstacle_distance_publisher" type="obstacle_distance_publisher.py" output="screen">
+    </node>
+    <node pkg="vandy_bluerov" name="spawn_box_obstacles" type="spawn_boxes.py"
+      output="screen">
+      <rosparam subst_value="true">
+        random_seed: $(arg random_seed)
+        lambda_low: $(arg lambda_low_static)  <!-- Seconds. Low end of interval a random poisson lambda is chosen -->
+        lambda_high: $(arg lambda_high_static)  <!-- Seconds. High end of interval a random poisson lambda is chosen -->
+        sdf: true  <!-- Specify box mesh file type. Select 'false' for urdf -->
+        box_distance: $(arg box_distance_static)  <!-- Meters. How far from the vehicle do you want boxes to spawn? -->
+        box_distance_variance: $(arg box_distance_variance)
+        enable_obstacles: $(arg enable_obstacles)
+        timeout: 15 <!-- Seconds -->
+        enable_debris: $(arg enable_debris)
+        num_obstacles: $(arg box_max_cnt)
+        box_size_x: $(arg box_size_x) <!-- if 0 then random from 0.5 to 5m -->
+        box_size_y: $(arg box_size_y) <!-- if 0 then random from 0.5 to 5m -->
+        box_size_z: $(arg box_size_z) <!-- if 0 then random from 0.5 to 5m -->
+        enable_random: $(arg enable_random)
+        enable_wall: $(arg enable_wall)
+        obstacle_filename: $(arg obstacle_filename_static)
+        initial_spawn_time: $(arg initial_spawn_time)
+        fixed_spawn_interval: $(arg fixed_spawn_interval)
+        random_box_density: $(arg random_box_density)
+      </rosparam>
+    </node>
+  </group>
+
+  <group if="$(arg enable_dynamic_obstacles)">
+      <node name="spawn_dynamic_obstacles" pkg="vandy_bluerov" type="spawn_dynamic_obstacles.py"
+          output="screen">
+          <rosparam subst_value="true">
+              random_seed: $(arg random_seed)
+              lambda_low: $(arg lambda_low)
+              lambda_high: $(arg lambda_high)
+              avg_uuv_speed: $(arg avg_uuv_speed)
+              box_distance_x:  $(arg box_distance_x)
+              box_distance_y: $(arg box_distance_y)
+              box_velocity_x: $(arg box_velocity_x)
+              box_velocity_y: $(arg box_velocity_y)
+              box_distance_variance: $(arg box_distance_variance)
+              box_max_cnt: $(arg box_max_cnt)
+              box_size_x: $(arg box_size_x) <!-- if 0 then random from 0.5 to 5m -->
+              box_size_y: $(arg box_size_y) <!-- if 0 then random from 0.5 to 5m -->
+              box_size_z: $(arg box_size_z) <!-- if 0 then random from 0.5 to 5m -->
+              obstacle_filename: $(arg obstacle_filename_dynamic)
+              initial_spawn_time: $(arg initial_spawn_time)
+              fixed_spawn_interval: $(arg fixed_spawn_interval)
+              num_obstacles: $(arg box_max_cnt)
+          </rosparam>
+      </node>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box1"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box2"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box3"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box4"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box5"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box6"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box7"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box8"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box9"/>
+      </include>
+      <include file="$(find uuv_descriptions)/models/common/launch/message_to_tf.launch">
+          <arg name="namespace" value="box10"/>
+      </include>
+  </group>
+
+</launch>

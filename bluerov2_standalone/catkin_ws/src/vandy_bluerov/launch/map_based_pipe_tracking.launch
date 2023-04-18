@@ -1,0 +1,18 @@
+<!--
+File:         map_based_pipe_tracking.launch
+-->
+
+<launch>
+    <arg name="uuv_name" default="uuv0"/>
+    <arg name="init_speed" default="2.0"/>
+    <arg name="init_depth" default="45"/>
+    <group ns="$(arg uuv_name)">
+        <node name="map_based_pipe_tracking" pkg="vandy_bluerov" type="map_based_pipe_tracking.py" output="screen">
+            <rosparam subst_value="true">
+            init_speed: $(arg init_speed)
+            init_depth: $(arg init_depth)
+            </rosparam>
+        </node>
+        
+    </group>
+</launch>

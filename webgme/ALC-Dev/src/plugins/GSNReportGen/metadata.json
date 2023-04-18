@@ -1,0 +1,14 @@
+{
+  "id": "GSNReportGen",
+  "name": "GSN Report Generator",
+  "version": "0.1.0",
+  "description": "Generates report from GSN models.",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": false,
+  "writeAccessRequired": false,
+  "configStructure": []
+}

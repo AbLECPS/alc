@@ -1,0 +1,11 @@
+[
+  {
+    "name": "keras",
+    "description": "Neural Network library using Keras with a TensorFlow backend",
+    "nodeTypes": [
+      "Architecture"
+    ],
+    "initCode": "# This defines the serialization/deserialization code for keras models when used\n# in deepforge\n\nimport deepforge\nimport keras\n\ndef dump_model(model, outfile):  # Create tar ball of custom_objects and model\n    # Create the tmp directory\n    import os\n    import time\n    tmp_dir = outfile.name + '-tmp-' + str(time.time())\n    os.makedirs(tmp_dir)\n\n    # store any custom objects in a file\n    if hasattr(model, 'custom_objects'):\n        co_path = os.path.join(tmp_dir, 'custom_objects')\n        with open(co_path, 'wb') as f:\n            import dill as pickle\n            pickle.dump(model.custom_objects, f)\n\n    # write the model to a file\n    model_path = os.path.join(tmp_dir, 'model')\n    model.save(model_path)\n\n    # tar both files together into the outfile\n    import tarfile\n    with tarfile.open(outfile.name, 'w:gz') as tar:\n        tar.add(model_path, arcname='model')\n        if hasattr(model, 'custom_objects'):\n            tar.add(co_path, arcname='custom_objects')\n\n    import shutil\n    shutil.rmtree(tmp_dir)\n\ndef load_model(infile):\n    # Make a tmp dir\n    import os\n    from os import path\n    import time\n    tmp_dir = infile.name + '-tmp-' + str(time.time())\n    os.makedirs(tmp_dir)\n\n    # I need to untar the given file\n    import tarfile\n    with tarfile.open(infile.name) as tar:\n        tar.extractall(path=tmp_dir)\n\n    # If custom_objects exists, then I need to unpickle it\n    has_custom_objects = False\n    custom_objects = None\n    co_path = path.join(tmp_dir, 'custom_objects')\n    if path.exists(co_path):\n        with open(co_path, 'rb') as f:\n            import dill as pickle\n            custom_objects = pickle.load(f)\n\n    model_path = path.join(tmp_dir, 'model')\n    model = keras.models.load_model(model_path, custom_objects=custom_objects)\n\n    import shutil\n    shutil.rmtree(tmp_dir)\n\n    return model\n\ndeepforge.serialization.register(keras.models.Model, dump_model, load_model)\n",
+    "seed": "keras"
+  }
+]

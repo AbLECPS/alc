@@ -1,0 +1,23 @@
+<!--
+File:         degradation_tester.launch
+-->
+
+<launch>
+  <arg name="dd_v2" default="true"/>
+  <arg name="uuv_name" default="uuv0"/>
+  <arg name="random_seed" default="0"/>
+
+  <group ns="$(arg uuv_name)">
+    <node name="degradation_tester" 
+          pkg="vandy_bluerov" 
+          type="degradation_tester.py" 
+          output="screen">
+          <rosparam subst_value="true">
+                  dd_v2: $(arg dd_v2)
+                  random_seed: $(arg random_seed)
+          </rosparam>
+         
+    </node>
+  </group>
+
+</launch>

@@ -1,0 +1,99 @@
+[
+  
+  {
+    "id": "ArtifactIndex",
+    "title": "ArtifactIndex",
+    "panel": "panels/ArtifactIndex/ArtifactIndexPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "CodeEditor",
+    "title": "CodeEditor",
+    "panel": "panels/CodeEditor/CodeEditorPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "Designer",
+    "title": "Designer",
+    "panel": "panels/Designer/DesignerPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "NotebookVisualizer",
+    "title": "NotebookVisualizer",
+    "panel": "panels/NotebookVisualizer/NotebookVisualizerPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "Implementation",
+    "title": "Implementation",
+    "panel": "panels/Assembly/AssemblyPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "Selector",
+    "title": "Selector",
+    "panel": "panels/Selector/SelectorPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "DataSet",
+    "title": "DataSet",
+    "panel": "panels/DataSet/DataSetPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "Status",
+    "title": "Status",
+    "panel": "panels/Status/StatusPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "ROSInfo",
+    "title": "ROSInfo",
+    "panel": "panels/ROSInfo/ROSInfoPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "Params",
+    "title": "Param Info",
+    "panel": "panels/Params/ParamsPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "ROSParams",
+    "title": "ROS Param Info",
+    "panel": "panels/Params/ParamsPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "ParamMap",
+    "title": "Parameter Mapping",
+    "panel": "panels/ParamMap/ParamMapPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "ActivityChoices",
+    "title": "ActivityChoices",
+    "panel": "panels/ActivityChoices/ActivityChoicesPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "ActivityInputs",
+    "title": "ActivityInputs",
+    "panel": "panels/ActivityInputs/ActivityInputsPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "IDE",
+    "title": "IDE",
+    "panel": "panels/IDE/IDEPanel",
+    "DEBUG_ONLY": false
+  },
+  {
+    "id": "ActivityDefinition",
+    "title": "ActivityDefinition",
+    "panel": "panels/ActivityDefinition/ActivityDefinitionPanel",
+    "DEBUG_ONLY": false
+  }
+]

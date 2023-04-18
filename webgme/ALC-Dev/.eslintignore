@@ -1,0 +1,5 @@
+src/common/lua.js
+src/visualizers/widgets/TextEditor/lib/*
+src/common/js-yaml.min.js
+src/visualizers/Visualizers.json
+config/config.webgme.js

@@ -1,0 +1,25 @@
+<!--
+File:         map_based_obstacle_avoidance.launch
+-->
+
+<launch>
+    <arg name="uuv_name" default="uuv0"/>
+    <arg name="init_speed" default="2.0"/>
+    <arg name="init_depth" default="45"/>
+    <arg name="avoidance_angle_step" default="20"/>
+    <arg name="use_obstacle_avoidance" default="true" />
+
+    <group ns="$(arg uuv_name)">
+         <node if="$(arg use_obstacle_avoidance)"
+               name="map_based_obstacle_avoidance" 
+               pkg="vandy_bluerov" 
+               type="map_based_obstacle_avoidance.py" 
+               output="screen" >
+            <rosparam subst_value="true">
+            init_speed: $(arg init_speed)
+            init_depth: $(arg init_depth)
+            avoidance_angle_step: $(arg avoidance_angle_step)
+            </rosparam>
+        </node>
+    </group>
+</launch>

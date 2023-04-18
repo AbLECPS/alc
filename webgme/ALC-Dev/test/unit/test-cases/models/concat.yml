@@ -1,0 +1,28 @@
+- type: Concat
+  id: /T/3
+  next: []
+  attributes:
+    dimension: 1
+- type: Linear
+  id: /T/G
+  next:
+    - /T/3
+  attributes:
+    bias: ''
+    outputSize: 7
+    inputSize: 5
+- type: Linear
+  id: /T/J
+  next:
+    - /T/3
+  attributes:
+    bias: ''
+    outputSize: 3
+    inputSize: 5
+- type: Reshape
+  id: /T/o
+  next:
+    - /T/G
+    - /T/J
+  attributes:
+    params: 5

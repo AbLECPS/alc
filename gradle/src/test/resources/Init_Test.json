@@ -1,0 +1,155 @@
+{
+    "buildRoot": "/alc/workflows/automate/Init_Test",
+    "genericActiveNode": "/y",
+    "jobs": [
+        {
+            "activities_map": {
+                "DataGen_Multi_Obstacle": "/y/V/V/I",
+                "DataGen_St_Obstacle": "/y/V/V/f"
+            },
+            "check": 0,
+            "inits": [
+                {
+                    "dst": [
+                        "/y/V/V/f",
+                        "/y/V/V/I"
+                    ],
+                    "dst_lec": "/BQCx/b/rXn/9qYht/o",
+                    "loop": "",
+                    "name": "Assembly_LEC_Setup",
+                    "src": [
+                        "/y/V/z/t/F/1"
+                    ]
+                }
+            ],
+            "inputs": [],
+            "job_name": "DataGeneration",
+            "job_subtype": "",
+            "job_type": "ALC_Job",
+            "loop_iter_vars": "",
+            "loop_jobs": [],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [],
+            "loop_start_path": [],
+            "loop_type": "",
+            "loop_vars": {},
+            "next_branch_false": [],
+            "next_branch_false_paths": [],
+            "next_branch_true": [],
+            "next_branch_true_paths": [],
+            "next_job_paths": [
+                "/y/n/K/9"
+            ],
+            "next_jobs": [
+                "SLModelTraining"
+            ],
+            "prev_jobs": [],
+            "script": "''",
+            "use_parameters": []
+        },
+        {
+            "activities_map": {
+                "LEC-2": "/y/V/z/Y"
+            },
+            "check": 0,
+            "inits": [],
+            "inputs": [
+                {
+                    "dst": [
+                        "/y/V/z/Y"
+                    ],
+                    "dst_lec": "",
+                    "in_loop": false,
+                    "input_job": [
+                        "DataGeneration"
+                    ],
+                    "loop": "all",
+                    "name": "Training_Data_Setup",
+                    "port": "",
+                    "task_name": "Jobs_Input"
+                }
+            ],
+            "job_name": "SLModelTraining",
+            "job_subtype": "",
+            "job_type": "ALC_Job",
+            "loop_iter_vars": "",
+            "loop_jobs": [],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [],
+            "loop_start_path": [],
+            "loop_type": "",
+            "loop_vars": {},
+            "next_branch_false": [],
+            "next_branch_false_paths": [],
+            "next_branch_true": [],
+            "next_branch_true_paths": [],
+            "next_job_paths": [
+                "/y/n/K/x"
+            ],
+            "next_jobs": [
+                "Deploy_and_Test"
+            ],
+            "prev_jobs": [
+                "DataGeneration"
+            ],
+            "script": "''",
+            "use_parameters": []
+        },
+        {
+            "activities_map": {
+                "Dep_AM_Tracking": "/y/V/k/W"
+            },
+            "check": 0,
+            "inits": [],
+            "inputs": [
+                {
+                    "dst": [
+                        "/y/V/k/W"
+                    ],
+                    "dst_lec": "/BQCx/b/MEe9h/9qYht/o",
+                    "in_loop": false,
+                    "input_job": [
+                        "SLModelTraining"
+                    ],
+                    "loop": "",
+                    "name": "Assembly_LEC_Setup",
+                    "port": "",
+                    "task_name": "LEC"
+                }
+            ],
+            "job_name": "Deploy_and_Test",
+            "job_subtype": "",
+            "job_type": "ALC_Job",
+            "loop_iter_vars": "",
+            "loop_jobs": [],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [],
+            "loop_start_path": [],
+            "loop_type": "",
+            "loop_vars": {},
+            "next_branch_false": [],
+            "next_branch_false_paths": [],
+            "next_branch_true": [],
+            "next_branch_true_paths": [],
+            "next_job_paths": [],
+            "next_jobs": [],
+            "prev_jobs": [
+                "SLModelTraining"
+            ],
+            "script": "''",
+            "use_parameters": []
+        }
+    ],
+    "maxIterations": {},
+    "owner": "alc",
+    "projectName": "wk_models",
+    "start_jobs": [
+        "DataGeneration"
+    ],
+    "statusPath": "",
+    "workflowName": "Init_Test",
+    "working_dir": "/home/ninehs/ALC/alc_workspace/jupyter/Workflows/admin_wk_models/Init_Test/1589214896815"
+}

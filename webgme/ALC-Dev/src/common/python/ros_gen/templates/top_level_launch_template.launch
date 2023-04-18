@@ -1,0 +1,19 @@
+<launch>
+    <!-- Generated from model {{ model_name }} at path {{ model_path }}. {{ datetime_str }} -->
+
+    <!-- Required Arguments/Parameters --> {% for name in required_ros_args %}
+    <arg name={{'\"' + name|string + '\"'}}/>  {% endfor %}
+
+    <!-- Optional Arguments/Parameters --> {% for name, value in ros_args.items() %}
+    <arg name={{'\"' + name|string + '\"'}} default={{'\"' + value|string + '\"'}}/>  {% endfor %}
+
+    <!-- Included launch files --> {% for info_dict in include_launch_files %}
+    <include file={{'\"' + info_dict["file_path"]|string + '\"'}}> {% for name, value in info_dict["parameters"].items() %}
+        <arg name={{'\"' + name|string + '\"'}} value={{'\"' + value|string + '\"'}}/> {% endfor %}
+    </include>
+    {% endfor %}
+
+    <!-- Generated & Custom launch info --> {% for custom_string in custom_launch_statements %}
+    {{custom_string|string}}
+    {% endfor %}
+</launch>

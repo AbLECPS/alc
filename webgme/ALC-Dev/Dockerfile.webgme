@@ -1,0 +1,76 @@
+From nexus.isis.vanderbilt.edu:8888/alc_alc:1
+RUN mv /alc /alc_webgme
+
+FROM alc_base:latest
+
+# Remove any existing docker packages, then install latest version.
+RUN apt-get remove docker docker-engine docker.io containerd runc
+RUN add-apt-repository ppa:openjdk-r/ppa -y
+RUN apt-get update
+RUN apt upgrade -y
+RUN apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+RUN apt-get update
+RUN apt-get install -y docker-ce docker-ce-cli containerd.io
+RUN pip install docker
+RUN apt purge openjdk-10-jdk openjdk-9-jdk openjdk-8-jdk java-common
+RUN apt install openjdk-11-jdk -y
+RUN apt-get install -y unzip jq  wget
+
+RUN mkdir -p /opt
+COPY java.security /opt/.
+RUN mv /opt/java.security /etc/java-11-openjdk/security/java.security
+RUN dpkg --purge --force-depends ca-certificates-java
+RUN apt install ca-certificates-java
+
+# Install gradle
+RUN mkdir -p /opt/gradle ; cd /opt/gradle ; wget -q https://services.gradle.org/distributions/gradle-5.6.3-bin.zip ; unzip -q gradle-5.6.3-bin.zip ; rm gradle-5.6.3-bin.zip
+RUN cd /opt/gradle; ln -s gradle-5.6.3 latest
+RUN echo 'PATH="$PATH:/opt/gradle/latest/bin"' >> /root/.bashrc
+
+# create directories for gradle execution environment and build-status output
+RUN mkdir -p /alc/webgme/automate/gradle
+RUN mkdir -p /alc/workflows
+
+# setup gradle wrapper so that it doesn't happen in production
+RUN mkdir -p /alc/webgme/automate/wrapper
+RUN cd /alc/webgme/automate/wrapper ; /opt/gradle/latest/bin/gradle wrapper --gradle-version=5.6.3 ; ./gradlew
+RUN rm -rf /alc/webgme/automate/wrapper
+
+# Install NodeJS v8
+RUN apt-get update -yq \
+    && apt-get install curl gnupg -yq \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash \
+    && apt-get install nodejs -yq
+
+
+COPY --from=0 /alc_webgme /alc/.
+
+# Install DeepForge
+#RUN echo '{"allow_root": true}' > /root/.bowerrc && mkdir -p /root/.config/configstore/ && \
+#    echo '{}' > /root/.config/configstore/bower-github.json
+    
+# Configure the worker
+#RUN /alc/webgme/bin/deepforge config blob.dir /data/blob && \
+#    /alc/webgme/bin/deepforge config mongo.dir /data/db && \
+#    /alc/webgme/bin/deepforge config worker.cache.useBlob false && \
+#    /alc/webgme/bin/deepforge config worker.cache.dir /deepforge/worker-cache
+
+# Setup entrypoint
+RUN python -m pip install pip --upgrade --force-reinstall
+RUN python -m pip install -r ./python_requirements.txt
+EXPOSE 8888
+
+CMD ["/bin/bash", "/alc/webgme/automate/gradle/src/main/shell/startup.sh"]
+
+

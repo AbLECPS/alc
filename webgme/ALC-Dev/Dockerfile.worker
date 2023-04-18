@@ -1,0 +1,54 @@
+FROM alc_base:latest
+
+# Remove any existing docker packages, then install latest version.
+RUN apt-get remove docker docker-engine docker.io containerd runc
+RUN apt-get update
+RUN apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+RUN apt-get update
+RUN apt-get install -y docker-ce docker-ce-cli containerd.io
+RUN pip install docker
+
+# Install NodeJS v8
+RUN apt-get update -yq \
+    && apt-get install curl gnupg -yq \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash \
+    && apt-get install nodejs -yq
+
+# Install DeepForge
+RUN echo '{"allow_root": true}' > /root/.bowerrc && mkdir -p /root/.config/configstore/ && \
+    echo '{}' > /root/.config/configstore/bower-github.json
+
+# Copy WebGME folder to /alc
+RUN mkdir -p /alc/webgme
+ADD . /alc/webgme
+WORKDIR /alc/webgme
+
+# Run WebGME install
+RUN npm install
+
+#RUN ln -s /alc/webgme/bin/deepforge /usr/local/bin
+
+# Configure the worker
+RUN apt-get install -y unzip
+RUN /alc/webgme/bin/deepforge config blob.dir /data/blob && \
+    /alc/webgme/bin/deepforge config mongo.dir /data/db && \
+    /alc/webgme/bin/deepforge config worker.cache.useBlob false && \
+    /alc/webgme/bin/deepforge config worker.cache.dir /deepforge/worker-cache
+
+# Setup entrypoint
+COPY alc_worker_entrypoint.sh /alc/webgme
+RUN chmod +x /alc/webgme/alc_worker_entrypoint.sh
+ENTRYPOINT ["/alc/webgme/alc_worker_entrypoint.sh"]
+CMD ["http://alc:8888"]
+

@@ -1,0 +1,410 @@
+<!--
+File:         start_bluerov_uuv.launch
+Description:  Uploads the Bluerov UUV nodes.
+-->
+
+<launch>
+    <!-- ############################### -->
+    <!--          UUV  ARGS              -->
+    <!-- ############################### -->
+
+    <arg name="uuv_name" default="uuv0"/>
+
+    <!--rtreach parameters-->
+    <arg name="use_rtreach" default="true"/>
+    <arg name="box_sim_time" default="2"/>
+    <arg name="uuv_sim_time" default = "45"/>
+    <arg name="box_wall_time" default="1"/>
+    <arg name="uuv_wall_time" default="10"/>
+    <arg name="box_display_max" default="5"/>
+    <arg name="box_size_x" default="10"/>
+    <arg name="rtreach_output" default="log"/> <!-- log or screen -->
+    <arg name="rtreach_debug" default="false"/>
+    <!--rtreach disturbance parameters-->
+    <arg name="xd_l" default="0.0" />
+    <arg name="xd_u" default="0.0" />
+    <arg name="yd_l" default="0.0" />
+    <arg name="yd_u" default="0.0" />
+    <arg name="vd_l" default="0.0" />
+    <arg name="vd_u" default="0.0" />
+    <arg name="thd_l" default="0.0" />
+    <arg name="thd_u" default="0.0" />
+    <arg name="parameter_uncertainty" default="0.0"/>
+    <arg name="x_unc" default="0.0" />
+    <arg name="y_unc" default="0.0" />
+    <arg name="speed_unc" default="0.0" />
+    <arg name="theta_unc" default="0.0" />
+
+
+    <!-- Rosbag -->
+    <arg name="record" default="false"/> 
+    <arg name="results_directory" default="$(find vandy_bluerov)/results"/>
+    <arg name="bag_filename" default="$(find vandy_bluerov)/results"/>
+    <arg name="small_bagfile" default="true"/>
+
+    <!-- Often modified params: -->
+
+    <!-- No go zones -->
+    <arg name="no_go_zone_list" default="''"/>
+
+    <!-- Anomaly Detector for Fishing Nets -->
+    <arg name="enable_anomaly_detector" default="false"/>
+
+    <!-- Behaviour Tree  CM -->
+    <arg name="enable_emergency_stop" default="true"/> 
+
+    <!-- FDR Log -->
+    <arg name="fdr_log_filename" default="fdr_rx_map.csv"/>
+    <arg name="generate_fdr" default="true"/>
+    
+    <!-- Runtime evaluation -->
+    <arg name="bluerov_eval" default="true"/>
+
+    <!-- Obstacle avoidance -->
+    <arg name="use_obstacle_avoidance" default="true" />
+
+    <!-- FLS LEC3 with pencilbeam sonar OR BlueROV Ping Sonar -->
+    <arg name="obstacle_avoidance_source" default="fls_lec3lite"/>
+    <arg name="enable_obstacles" default="false" />
+    <arg name="enable_dynamic_obstacles" default="false" />
+
+
+    <!-- Waypoints: -->
+    <arg name="random_waypoints" default="false"/>
+    <!-- <arg name="waypoint_filename" default="search_pattern.yaml"/> -->
+    <arg name="waypoint_filename" default="training_pattern.yaml"/>
+    <arg name="num_waypoints" default="5"/>
+    <arg name="min_distance" default="15"/>
+    <arg name="max_distance" default="30"/>
+    <arg name="min_heading" default="-1.5708"/>
+    <arg name="max_heading" default="1.5708"/>
+    <arg name="x_track_error" default="false"/>
+
+    <!-- AIS -->
+    <!-- VU: -->
+    <arg name="generate_ais_data" default="false"/>
+    <arg name="predict_ais_data"  default="false"/>
+    <arg name="dynamic_obstacles_count" default="8"/>
+
+    <!-- CM params -->
+    <arg name="travel_cost" default="0.0013"/>
+    <arg name="failsafe_battery_low_threshold" default="0.10"/>
+    <arg name="failsafe_rth_enable" default="true"/>
+    <arg name="failsafe_signal_lost_threshold" default="120"/>
+    <arg name="failsafe_tracking_lost_threshold" default="30"/>
+    <arg name="geofence_threshold" default="500"/>
+    <arg name="home_radius" default="15"/>
+    <arg name="pipe_estimation_good_log_val" default="7.5"/>
+    <arg name="speed_good_log_val" default="10"/>
+    <arg name="uuv_max_speed" default="0.9"/>
+    <arg name="uuv_min_speed" default="0.4"/>
+    <arg name="batt_charge" default="0.99"/>
+    <arg name="enable_rpm_sensor_check" default="false"/>
+    <arg name="enable_training_data_collection" default="false"/> 
+
+    <!-- Degradation Detector LEC enable -->
+    <arg name="enable_fault_detection" default="false"/>
+    <arg name="decision_source" default="combination_am"/> 
+    <arg name="fls_in_view_window" default="20"/> 
+    <arg name="fls_in_view_limit" default="100"/> 
+    <arg name="classification_threshold" default="0.99"/> 
+    <arg name="sum_thrust_loss_threshold" default="1.00"/> 
+    <arg name="total_degradation_threshold" default="0.0"/>
+    
+    <arg name="mission_file" default="mission_04.yaml"/>
+    <arg name="fdir_path" default="jupyter/admin_BlueROV/FDIR/selclass"/> 
+    <arg name="fdir_params" default="{'user_choice':'override_threshold','am_s_threshold':0.5, 'am_threshold':0.5}"/> 
+
+    <!-- Note: Possible control reallocation with TAM -->
+    <arg name="tam_file" default="$(find vandy_bluerov)/config/TAM.yaml"/>
+
+    <!-- Degraded thruster info from GT for training -->
+        <!-- Thruster motor failure for thrust loss and amper drop in thruster power -->
+        <arg name="thruster_motor_failure" default="false"/>
+        <arg name="thruster_id" default="0"/>  <!-- 0..5 -->
+        <arg name="thruster_thrust_force_efficiency" default="0.81"/> <!-- 0.0 to 1.0 -->
+        <arg name="thruster_motor_fail_duration" default="65535"/>
+        <arg name="thruster_motor_fail_starting_time" default="50"/>
+        <!-- Secondaty thruster failure -->
+        <arg name="dual_thruster_failure" default="false"/>
+        <arg name="second_thruster_id" default="0"/>  <!-- 0..5 -->
+        <arg name="second_thruster_thrust_force_efficiency" default="0.31"/> <!-- 0.0 to 1.0 -->
+        <arg name="second_thruster_motor_fail_duration" default="65535"/>
+        <arg name="second_thruster_motor_fail_starting_time" default="100"/>
+
+    <!-- BlueROV2 PID controller launch params-->
+    <arg name="teleop" default="false"/>
+    <arg name="mode" default="noisy"/>  <!--noisy/default-->
+    <arg name="joy_id" default="0"/>
+    <!-- Use NED -->
+    <arg name="use_ned" default="true"/>
+
+    <!-- Random Seed for ROS Nodes and Gazebo Plugins -->
+    <arg name="random_seed" default="0"/>
+
+    <!-- Init params from world model -->
+    <arg name="vehicle_latitude" default="38.971203"/>
+    <arg name="vehicle_longitude" default="-76.398464"/>
+    <arg name="vehicle_altitude" default="45"/>
+
+    <arg name="vehicle_roll" default="0"/>
+    <arg name="vehicle_pitch" default="0"/>
+    <arg name="vehicle_yaw" default="0"/>
+
+    <!-- Vehicle's Initial HSD Command -->
+    <arg name="init_heading" default="$(arg vehicle_yaw)"/>
+    <arg name="init_speed" default="$(arg uuv_max_speed)"/>
+    <arg name="init_depth" default="$(arg vehicle_altitude)"/> 
+
+    <!-- For testing PID Controller -->
+    <arg name="heading" default="0"/>
+    <arg name="speed" default="$(arg uuv_max_speed)"/>
+    <arg name="depth" default="45"/>
+    <arg name="enable_send_hsd_single" default="true"/>
+    <arg name="hsd_debug_mode" default="false"/>
+
+    <!-- LEC2 params -->
+    <arg name="lec2_vae_path" default="/jupyter/admin_BlueROV/LEC2Lite_AM/vae"/>
+	<arg name="lec2_svdd_path" default="/jupyter/admin_BlueROV/LEC2Lite_AM/svdd/SLModel"/>
+    <arg name="lec2_filename" default="lec2_quant_up_hwsim_100_8.tflite"/>
+
+    <!-- Side Scan Sonar noise -->
+	<arg name="sss_sonar_noise" default="0.5"/>
+	<!-- Forward Imaging Sonar noise -->
+	<arg name="fis_sonar_noise" default="25"/>
+
+    <!-- LEC3 params -->
+    <arg name="max_range" default="50.0" />
+    <arg name="num_range_bins" default="252" />
+    <arg name="lec3_vae_path" default="/jupyter/admin_BlueROV/LEC3Lite_AM/vae"/>
+    <arg name="lec3_filename" default="best_model/lec3_quant.tflite"/>
+
+    <!-- Timeouts  -->
+    <arg name="unpause_timeout" default="15"/>
+    <arg name="timeout" default="600"/>
+
+
+    <!-- ############################### -->
+    <!--          INCLUDES               -->
+    <!-- ############################### -->
+
+
+    <!-- works with Python3.8 -->
+    <!-- <include file="$(find vandy_bluerov)/launch/resonate.launch">
+    </include> -->
+
+    <!--
+        Unpause timeout, this is done to allow Gazebo and its plugins to properly
+        start before all other ROS nodes. Otherwise it can happen that ROS nodes
+        start before some services or topics are available, leading to some
+        initialization issues.
+    -->
+    <include file="$(find vandy_bluerov)/launch/unpause_timeout.launch">
+        <arg name="timeout" value="$(arg unpause_timeout)"/>
+        <arg name="results_directory" value="$(arg results_directory)"/>
+    </include>
+
+    <!-- Start the PID controller with its default parameters for the RexROV vehicle  -->
+    <!-- Remap messages so PID will use noisy sensors -->
+    <group>
+        <!-- <remap from="odom" to="pose_gt_noisy_ned"/> -->
+        <include file="$(find bluerov2_control)/launch/start_pid_controller.launch">
+            <arg name="thruster_manager_config_file" default="$(find vandy_bluerov)/config/thruster_manager.yaml"/>
+            <arg name="uuv_name" value="$(arg uuv_name)"/>
+            <arg name="teleop_on" value="$(arg teleop)"/>
+            <arg name="joy_id" value="$(arg joy_id)"/>
+            <arg name="use_ned_frame" value="$(arg use_ned)"/>
+            <arg name="tam_file" value="$(arg tam_file)"/>
+            <arg name="gui_on" value="false"/>
+            <!--fwd, yaw, alt, roll -->
+            <arg name="Kp" value="200,50,100,100,0,0"/>
+            <arg name="Kd" value="150,0,10,0,0,0"/>
+            <arg name="Ki" value="60,0,1000,0,0,0"/>
+            <arg name="axis_x" value="2"/>
+            <arg name="record" value="false"/>
+        </include>
+    </group>
+
+
+    <!-- <node name="publish_obstacles_local" type="publish_obstacles_local.py" pkg="vandy_bluerov" args="$(arg rtreach_debug)" output="$(arg rtreach_output)" required="true"/> -->
+
+        <include file="$(find vandy_bluerov)/launch/rtreach.launch">
+            <arg name="results_directory" value="$(arg results_directory)"/>
+            <arg name="use_rtreach" value="$(arg use_rtreach)"/>
+            <arg name="box_sim_time" value="$(arg box_sim_time)"/>
+            <arg name="uuv_sim_time" value="$(arg uuv_sim_time)"/>
+            <arg name="box_wall_time" value="$(arg box_wall_time)"/>
+            <arg name="uuv_wall_time" value="$(arg uuv_wall_time)"/>
+            <arg name="box_display_max" value="$(arg box_display_max)"/>
+            <arg name="box_size" value="$(arg box_size_x)"/>
+            <arg name="output" value="$(arg rtreach_output)"/>
+            <arg name="debug" value="$(arg rtreach_debug)"/>
+
+            <!--rtreach disturbance parameters-->
+            <arg name="xd_l" value="$(arg xd_l)" />
+            <arg name="xd_u" value="$(arg xd_u)" />
+            <arg name="yd_l" value="$(arg yd_l)" />
+            <arg name="yd_u" value="$(arg yd_u)" />
+            <arg name="vd_l" value="$(arg vd_l)" />
+            <arg name="vd_u" value="$(arg vd_u)" />
+            <arg name="thd_l" value="$(arg thd_l)" />
+            <arg name="thd_u" value="$(arg thd_u)" />
+            <arg name="parameter_uncertainty" value="$(arg parameter_uncertainty)"/>
+            <arg name="x_unc" value="$(arg x_unc)" />
+            <arg name="y_unc" value="$(arg y_unc)" />
+            <arg name="speed_unc" value="$(arg speed_unc)" />
+            <arg name="theta_unc" value="$(arg theta_unc)" />
+            
+        </include>
+
+
+    <!--ROS Timeout for ALC -->
+    <!-- $(find vandy_bluerov)/launch/ros_timeout.launch -->
+    <include file="$(find vandy_bluerov)/launch/ros_timeout.launch">
+        <arg name="timeout" value="$(arg timeout)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/anomaly_detector.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="enable_anomaly_detector" value="$(arg enable_anomaly_detector)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/obstacle_mapping.launch">
+        <arg name="random_seed" value="$(arg random_seed)"/>
+        <arg name="generate_ais_data" value="$(arg generate_ais_data)"/>
+        <arg name="predict_ais_data" value="$(arg predict_ais_data)"/>
+        <arg name="dynamic_obstacles_count" value="$(arg dynamic_obstacles_count)"/>
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="obstacle_avoidance_source" value="$(arg obstacle_avoidance_source)"/>
+        <arg name="no_go_zone_list" value="$(arg no_go_zone_list)"/>
+        <arg name="vae_path" value="$(arg lec3_vae_path)"/>
+        <arg name="lec3_filename" value="$(arg lec3_filename)"/>
+
+    </include>
+
+    <!-- <include file="$(find vandy_bluerov)/launch/nav_mapping.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="random_seed" value="$(arg random_seed)"/>
+    </include> -->
+    
+    <include file="$(find vandy_bluerov)/launch/pipeline_mapping.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/> 
+        <arg name="vae_path" value="$(arg lec2_vae_path)"/>
+	    <arg name="svdd_path" value="$(arg lec2_svdd_path)"/>
+        <arg name="filename" value="$(arg lec2_filename)"/>
+        <arg name="sss_sonar_noise" value="$(arg sss_sonar_noise)"/>
+        <arg name="fis_sonar_noise" value="$(arg fis_sonar_noise)"/>
+    </include>
+
+
+    <!-- Behaviour Tree "CM" -->
+    <include file="$(find vandy_bluerov)/launch/bluerov_bt.launch" >
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="travel_cost" value="$(arg travel_cost)"/>
+        <arg name="failsafe_battery_low_threshold" value="$(arg failsafe_battery_low_threshold)"/>
+        <arg name="failsafe_rth_enable" value="$(arg failsafe_rth_enable)"/>
+        <arg name="failsafe_signal_lost_threshold" value="$(arg failsafe_signal_lost_threshold)"/>
+        <arg name="failsafe_tracking_lost_threshold" value="$(arg failsafe_tracking_lost_threshold)"/>
+        <arg name="geofence_threshold" value="$(arg geofence_threshold)"/>
+        <arg name="home_radius" value="$(arg home_radius)"/>
+        <!-- <arg name="uuv_degradation_mode" value="$(arg uuv_degradation_mode)"/>  -->
+        <!-- For degradation training data: -->
+        <arg name="uuv_degradation_mode" value="$(arg thruster_id)"/>
+        <arg name="enable_rpm_sensor_check" value="$(arg enable_rpm_sensor_check)"/>
+        <arg name="pipe_estimation_good_log_val" value="$(arg pipe_estimation_good_log_val)"/>
+
+        <arg name="decision_source" value="$(arg decision_source)"/> 
+        <arg name="fls_in_view_window" value="$(arg fls_in_view_window)"/>
+        <arg name="fls_in_view_limit" value="$(arg fls_in_view_limit)"/>
+        <arg name="enable_fault_detection" value="$(arg enable_fault_detection)"/> 
+        <arg name="enable_obstacle_avoidance" value="$(arg use_obstacle_avoidance)"/> 
+        <arg name="enable_emergency_stop" value="$(arg enable_emergency_stop)"/> 
+
+        <arg name="total_degradation_threshold" value="$(arg total_degradation_threshold)"/>
+        <arg name="uuv_max_speed" value="$(arg uuv_max_speed)"/>
+        <arg name="mission_file" value="$(arg mission_file)"/>
+        <arg name="uuv_min_speed" value="$(arg uuv_min_speed)"/>
+        <!-- For training: -->
+        <arg name="thruster_thrust_force_efficiency" value="$(arg thruster_thrust_force_efficiency)"/> <!-- 0.0 to 1.0 -->
+        <arg name="enable_training_data_collection" value="$(arg enable_training_data_collection)"/>
+        <arg name="thruster_motor_fail_duration" value="$(arg thruster_motor_fail_duration)"/>
+        <arg name="thruster_motor_fail_starting_time" value="$(arg thruster_motor_fail_starting_time)"/>
+        <arg name="thruster_motor_failure" value="$(arg thruster_motor_failure)"/>
+        <!-- For CM based waypoint server: -->
+        <arg name="waypoint_filename" value="$(arg waypoint_filename)"/>
+        <arg name="random_waypoints" value="$(arg random_waypoints)"/>
+        <arg name="fdir_path" value="$(arg fdir_path)"/> 
+        <arg name="fdir_params" value="$(arg fdir_params)"/> 
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/task_surface.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/task_rth.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/map_based_pipe_tracking.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/map_based_obstacle_avoidance.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="use_obstacle_avoidance" value="$(arg use_obstacle_avoidance)" />
+    </include>
+
+    <!-- Evaluation -->
+    <include file="$(find vandy_bluerov)/launch/bluerov_evaluation.launch">
+        <arg name="results_directory" value="$(arg results_directory)"/>
+        <arg name="bluerov_eval" value="$(arg bluerov_eval)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/task_waypoint.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="random_waypoints" value="$(arg random_waypoints)"/>
+        <arg name="random_seed" value="$(arg random_seed)"/>
+        <arg name="num_waypoints" value="$(arg num_waypoints)"/>
+        <arg name="min_distance" value="$(arg min_distance)"/>
+        <arg name="max_distance" value="$(arg max_distance)"/>
+        <arg name="min_heading" value="$(arg min_heading)"/>
+        <arg name="max_heading" value="$(arg max_heading)"/>
+        <arg name="x_track_error" value="$(arg x_track_error)"/>
+        <!-- <remap from="odom" to="pose_gt_noisy_ned"/> -->
+    </include>
+
+    <!-- FDR Tx/Rx -->
+    <include file="$(find vandy_bluerov)/launch/fdr_uuv.launch">
+        <arg name="generate_fdr" value="$(arg generate_fdr)"/>
+        <arg name="random_seed" value="$(arg random_seed)"/>
+        <arg name="fdr_log_filename" value="$(arg fdr_log_filename)"/>
+        <arg name="results_directory" value="$(arg results_directory)"/>
+    </include>
+
+    <!-- Start the controller-->
+    <include file="$(find vandy_bluerov)/launch/hsd_setpoint_controller.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="init_heading" value="$(arg init_heading)"/>
+        <arg name="init_speed" value="$(arg init_speed)"/>
+        <arg name="init_depth" value="$(arg init_depth)"/>
+        <arg name="hsd_debug_mode" value="$(arg hsd_debug_mode)"/>
+        <arg name="hsd_debug_window" value="30"/>
+        <arg name="min_speed" default="$(arg uuv_min_speed)"/> 
+        <arg name="max_speed" default="$(arg uuv_max_speed)"/>
+    </include>
+
+    <!-- Start speed publisher -->
+    <include file="$(find vandy_bluerov)/launch/speed_publisher.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+    </include>
+
+    <!-- Launch rosbag -->
+    <include file="$(find vandy_bluerov)/launch/bluerov2_record.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="record" value="$(arg record)"/>
+        <arg name="small_bagfile" value="$(arg small_bagfile)"/>
+        <arg name="bag_filename" value="$(arg bag_filename)"/>
+    </include>
+
+</launch>
+

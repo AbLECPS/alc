@@ -1,0 +1,3 @@
+webgme-bindings
+jinja2
+future

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4721"
+   height="56.990726"
+   width="62.550797"
+   version="1.1"
+   viewBox="0 0 1254.3716 1142.8719"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="ModeVariable.svg">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="17.002767"
+     inkscape:cx="31.275397"
+     inkscape:cy="28.495363"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4721"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <g
+     id="g4201">
+    <rect
+       id="rect5269"
+       height="1142.8719"
+       width="1254.3716"
+       y="-8.2622399e-014"
+       x="0"
+       style="fill:#4d4d4d;stroke-opacity:0" />
+    <ellipse
+       ry="519.64429"
+       rx="571.58783"
+       id="path6745"
+       transform="matrix(0.99940295,-0.0345507,0.04190261,0.9991217,0,0)"
+       cy="597.52588"
+       cx="604.07501"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:70.17190552" />
+    <g
+       transform="matrix(0.93587626,0,0,0.92533851,172.08934,505.79597)"
+       id="g6">
+      <text
+         id="text6747"
+         style="font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000"
+         xml:space="preserve"
+         font-size="40px"
+         y="185.33887"
+         x="214.02043"
+         line-height="125%"
+         sodipodi:linespacing="125%"><tspan
+           id="tspan6749"
+           x="214.02043"
+           y="185.33887" /></text>
+      <flowRoot
+         id="flowRoot6775"
+         font-size="40px"
+         xml:space="preserve"
+         style="font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000ff"
+         line-height="125%"><flowRegion
+           id="flowRegion6777"><rect
+             id="rect6779"
+             height="120.65"
+             width="58.662998"
+             y="141.67999"
+             x="556.75"
+             style="fill:#0000ff" /></flowRegion><flowPara
+           id="flowPara6781" /></flowRoot>      <text
+         id="text6783"
+         style="font-size:774.32434082px;line-height:125%;font-family:Calibri;letter-spacing:0px;word-spacing:0px;fill:#00cc00"
+         xml:space="preserve"
+         transform="scale(0.8748168,1.1430965)"
+         line-height="125%"
+         font-size="794.93px"
+         y="268.62878"
+         x="-57.1908"
+         sodipodi:linespacing="125%"><tspan
+           id="tspan6785"
+           y="268.62878"
+           x="-57.1908"
+           style="font-family:Calibri;fill:#00aa88;stroke-width:31.25"><tspan
+             id="tspan4161"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:774.31903076px;line-height:125%;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1">{</tspan><tspan
+             id="tspan4169"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:774.31903076px;line-height:125%;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start">M</tspan><tspan
+             id="tspan4165"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:774.31903076px;line-height:125%;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1">}</tspan></tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+- type: Reshape
+  id: /Y/0
+  next:
+    - /Y/y
+  attributes:
+    params: 100
+- type: Linear
+  id: /Y/Z
+  next: []
+  attributes:
+    bias: ''
+    outputSize: 10
+    inputSize: 300
+- type: Tanh
+  id: /Y/p
+  next:
+    - /Y/Z
+  attributes: {}
+- type: Linear
+  id: /Y/y
+  next:
+    - /Y/p
+  attributes:
+    bias: ''
+    outputSize: 300
+    inputSize: 100

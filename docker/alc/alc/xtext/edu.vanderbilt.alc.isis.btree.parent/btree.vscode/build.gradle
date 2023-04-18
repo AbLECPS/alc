@@ -1,0 +1,43 @@
+/*task copyApplication(type: Copy) {
+    dependsOn (':edu.vanderbilt.alc.isis.btree.ide:installDist')
+    from 'edu.vanderbilt.alc.isis.btree.ide/build/install/btree-server'
+    into 'src/btree'
+}
+*/
+/*
+task copyApplication(type: Copy) {
+    def installDistTask1 = project(':edu.vanderbilt.alc.isis.btree.ide').tasks.installDist
+    dependsOn installDistTask1
+    from installDistTask.outputs
+    into 'src/btree'
+}*/
+task copyApplication(type: Exec) {
+    commandLine 'cp'
+    args '-r', '../edu.vanderbilt.alc.isis.btree.ide/build/install/btree-server/.' , './src/btree/.'
+}
+
+clean {
+    doLast {
+        delete './src/btree/*'
+    }
+}
+
+npmInstall.dependsOn copyApplication
+
+task installExtension(type: Exec, dependsOn: vscodeExtension) {
+    if (System.properties['os.name'].toLowerCase().contains('windows')) {
+        commandLine 'code.cmd'
+    } else {
+        commandLine 'code'
+    }
+    args '--install-extension', vscodeExtension.destPath
+}
+
+task startCode(type:Exec, dependsOn: installExtension) {
+    if (System.properties['os.name'].toLowerCase().contains('windows')) {
+        commandLine 'code.cmd'
+    } else {
+        commandLine 'code'
+    }
+    args "$rootProject.projectDir/demo/", '--new-window'
+}

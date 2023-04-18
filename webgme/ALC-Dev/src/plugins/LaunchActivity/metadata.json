@@ -1,0 +1,26 @@
+{
+  "id": "LaunchActivity",
+  "name": "Launch Activity",
+  "version": "0.1.0",
+  "description": "Launch Activity Instance",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+
+      {
+        "name": "setupAndBuildRepo",
+        "displayName": "Setup and Build Repo",
+        "description": "If the model is using repo, set this flag to True for setup (clone or pull) and (re-)building the repo",
+        "value": false,
+        "valueType": "boolean",
+        "readOnly": false
+      }
+    
+  ]
+}

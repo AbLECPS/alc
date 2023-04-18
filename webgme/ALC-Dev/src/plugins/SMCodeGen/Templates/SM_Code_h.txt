@@ -1,0 +1,74 @@
+#ifndef SM_<SMNAME>_h
+#define SM_<SMNAME>_h
+
+#include <iostream>
+#include <set>
+#include <vector>
+#include <map>
+
+#include <StateMachine.h>
+
+using namespace std;
+using namespace STATEMACHINE;
+
+
+namespace <SMNAME>
+{
+	class DataSource : public STATEMACHINE::DataSource
+	{
+	
+	public:
+		DataSource();
+		virtual ~DataSource();
+		
+		void init();
+		void destroy();
+		
+		//Execute state entry-action 
+		virtual void performStateEntryAction(STATEID sid);
+		//Execute state exit-action		
+		virtual void performStateExitAction(STATEID sid);
+		//Execute state during-action
+		virtual void performStateDuringAction(STATEID sid);
+		//Execute default action in a state when there are no active outgoing transitions
+		virtual void performDefaultStateAction(STATEID sid);
+		
+		//Execute default event action
+		virtual void checkAndPerformDefaultEventAction();
+			
+		virtual void performTransitionAction(TRANSID tid);// Execute transitions -action
+		virtual bool evalTransitionGuard(TRANSID tid); //Evaluate transitions - guard
+		virtual bool evalTransitionEventTrigger(TRANSID tid); //Evaluate transitions - trigger
+
+<TG_FN_DECL>
+<TA_FN_DECL>
+<TT_FN_DECL>
+<EVENT_FN_DECL>
+
+		//Variable declarations
+<VAR_DECL>
+
+	}; //end class SHMEngine_CompBehavior::DataSource
+	
+	class Repo
+	{
+		public:
+			static Repo* Instance();
+			static void Terminate();
+			StateMachine* SM();
+			DataSource* DS();
+			~Repo();
+		private:
+			Repo();
+			void build();
+			static Repo* _pInstance;
+			StateMachine* _pStateMachine;
+			DataSource* _pDataSource;
+			
+	};//end Repo class
+	
+	
+
+	
+}//end namespace SM_<SMNAME>
+#endif //SM_<SMNAME>_h

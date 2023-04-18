@@ -1,0 +1,4 @@
+FROM alc:latest
+RUN rm /usr/bin/supervisord
+COPY supervisord /usr/bin/
+RUN chmod +x /usr/bin/supervisord

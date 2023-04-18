@@ -1,0 +1,112 @@
+<launch>
+    <!-- Arguments/Parameters --> 
+    {% for name, value, reqd in ros_args %}
+    {% if (value) %}
+    <arg name={{'\"' + name|string + '\"'}} default={{'\"' + value|string + '\"'}}/>  
+    {% else %}
+    <arg name={{'\"' + name|string + '\"'}}/>  
+    {% endif %}
+    {% endfor %}
+    {% for s in subInfoKeys%}
+    {% if (subInfo[s]["type"]) %}
+    {% if (subInfo[s]["topic"]) %}
+    <arg name="topic_sub_{{subInfo[s]["name"]}}" default="{{subInfo[s]["topic"]}}"/> 
+    {% else %}
+    <arg name="topic_sub_{{subInfo[s]["name"]}}"/>  
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% for p in pubInfoKeys%}
+    {% if (pubInfo[p]["type"]) %}
+    {% if (pubInfo[p]["topic"]) %}
+    <arg name="topic_pub_{{pubInfo[p]["name"]}}" default="{{pubInfo[p]["topic"]}}"/> 
+    {% else %}
+    <arg name="topic_pub_{{pubInfo[p]["name"]}}"/>  
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in serviceServers%}
+    {% if (cls_type) %}
+    {% if (topic) %}
+    <arg name="topic_service_{{name}}" default="{{topic}}"/>
+    {% else %}
+    <arg name="topic_service_{{name}}"/>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in serviceClients%}
+    {% if (cls_type) %}
+    {% if (topic) %}
+    <arg name="topic_client_{{name}}" default="{{topic}}"/>
+    {% else %}
+    <arg name="topic_client_{{name}}"/>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in actionServers%}
+    {% if (cls_type) %}
+    {% if (topic) %}
+    <arg name="topic_as_{{name}}" default="{{topic}}"/>
+    {% else %}
+    <arg name="topic_as_{{name}}"/>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in actionClients%}
+    {% if (cls_type) %}
+    {% if (topic) %}
+    <arg name="topic_ac_{{name}}" default="{{topic}}"/>
+    {% else %}
+    <arg name="topic_ac_{{name}}"/>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% if (lec_info['use'] ==1) %}
+    <arg name="{{lec_info['deployment_key']}}"/>
+    {% endif %}
+    <!-- Generated launch info --> 
+    {% if node_info["namespace"]==''%}
+    <node name={{'\"' + node_info["compName"]|string + '\"'}} pkg={{'\"' + node_info["pkgName"]|string + '\"'}} type={{'\"' + node_info["Type"]|string + '\"'}}>
+    {% else %}
+    <node name={{'\"' + node_info["compName"]|string + '\"'}} pkg={{'\"' + node_info["pkgName"]|string + '\"'}} type={{'\"' + node_info["Type"]|string + '\"'}} ns={{'\"' + node_info["namespace"]|string + '\"'}}>
+    {% endif %}
+        <rosparam subst_value="true"> 
+            {% for name, value, reqd in ros_params %}
+            {{name}}: $(arg {{name}}) 
+            {% endfor %}
+            {% for s in subInfoKeys%}
+            {% if (subInfo[s]["type"]) %}
+            topic_sub_{{subInfo[s]["name"]}}: $(arg topic_sub_{{subInfo[s]["name"]}})
+            {% endif %}
+            {% endfor %}
+            {% for p in pubInfoKeys%}
+            {% if (pubInfo[p]["type"]) %}
+            topic_pub_{{pubInfo[p]["name"]}}: $(arg topic_pub_{{pubInfo[p]["name"]}})
+            {% endif %}
+            {% endfor %}
+            {% for pkg_type, cls_type, name,topic in serviceServers%}
+            {% if (cls_type) %}
+            topic_service_{{name}}: $(arg topic_service_{{name}} )
+            {% endif %}
+            {% endfor %}
+            {% for pkg_type, cls_type, name,topic in serviceClients%}
+            {% if (cls_type) %}
+            topic_client_{{name}} : $(arg topic_client_{{name}} )
+            {% endif %}
+            {% endfor %}
+            {% for pkg_type, cls_type, name,topic in actionServers%}
+            {% if (cls_type) %}
+            topic_as_{{name}} : $(arg topic_as_{{name}} )
+            {% endif %}
+            {% endfor %}
+            {% for pkg_type, cls_type, name,topic in actionClients%}
+            {% if (cls_type) %}
+            topic_ac_{{name}} : $(arg topic_ac_{{name}} )
+            {% endif %}
+            {% endfor %}
+            {% if (lec_info['use'] ==1) %}
+            {{lec_info['deployment_key']}} : $(arg {{lec_info['deployment_key']}} )
+            {% endif %}
+        </rosparam>
+    </node>
+</launch>

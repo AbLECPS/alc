@@ -1,0 +1,7 @@
+# This is a service for Iver/BlueROV2's heading, speed and depth commands
+
+float64 heading
+float64 speed
+float64 depth
+---
+bool success

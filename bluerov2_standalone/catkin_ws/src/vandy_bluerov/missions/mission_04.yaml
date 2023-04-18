@@ -1,0 +1,90 @@
+home: [ 0, 0 ]
+missions:
+  # - type: waypoint_following
+  #   waypoints:
+      # - [0,  0, 45, 1]
+      # - [0,  10, 45, 1]
+      # - [30, 10, 45, 1]
+      # - [30, 20, 45, 1]
+
+  #     # - [ 0, 30, 45.0, 1.5 ] 
+  #     # - [ -20, 60, 45.0, 1.5 ] 
+  #   waypoint_reached_distance: 5.0
+  #   avoidance_operating_depth: 10
+  #   avoidance_learning: true
+  #   loiter_box_size: 9.0
+  #   termination_conditions:
+  #     - type: final_waypoint_reached
+  #       distance: 5.0
+  #       actions:
+  #         - surface
+  #     - type: min_obstacle_standoff
+  #       distance: 4.0
+  #       actions::
+  #         - surface
+  #         - go_home
+  #   assurance_technologies:
+  #     - topic: "/assurance/degradation"
+  #       contingency_action:
+  #         - surface
+  #         - go_home
+  #     - topic: "/degradation_detector"
+  #       decision_threshold: -0.145
+
+  - type: waypoint_following
+    waypoints:
+      - [0,  0, 45, 1]
+      # - [0,  10, 45, 1]
+      # - [30, 10, 45, 1]
+      # - [30, 20, 45, 1]
+      # - [0, 20, 45, 1]
+      - [50, 10, 45, 1]
+      - [50, 50, 45, 1]
+      - [-50, 50, 45, 1]
+      - [-50, 100, 45, 1]
+      - [50, 100, 45, 1]
+      - [50, 150, 45, 1]
+      - [-50, 150, 45, 1]
+    max_forward_speed: 1.5
+    heading: 0
+    use_fixed_heading: False
+    waypoint_reached_distance: 5.0
+    avoidance_operating_depth: 10
+    avoidance_learning: true
+    loiter_box_size: 9.0
+    termination_conditions:
+      - type: final_waypoint_reached
+        distance: 5.0
+        actions:
+          - surface
+      - type: min_obstacle_standoff
+        distance: 4.0
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home
+      - topic: "/degradation_detector"
+        decision_threshold: -0.145
+
+  # - type: pipe_following
+  #   waypoint_reached_distance: 5.1
+  #   avoidance_operating_depth: 10.1
+  #   avoidance_learning: false
+  #   loiter_box_size: 9.1
+  #   termination_conditions:
+  #     - type: min_obstacle_standoff
+  #       distance: 4.1
+  #       actions::
+  #         - surface
+  #         - go_home
+  #   assurance_technologies:
+  #     - topic: "/assurance/degradation"
+  #       contingency_action:
+  #         - surface
+  #         - go_home
+  #     - topic: "/degradation_detector"
+  #       decision_threshold: 0.4

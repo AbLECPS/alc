@@ -1,0 +1,34 @@
+import sys
+from pathlib import Path
+
+sys.stderr = Path("{{ stderr_file }}").open("w")
+sys.stdout = Path("{{ stdout_file }}").open("w")
+
+from RootJob import RootJob
+from Result import ResultAux
+from ParameterManager import ParameterManager
+from ProjectParameters import ProjectParameters
+from WorkflowData import WorkflowData
+
+
+{% for user_function in user_function_list %}{{user_function}}
+
+
+{% endfor -%}
+ProjectParameters.set_generic_active_node("{{ generic_active_node }}")
+ProjectParameters.set_owner("{{ owner }}")
+ProjectParameters.set_project_name("{{ project_name }}")
+ProjectParameters.set_status_node("{{ status_path }}")
+ProjectParameters.set_script_path(Path(sys.argv[0]).absolute())
+ProjectParameters.set_stderr_file_path(Path("{{ stderr_file }}"))
+ProjectParameters.set_stdout_file_path(Path("{{ stdout_file }}"))
+ProjectParameters.set_failing_task_path_file_path(Path("{{ failing_task_path_file }}"))
+ProjectParameters.set_exceptions_file_path(Path("{{ exceptions_file }}"))
+
+output_dir = Path("{{ output_dir }}")
+
+root_job = RootJob(ProjectParameters.get_project_name(), output_dir)
+
+{{ job_list|join("\n\n") }}
+
+sys.exit(root_job.execute_workflow())

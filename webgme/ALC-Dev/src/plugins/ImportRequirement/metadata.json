@@ -1,0 +1,23 @@
+{
+  "id": "ImportRequirement",
+  "name": "ImportRequirement",
+  "version": "0.1.0",
+  "description": "Import Requirement Model",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": false,
+  "writeAccessRequired": false,
+  "configStructure": [
+    {
+      "name": "reqModel",
+      "displayName": "Requirement Model xml file",
+      "description": "Requirement Model in xml format.",
+      "value": "",
+      "valueType": "asset",
+      "readOnly": false
+    }
+	]
+}

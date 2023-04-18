@@ -1,0 +1,10 @@
+{
+    "Recurrent": {
+        "feedback": "nn.Module",
+        "input": "nn.Module",
+        "transfer": "nn.Module"
+    },
+    "Bottle": {
+        "module": "nn.Module"
+    }
+}

@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Loading some constants -->
+  <xacro:include filename="$(find uuv_descriptions)/urdf/common.urdf.xacro"/>
+  <!-- Loading file with sensor macros -->
+  <xacro:include filename="$(find uuv_sensor_ros_plugins)/urdf/sensor_snippets.xacro"/>
+  <!-- Loading vehicle's specific macros -->
+  <xacro:include filename="$(find bluerov2_description)/urdf/snippets.xacro"/>
+
+  <!-- ADDED  -->
+  <xacro:include filename="$(find uuv_gazebo_ros_plugins)/urdf/snippets.xacro"/>
+
+  <!--
+    Vehicle's parameters (remember to enter the model parameters below)
+  -->
+  <!-- Thruster blade failure -->
+  <!-- If true, adds 10x more IMU noise for ADIS16448 normal noise-->
+  <!--<xacro:arg name="thruster_blade_failure" value="true"/>-->
+  <!-- Mass -->
+  <xacro:property name="mass" value="11.215"/> <!-- increased mass (+1.25) to solve bouyancy issues with sonar-->
+  <!-- Describing the dimensions of the vehicle's bounding box: width, length, height -->
+  <xacro:property name="x_size" value="0.448"/>
+  <xacro:property name="y_size" value="0.2384"/>
+  <xacro:property name="z_size" value="0.28066"/>
+  <!-- minion_usv_height is not really! It's just for run... We need first calculate the Fossen parameters -->
+  <!-- Volume -->
+  <xacro:property name="volume" value="0.011054"/>
+  <!-- Center of gravity -->
+  <xacro:property name="cog" value="0 0 -0.245"/>
+  <!--
+  Center of buoyancy according to eq. (3.1) p. 28 in Berg2012.
+  The original values, [0.0822, -0.00773, 0.3872] however, seem to
+  assume NWU (otherwise cob is below cog?). 0.155
+  -->
+  <xacro:property name="cob" value="0 0 0.155"/>
+  <!-- Fluid density -->
+  <xacro:property name="rho" value="1028"/>
+  <!--
+    Visual mesh file for the vehicle, usually in DAE (Collada) format. Be sure to store the
+    mesh with the origin of the mesh on the same position of the center of mass, otherwise
+    the mesh pose will have to be corrected below in the <visual> block.
+    Open the meshes for the RexROV vehicle in Blender to see an example on the mesh placement.
+  -->
+  <xacro:property name="visual_mesh_file" value="file://$(find bluerov2_description)/meshes/bluerov2_noprop.dae"/>
+
+  <!-- Collision geometry mesh, usually in STL format (it is recommended to keep
+  this geometry as simple as possible to improve the performance the physics engine
+  regarding the computation of collision forces) -->
+  <xacro:property name="collision_mesh_file" value="file://$(find bluerov2_description)/meshes/bluerov2_noprop.stl"/>
+  <!-- Vehicle macro -->
+  <!-- <xacro:macro name="bluerov2_base" params="namespace debug *gazebo"> -->
+  <xacro:macro name="bluerov2_base" params="namespace noisy *gazebo">
+
+      <!-- Rigid body description of the base link -->
+      <link name="${namespace}/base_link">
+        <!--
+          Be careful to setup the coefficients for the inertial tensor,
+          otherwise your model will become unstable on Gazebo
+        -->
+        <inertial>
+          <mass value="${mass}" />
+          <origin xyz="${cog}" rpy="0 0 0"/>
+          <!-- <inertia ixx="525.39" ixy="1.44" ixz="33.41" iyy="794.20" iyz="2.6" izz="691.23"/> -->
+          <inertia
+            ixx="${0.2*mass*y_size*y_size + 0.2*mass*z_size*z_size}" ixy="0.0" ixz="0.0"
+            iyy="${0.2*mass*x_size*x_size + 0.2*mass*z_size*z_size}" iyz="0.0"
+            izz="${0.2*mass*x_size*x_size + 0.2*mass*y_size*y_size}" />
+        </inertial>
+
+        <!-- This visual geometry representation can be used when running
+             tasks in which you need Gazebo to start quickly
+        -->
+        <!-- <xacro:if value="${use_simplified_mesh}"> -->
+        <!-- Code in rexrov2_base.xacro if use the flag use_simplified_mesh -->
+
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="${visual_mesh_file}" scale="1 1 1" />
+          </geometry>
+        </visual>
+
+        <!-- In rexrov2_base they made collision planes to minize the GPU load -->
+        <!-- <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="${collision_mesh_file}" scale="1 1 1" />
+          </geometry>
+        </collision> -->
+
+      </link>
+
+    <gazebo reference="${namespace}/base_link">
+      <selfCollide>false</selfCollide>
+    </gazebo>
+
+    <!-- Set up hydrodynamic plugin given as input parameter -->
+    <xacro:insert_block name="gazebo"/>
+
+    <!-- Include the actuators modules: Thrusters, Beacon -->
+    <xacro:include filename="$(find bluerov2_description)/urdf/actuators.xacro" />
+
+    <!-- Include the sensor modules: 3D Pose, IMU, Pressure, Camera -->
+    <xacro:include filename="$(find vandy_bluerov)/urdf/bluerov_sensors.xacro">
+      <xacro:arg name="noisy" value="${noisy}"/>
+    </xacro:include>
+        
+    <!-- Mount a Pose 3D sensor. -->
+    <xacro:default_pose_3d_macro
+            namespace="${namespace}"
+            parent_link="${namespace}/base_link"
+            inertial_reference_frame="world"/>
+
+    <!-- TODO: Parametrize the battery unit -->
+    <xacro:basic_linear_battery_macro
+      namespace="${namespace}"
+      parent_link="${namespace}/base_link"
+      prefix=""
+      open_circuit_voltage_constant_coef="3.7"
+      open_circuit_voltage_linear_coef="-3.1424"
+      initial_charge="1.181665"
+      capacity="18"
+      resistance="0.002"
+      smooth_current_tau="1.9499"
+      voltage="16.8"
+      update_rate="2.0"/>
+
+  </xacro:macro>
+
+<!-- FLS echosounder and Altimeter echosounder (rangefinder sonar) joints -->
+
+<joint name="sonar_front_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin rpy="0 0 0" xyz="0.5 0 0" />
+    <parent link="uuv0/base_link"/>
+    <child link="uuv0/base_sonar_front"/>
+</joint>
+
+<link name="uuv0/base_sonar_front">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+ </link>
+
+
+ <joint name="sonar_bottom_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin rpy="0 1.5708 0" xyz="0 0 -0.5" />
+    <parent link="uuv0/base_link"/>
+    <child link="uuv0/base_sonar_bottom"/>
+</joint>
+
+<link name="uuv0/base_sonar_bottom">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+ </link>
+
+
+<joint name="camera_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin rpy="0 0 0" xyz="0.2 0 0.1" />
+    <parent link="uuv0/base_link"/>
+    <child link="uuv0/camera_link"/>
+  </joint>
+
+  <!-- Camera -->
+  <link name="uuv0/camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	      <box size="0.02 0.02 0.02"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <geometry>
+	      <box size="0.02 0.02 0.02"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- generate an optical frame http://www.ros.org/reps/rep-0103.html#suffix-frames
+      so that ros and opencv can operate on the camera frame correctly -->
+
+  <joint name="camera_optical_joint" type="fixed">
+  <!--   these values have to be these values otherwise the gazebo camera image
+        won't be aligned properly with the frame it is supposedly originating from -->
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="uuv0/camera_link"/>
+    <child link="uuv0/camera_link_optical"/>
+  </joint>
+  <link name="uuv0/camera_link_optical">
+  </link>
+
+  <joint name="camera_depth_joint" type="fixed">
+  <!--   these values have to be these values otherwise the gazebo camera image
+        won't be aligned properly with the frame it is supposedly originating from -->
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="uuv0/camera_link"/>
+    <child link="uuv0/camera_link_depth"/>
+  </joint>
+  <link name="uuv0/camera_link_depth">
+  </link>
+
+
+<!-- VU SSS -->
+<!-- Both side, splitted from SW -->
+<joint name="sss_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin rpy="1.5708 1.5708 1.5708" xyz="1.0 0.0 0" />
+    <parent link="uuv0/base_link"/>
+    <child link="uuv0/base_sss"/>
+</joint>
+
+<link name="uuv0/base_sss">
+</link>
+
+<!-- VU FLS -->
+<joint name="fis_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin rpy="0 0.7854 0" xyz="1 0 1" />
+    <parent link="uuv0/base_link"/>
+    <child link="uuv0/base_fis"/>
+</joint>
+
+<link name="uuv0/base_fis">
+</link>
+
+</robot>

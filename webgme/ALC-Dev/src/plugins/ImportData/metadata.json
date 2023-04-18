@@ -1,0 +1,42 @@
+{
+  "id": "ImportData",
+  "name": "Import Data",
+  "version": "0.1.0",
+  "description": "Import Data To ALC",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": true,
+  "configStructure": [
+    {
+      "name": "recordname",
+      "displayName": "Record Name",
+      "description": "Reference name to be assigned for use in project",
+      "value": "",
+      "valueType": "string",
+      "readOnly": false
+    },
+    {
+      "name": "assetdata",
+      "displayName": "Data to upload",
+      "description": "Data to upload and store in server",
+      "value": "",
+      "valueType": "asset",
+      "readOnly": false
+    },
+    {
+      "name": "pathtodocument",
+      "displayName": "Folder to Record",
+      "description": "Folder path if document exists on server (absolute path or relative to $ALC_WORKSPACE)",
+      "value": "",
+      "valueType": "string",
+      "readOnly": false
+    }
+    
+    
+  ]
+}

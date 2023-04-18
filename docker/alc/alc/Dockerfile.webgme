@@ -1,0 +1,9 @@
+From alc_1:latest
+
+RUN mkdir -p /alc/webgme/ /alc/webgme/automate/gradle /alc/webgme/automate/wrapper /alc/workflows  /opt/gradle
+ADD ALC-Dev/*  /alc/webgme/
+ADD install_webgme.sh  java.security /
+RUN chmod +x install_webgme.sh &&  /install_webgme.sh 
+EXPOSE 8888
+EXPOSE 22
+CMD ["/bin/bash", "/alc/webgme/automate/gradle/src/main/shell/startup.sh"]  

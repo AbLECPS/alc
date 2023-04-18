@@ -1,0 +1,34 @@
+<!--
+File:         fdr.launch
+Description:  Flight Data Recorder simulation package
+-->
+<launch>
+  <arg name="fdr_log_filename" default="fdr_rx_map.csv"/>
+  <arg name="random_seed" default="0"/>
+  <arg name="ocean_depth" default="60"/>
+  <arg name="results_directory" default="$(find vandy_bluerov)/results"/>
+  <arg name="generate_fdr" default="true"/>
+
+    <group if="$(arg generate_fdr)">
+        <node name="fdr_tx" pkg="vandy_bluerov" type="fdr_tx.py" output="screen">
+            <rosparam subst_value="true">
+                random_seed: $(arg random_seed)
+                ocean_depth: $(arg ocean_depth)
+            </rosparam>
+        </node>
+        <node name="fdr_rx" pkg="vandy_bluerov" type="fdr_rx.py" output="screen">
+            <param name="results_directory" type="string" value="$(arg results_directory)" />
+            <rosparam subst_value="true">
+                random_seed: $(arg random_seed)
+                log_filename: $(arg fdr_log_filename)
+            </rosparam>
+        </node>
+        <node name="fdr_locator" pkg="vandy_bluerov" type="fdr_locator.py" output="screen">
+            <param name="results_directory" type="string" value="$(arg results_directory)" />
+            <rosparam subst_value="true">
+                log_filename: $(arg fdr_log_filename)
+            </rosparam>
+        </node>
+
+    </group>
+</launch>

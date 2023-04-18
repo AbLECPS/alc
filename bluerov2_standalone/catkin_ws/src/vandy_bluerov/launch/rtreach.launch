@@ -1,0 +1,64 @@
+<!--
+File:         rtreach.launch
+Description:  RT Reachability
+-->
+<launch>
+    <!--rtreach parameters-->
+    <arg name="origin_latitude"  default="39.06"   />
+    <arg name="origin_longitude" default="-76.4183" />
+    <arg name="origin_altitude"  default="0.0"/>
+    <arg name="use_rtreach" default="true"/>
+    <arg name="box_sim_time" default="2"/>
+    <arg name="uuv_sim_time" default = "45"/>
+    <arg name="results_directory" default = ""/>
+    <arg name="box_wall_time" default="1"/>
+    <arg name="uuv_wall_time" default="10"/>
+    <arg name="box_display_max" default="5"/>
+    <arg name="box_size" default="10"/>
+    <arg name="output" default="log"/> <!-- log or screen -->
+    <arg name="debug" default="0"/>
+    <arg name="parameter_uncertainty" default="0.0"/>
+
+
+    <!--rtreach disturbance parameters-->
+    <arg name="xd_l" default="0.0" />
+    <arg name="xd_u" default="0.0" />
+    <arg name="yd_l" default="0.0" />
+    <arg name="yd_u" default="0.0" />
+    <arg name="vd_l" default="0.0" />
+    <arg name="vd_u" default="0.0" />
+    <arg name="thd_l" default="0.0" />
+    <arg name="thd_u" default="0.0" />
+
+    <arg name="x_unc" default="0.025" />
+    <arg name="y_unc" default="0.025" />
+    <arg name="speed_unc" default="0.025" />
+    <arg name="theta_unc" default="0.025" />
+
+    <!-- time out for uncertainty experiments
+       set value to -1 for no timeout-->
+    <arg name="timeout" default = "-1"/>
+
+
+    <group if="$(arg use_rtreach)">
+    <!--reach node and visualize node-->
+            <!--Vandy SysID Data-->
+        <node name="vandy_sys_id" type="vandy_sys_id.py" pkg="vandy_bluerov" args="$(arg results_directory)" required="true"/>
+        <node name="publish_obstacles" type="publish_obstacles.py" pkg="rtreach" output="screen" required="true"/>
+        <node name="geo_fencing_publisher" pkg="rtreach" type="geofencing_bounding_box.py" args="$(arg origin_latitude) $(arg origin_longitude) $(arg origin_altitude)" output="$(arg output)"/>
+        <node name="reach_node" pkg="rtreach" type="reach_node_uncertain_rov" args="$(arg uuv_wall_time) $(arg uuv_sim_time) $(arg debug) $(arg parameter_uncertainty) $( arg xd_l) $( arg xd_u) $( arg yd_l) $( arg yd_u) $( arg vd_l) 
+                                                                                                                                                                 $( arg vd_u) $( arg thd_l) $( arg thd_u) $(arg results_directory)
+                                                                                                                                                                 $( arg x_unc) $( arg y_unc) $( arg speed_unc) $( arg theta_unc)" output="$(arg output)"/>
+        <!--rtreach obstacle nodes-->
+        <node name="visualize_node_obs" pkg="rtreach" type="visualize_obs" args="box1 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs1" pkg="rtreach" type="visualize_obs" args="box2 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs2" pkg="rtreach" type="visualize_obs" args="box3 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs3" pkg="rtreach" type="visualize_obs" args="box4 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs4" pkg="rtreach" type="visualize_obs" args="box5 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs5" pkg="rtreach" type="visualize_obs" args="box6 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs6" pkg="rtreach" type="visualize_obs" args="box7 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs7" pkg="rtreach" type="visualize_obs" args="box8 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs8" pkg="rtreach" type="visualize_obs" args="box9 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+        <node name="visualize_node_obs9" pkg="rtreach" type="visualize_obs" args="box10 $(arg box_size) $(arg box_sim_time) $(arg box_wall_time) $(arg box_display_max)" output="log"/>
+    </group>
+</launch>

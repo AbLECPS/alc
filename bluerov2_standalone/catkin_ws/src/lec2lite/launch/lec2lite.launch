@@ -1,0 +1,20 @@
+<launch>
+	<arg name="filename_a" default="lec2_quant_a_edgetpu.tflite"/>
+    <arg name="filename_b" default="lec2_quant_b_edgetpu.tflite"/>
+
+    <!-- side: r or l -->
+    <!-- <node name="vu_lec2_lite_l" pkg="lec2lite" type="lec2_lite_node.py" output="screen" >
+    <node name="vu_lec2_lite_l" pkg="lec2lite" type="lec2_lite_coral_node.py" output="screen" >
+        <param name="~side" type="str" value="l" />
+        <param name="~filename" type="str" value="lec2_quant_a_edgetpu.tflite" />        
+    </node>
+    <node name="vu_lec2_lite_r" pkg="lec2lite" type="lec2_lite_coral_node.py" output="screen" >
+    <node name="vu_lec2_lite_r" pkg="lec2lite" type="lec2_lite_node.py" output="screen" >
+        <param name="~side" type="str" value="r" />
+        <param name="~filename" type="str" value="lec2_quant_b_edgetpu.tflite" />        
+    </node> -->
+    <node name="vu_lec2_lite_dual" pkg="lec2lite" type="lec2_lite_coral_dual_node.py" output="screen" >
+        <param name="~filename_a" type="str" value="$(arg filename_a)" />        
+        <param name="~filename_b" type="str" value="$(arg filename_b)" />        
+    </node>
+</launch>

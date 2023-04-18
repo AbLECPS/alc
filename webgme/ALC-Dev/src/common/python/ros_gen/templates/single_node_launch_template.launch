@@ -1,0 +1,11 @@
+<launch>
+    <!-- Arguments/Parameters --> {% for name, value in ros_args.items() %}
+    <arg name={{'\"' + name|string + '\"'}} value={{'\"' + value|string + '\"'}}/>  {% endfor %}
+
+    <!-- Generated launch info --> {% for node_info in generate_launch_info %}
+    <node name={{'\"' + node_info["name"]|string + '\"'}} pkg={{'\"' + node_info["Package"]|string + '\"'}} type={{'\"' + node_info["Type"]|string + '\"'}} ns={{'\"' + node_info["Namespace"]|string + '\"'}}>
+        <rosparam subst_value="true"> {% for name, value in node_info["Parameters"].items() %}
+            {{'\"' + name|string + '\"'}}: {{'\"' + value|string + '\"'}} {% endfor %}
+        </rosparam>
+    </node>{% endfor %}
+</launch>

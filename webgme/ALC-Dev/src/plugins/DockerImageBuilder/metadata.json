@@ -1,0 +1,17 @@
+{
+  "id": "DockerImageBuilder",
+  "name": "DockerImageBuilder",
+  "version": "0.1.0",
+  "description": "Builder Docker Image",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": true,
+  "configStructure": [
+    
+  ]
+}

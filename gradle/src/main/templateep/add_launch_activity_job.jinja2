@@ -1,0 +1,9 @@
+with {{ parent_job }}.add_launch_activity_job(
+  "{{ job_name }}",
+  "{{ activity_name }}",
+  "{{ activity_node }}",
+  {{ previous_job_name_list }},
+  {{ next_job_name_list }}
+) as {{ var_name }}:
+    {{ var_name }}{% for call in call_list %} \
+        .{{ call | indent(8) }}{% endfor %}

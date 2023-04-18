@@ -1,0 +1,140 @@
+#include "SM_<SMNAME>.h"
+
+using namespace SM_<SMNAME>;
+
+Repo* SM_<SMNAME>::Repo::_pInstance = 0;
+
+
+
+SM_<SMNAME>::DataSource::DataSource()
+{
+	clearlists();
+	init();
+}
+
+SM_<SMNAME>::DataSource::~DataSource()
+{
+	clearlists();
+	destroy();
+}
+
+
+//Execute state entry-action 
+void SM_<SMNAME>::DataSource::performStateEntryAction(STATEID sid)
+{
+<S_ENTRY_SWITCH>
+	return;
+}
+
+//Execute state exit-action		
+void SM_<SMNAME>::DataSource::performStateExitAction(STATEID sid)
+{
+<S_EXIT_SWITCH>
+	return;
+
+} 
+
+//Execute state during-action
+void SM_<SMNAME>::DataSource::performStateDuringAction(STATEID sid)
+{
+<S_DURING_SWITCH>
+	return;
+
+}
+
+//Execute default action in a state when there are no active outgoing transitions
+void SM_<SMNAME>::DataSource::performDefaultStateAction(STATEID sid)
+{
+	return;
+}
+
+
+// Execute transitions -action
+void SM_<SMNAME>::DataSource::performTransitionAction(TRANSID tid)
+{
+<TA_SWITCH>
+	return;
+} 
+
+bool SM_<SMNAME>::DataSource::evalTransitionGuard(TRANSID tid) //Evaluate transitions - guard
+{
+
+<TG_SWITCH>
+	return true;
+}
+
+bool SM_<SMNAME>::DataSource::evalTransitionEventTrigger(TRANSID tid) //Evaluate transitions - trigger
+{
+<TT_SWITCH>
+	return true;
+}
+
+<TG_FN_DEF>
+<TA_FN_DEF>
+<TT_FN_DEF>
+<EVENT_FN_DEF>
+
+//Execute default event action
+void SM_<SMNAME>::DataSource::checkAndPerformDefaultEventAction()
+{
+
+}
+
+Repo* Repo::Instance()
+{
+	if (!Repo::_pInstance)
+		Repo::_pInstance = new Repo();
+	return Repo::_pInstance;
+}
+
+void Repo::Terminate()
+{
+	delete _pInstance;
+}
+
+Repo::Repo()
+{
+	build();
+}
+
+Repo::~Repo()
+{
+	delete _pStateMachine;
+	delete _pDataSource;
+}
+
+StateMachine* Repo::SM()
+{
+	return _pStateMachine;
+}
+
+SM_<SMNAME>::DataSource* Repo::DS()
+{
+	return _pDataSource;
+}
+
+
+void Repo::build()
+{
+	_pDataSource = new SM_<SMNAME>::DataSource();
+		
+	
+	_pStateMachine = new STATEMACHINE::StateMachine("<SMNAME>", _pDataSource);
+	_pStateMachine->addRegion("R_<SMNAME>",0,0);
+<STATES_REGIONS>
+<TRANSITIONS>
+	_pStateMachine->build();
+}
+
+void SM_<SMNAME>::DataSource::init()
+{
+	//Enter code here
+}
+		
+void SM_<SMNAME>::DataSource::destroy()
+{
+	//Enter code here
+}
+		
+
+

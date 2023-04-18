@@ -1,0 +1,51 @@
+bluerov/iver
+world/world_ned
+hull box parameters
+sysid parameters(3 params, lr, lf)
+
+input topics
+---------------
+visualize
+---------
+sub = n.subscribe("uuv0/hsd_command", 1000, hsd_callback);
+sub2 = n.subscribe("uuv0/pose_gt_ned", 1000, callback);
+sub3 = n.subscribe("uuv0/thruster_reallocation",100, degredation_callback);
+
+reach_node
+------------
+
+ros::Subscriber sub = n.subscribe("uuv0/hsd_command", 100, hsd_callback);
+message_filters::Subscriber<rtreach::reach_tube> obs1(n,"box1/reach_tube",10);
+message_filters::Subscriber<rtreach::reach_tube> obs2(n,"box2/reach_tube",10);
+message_filters::Subscriber<rtreach::reach_tube> obs3(n,"box3/reach_tube",10);
+message_filters::Subscriber<rtreach::reach_tube> obs4(n,"box4/reach_tube",10);
+message_filters::Subscriber<rtreach::reach_tube> obs5(n,"box5/reach_tube",10);
+message_filters::Subscriber<rtreach::reach_tube> obs6(n,"box6/reach_tube",10);
+message_filters::Subscriber<rtreach::reach_tube> obs7(n,"uuv0/bounding_box_interval",10);
+message_filters::Subscriber<rtreach::reach_tube> obs8(n,"obstacles",10);
+message_filters::Subscriber<rtreach::reach_tube> obs9(n,"box9/reach_tube",10);
+message_filters::Subscriber<rtreach::reach_tube> obs10(n,"box10/reach_tube",10);
+message_filters::Subscriber<nav_msgs::Odometry> odom_sub(n, "uuv0/pose_gt_ned", 10);
+sub3 = n.subscribe("uuv0/thruster_reallocation",100, degredation_callback);
+
+output topics
+-------------
+
+visualize
+-----------
+vis_pub = n.advertise<visualization_msgs::MarkerArray>( "reach_hull", 100 );
+
+
+reach_node
+-----------
+
+res_pub = n.advertise<std_msgs::Float32>("reachability_result", 10);
+if(debug)
+{
+      vis_pub = n.advertise<visualization_msgs::MarkerArray>( "reach_verify", 100 );
+}
+
+
+
+
+

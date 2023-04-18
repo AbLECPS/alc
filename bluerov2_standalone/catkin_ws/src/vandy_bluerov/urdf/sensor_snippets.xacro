@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2016 The UUV Simulator Authors.
+     All rights reserved.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find uuv_sensor_ros_plugins)/urdf/pose_3d_snippets.xacro"/>
+
+  <xacro:macro name="thruster_blade_fail_imu_ned" params="namespace parent_link *origin thruster_blade_failure">
+    <!-- ADIS16448 IMU. -->
+    <xacro:if value="${thruster_blade_failure == 'true'}">
+      <!--10x more noise-->
+      <xacro:imu_plugin_macro
+        namespace="${namespace}"
+        imu_suffix=""
+        parent_link="${parent_link}"
+        imu_topic="imu"
+        mass_imu_sensor="0.015"
+        gyroscope_noise_density="0.003394"
+        gyroscope_random_walk="0.00038785"
+        gyroscope_bias_correlation_time="1000.0"
+        gyroscope_turn_on_bias_sigma="0.0087"
+        accelerometer_noise_density="0.04"
+        accelerometer_random_walk="0.06"
+        accelerometer_bias_correlation_time="300.0"
+        accelerometer_turn_on_bias_sigma="0.1960"
+        orientation_noise="0.1"
+        enable_local_ned_frame="true"
+        reference_frame="world_ned"
+        update_rate="50">
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+        <xacro:insert_block name="origin" />
+      </xacro:imu_plugin_macro>
+     </xacro:if> 
+
+    <xacro:if value="${thruster_blade_failure == 'false'}">
+      <xacro:imu_plugin_macro
+        namespace="${namespace}"
+        imu_suffix=""
+        parent_link="${parent_link}"
+        imu_topic="imu"
+        mass_imu_sensor="0.015"
+        gyroscope_noise_density="0.0003394"
+        gyroscope_random_walk="0.000038785"
+        gyroscope_bias_correlation_time="1000.0"
+        gyroscope_turn_on_bias_sigma="0.0087"
+        accelerometer_noise_density="0.004"
+        accelerometer_random_walk="0.006"
+        accelerometer_bias_correlation_time="300.0"
+        accelerometer_turn_on_bias_sigma="0.1960"
+        orientation_noise="0.01"
+        enable_local_ned_frame="true"
+        reference_frame="world_ned"
+        update_rate="50">
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+        <xacro:insert_block name="origin" />
+      </xacro:imu_plugin_macro>
+     </xacro:if> 
+  </xacro:macro>
+
+  <xacro:macro name="pose_3d_sensor_ned" params="namespace suffix parent_link
+    gaussian_noise_sigma gaussian_noise_amplitude topic">
+    <xacro:pose_3d_macro
+      namespace="${namespace}"
+      parent_link="${parent_link}"
+      topic="${topic}"
+      update_rate="20"
+      noise_sigma="${gaussian_noise_sigma}"
+      noise_amplitude="${gaussian_noise_amplitude}"
+      suffix="${suffix}"
+      reference_frame="world_ned"
+      publish_ned_odom="true">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:pose_3d_macro>
+  </xacro:macro>
+</robot>

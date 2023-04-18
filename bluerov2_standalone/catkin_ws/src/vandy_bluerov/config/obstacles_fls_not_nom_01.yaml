@@ -1,0 +1,13 @@
+inertial_frame_id: world
+obstacles:
+  #Point: X, Y, Z, Z relative to UUV
+  -
+    point: [35, 0, 0]
+    box_velocity_x: 1
+    box_velocity_y: 0
+    box_velocity_z: 0
+    box_size_x: 5
+    box_size_y: 5
+    box_size_z: 5
+
+  

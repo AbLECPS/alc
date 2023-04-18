@@ -1,0 +1,37 @@
+home: [ 39.06, -76.4183 ]
+missions:
+  # - type: pipe_following
+  - type: path_following
+    segments:
+      #- [ heading (in degrees), range (in meters), depth (in meters), speed (in knots) ]
+      - [ 325, 25, 45, 0.9 ]
+      - [ 335, 50, 45, 0.9 ]
+      - [ 315, 50, 45, 0.9 ]
+      - [ 335, 25, 45, 0.9 ]
+      - [ 320, 50, 45, 0.9 ]
+      - [ 330, 150, 45, 0.9 ]
+      - [ 300, 150, 45, 0.9 ]
+      - [ 180, 400, 45, 0.9 ]
+      - [ 000, 400, 45, 0.9 ]
+      - [ 180, 400, 45, 0.9 ]
+      - [ 000, 400, 45, 0.9 ]
+      - [ 180, 400, 45, 0.9 ]
+    # waypoint_reached_distance: 5.1
+    # avoidance_operating_depth: 10.1
+    # avoidance_learning: false
+    # loiter_box_size: 9.1
+    # termination_conditions:
+    #   - type: final_waypoint_reached
+    #     distance: 5.1
+    #     actions:
+    #       - surface
+    #   - type: min_obstacle_standoff
+    #     distance: 4.1
+    #     actions::
+    #       - surface
+    #       - go_home
+    # assurance_technologies:
+    #   - topic: "/assurance/degradation"
+    #     contingency_action:
+    #       - surface
+    #       - go_home

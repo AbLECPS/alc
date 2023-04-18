@@ -1,0 +1,146 @@
+buildscript {
+	repositories {
+		jcenter()
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+		maven { url "http://maven-eclipse.github.io/maven"  }
+	}
+	dependencies {
+		classpath 'org.xtext:xtext-gradle-plugin:2.0.8'
+		classpath 'com.github.node-gradle:gradle-node-plugin:2.2.4'
+		classpath 'net.researchgate:gradle-release:2.8.1'
+
+	}
+}
+apply plugin: 'com.github.node-gradle.node'
+apply plugin: 'net.researchgate.release'
+apply plugin: 'eclipse'
+
+node {
+	version = '10.16.0'
+	npmVersion = '6.10.2'
+	download = true
+}
+
+configure(subprojects.findAll { it.name.startsWith('edu') })   {
+	ext.xtextVersion = '2.25.0'
+	repositories {
+		mavenCentral()
+	}
+	
+	apply plugin: 'java'
+	dependencies {
+		compile platform("org.eclipse.xtext:xtext-dev-bom:${xtextVersion}")
+	}
+
+	apply plugin: 'org.xtext.xtend'
+	apply from: "${rootDir}/gradle/source-layout.gradle"
+	apply plugin: 'eclipse'
+	
+	group = 'edu.vanderbilt.alc.isis.btree'
+	version = '1.0.0-SNAPSHOT'
+	
+	sourceCompatibility = '11'
+	targetCompatibility = '11'
+	
+	configurations.all {
+		exclude group: 'asm'
+	}
+}
+
+task npmInstallVsce(type: NpmTask, dependsOn: npmSetup) {
+	ext.destPath = "$rootProject.projectDir/node_modules/vsce" 
+	outputs.dir(destPath)
+	group 'Node'
+	description 'Installs the NodeJS package "Visual Studio Code Extension Manager"'
+	args = [ 'install', 'vsce' ]
+}
+
+configure(subprojects.findAll { it.name.endsWith('vscode') }) {
+
+	apply plugin: 'com.github.node-gradle.node'
+	node {
+	    version = '10.16.0'
+	    npmVersion = '6.10.2'
+	    download = true
+	}
+
+	def inputFiles = fileTree(
+		dir: projectDir, 
+		excludes: [ 'out/**', '.gitignore', '.gradle/**', 'build/**', '*.gradle' ]
+	)
+
+	npmInstall {
+		inputs.files(inputFiles)
+		outputs.dir('out')
+	}
+
+	task vscodeExtension(dependsOn: [npmInstall, npmInstallVsce], type: NodeTask) {
+		ext.destDir = new File(buildDir, 'vscode')
+		ext.archiveName = "$project.name-${project.version}.vsix"
+		ext.destPath = "$destDir/$archiveName"
+		inputs.with {
+			files inputFiles
+			dir npmInstallVsce.destPath
+		}
+		outputs.dir destDir
+		doFirst {
+			destDir.mkdirs()
+		}
+		script = file("$npmInstallVsce.destPath/out/vsce")
+		args = [ 'package', '--out', destPath ]
+		execOverrides {
+			workingDir = projectDir
+		}
+	}
+
+	task clean {
+		doLast {
+			delete vscodeExtension.destDir
+			delete 'out' // output of npmInstall - don't want to delete node_modules
+		}
+		
+	}
+
+}
+
+plugins.withType(com.moowork.gradle.node.NodePlugin) {
+	node {
+		workDir = file("$rootProject.buildDir/nodejs")
+		nodeModulesDir = rootProject.projectDir
+	}
+}
+
+updateVersion {
+		doLast {
+			// custom code
+			def versionPattern = /\d+.\d+(.\d+)?/
+			def encoding = 'UTF-8'
+			def filesToUpdate = [
+				new File('btree.vscode', 'package.json'),
+			]
+
+			// String replacements - isn't long enough to justify advanced code ;)
+			filesToUpdate.forEach { file ->
+
+				String text = file.getText(encoding)
+				text = text.replaceAll("\"version\": \"$versionPattern\",", "\"version\": \"$project.version\",")
+				file.setText(text, encoding)
+			}
+		}
+	}
+
+release {
+    tagTemplate = 'v${version}'
+	preTagCommitMessage = '[release] pre tag commit: '
+    tagCommitMessage = '[release] creating tag: '
+    newVersionCommitMessage = '[release] new version commit: '
+    failOnSnapshotDependencies = false
+}
+
+// Workaround for issue https://github.com/researchgate/gradle-release/issues/144
+task build {
+	dependsOn subprojects.findResults { it.tasks.findByName('build') }
+}

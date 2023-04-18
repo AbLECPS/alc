@@ -1,0 +1,24 @@
+li.deepforge-logo {
+    background-image: url(img/deepforge-logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+    background-size: 95px;
+}
+
+li.deepforge-logo span {
+    visibility: hidden;
+}
+
+i.gme-icon {
+    background-image: url(img/deepforge-icon.png);
+    background-size: 15.20px 18px;
+}
+
+.create-node text {
+    font-style: italic;
+}
+
+.job-canceled {
+    background-color: #ffe0b2;
+}

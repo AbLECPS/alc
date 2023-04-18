@@ -1,0 +1,12 @@
+{
+  "id": "StopExpt",
+  "name": "Stop Experiment",
+  "version": "0.1.0",
+  "description": "Stop Experiment on the server",
+  "icon": {
+    "src": "",
+    "class": "glyphicon glyphicon-ok-circle"
+  },
+  "disableBrowserSideExecution": false,
+  "configStructure": []
+}

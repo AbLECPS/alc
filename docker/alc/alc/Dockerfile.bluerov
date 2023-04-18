@@ -1,0 +1,110 @@
+#THIS LATEST ROS DOCKER IMAGE HAS AN ABI ROSTIME BREAKAGE
+#AS OF 12/21/2018 SO APT INSTALL PACKAGES INSTEAD
+#FROM osrf/ros:melodic-desktop-full
+
+#this version has ros installed via apt
+#FROM build_tf_ros:built
+#FROM tf2cpu_ros
+ARG TAG=gpu-jupyter
+FROM tensorflow/tensorflow:2.5.1-$TAG
+
+
+# ROS Melodic
+COPY bluerov_install_scripts.sh build_tf2_geometry.sh build_cvbridge.sh alc_jupyter_entrypoint.sh  jupyter_notebook_config.py alc_jupyter_matlab_entrypoint.sh jupyter_notebook_matlab_config.py /
+RUN chmod +x /bluerov_install_scripts.sh && chmod +x /build_tf2_geometry.sh  && chmod +x /build_cvbridge.sh &&  chmod +x /alc_jupyter_entrypoint.sh  &&  chmod +x /alc_jupyter_matlab_entrypoint.sh  &&\
+   DEBIAN_FRONTEND=noninteractive /bluerov_install_scripts.sh && \
+   /build_tf2_geometry.sh && \
+   /build_cvbridge.sh
+
+RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py 
+RUN sudo python2.7 get-pip.py
+
+RUN apt install -y ros-melodic-uuv-simulator
+RUN sed -i 's/env python2/env python/g' /opt/ros/melodic/lib/uuv_descriptions/spawn_model \
+    && sed -i 's/env python2/env python/g' /opt/ros/melodic/lib/uuv_thruster_manager/thruster_allocator.py \
+    && sed -i 's/env python2/env python/g' /opt/ros/melodic/lib/uuv_trajectory_control/rov_pid_controller.py \
+    && sed -i 's/from thruster import Thruster/from .thruster import Thruster/g' /opt/ros/melodic/lib/python2.7/dist-packages/uuv_thrusters/models/thruster_proportional.py \
+    && sed -i 's/import cPickle/import _pickle as cPickle/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/blackboard.py \
+    && sed -i 's/print "%s" % sub_blackboard.data/print("%s" % sub_blackboard.data)/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/programs/blackboard_watcher.py \
+    && sed -i 's/print "%s" % s/print("%s" % s)/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/programs/blackboard_watcher.py \
+    && sed -i 's/Exception, e:/Exception(e):/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/programs/blackboard_watcher.py \
+    && sed -i 's/print "%s" % s/print("%s" % s)/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/programs/tree_watcher.py \
+    && sed -i 's/print "%s" % msg.data/print("%s" % msg.data)/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/programs/tree_watcher.py \
+    && sed -i 's/basestring/str/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/subscribers.py \
+    && sed -i 's/iteritems/items/g' /opt/ros/melodic/lib/python2.7/dist-packages/py_trees_ros/subscribers.py \
+    && rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN pip3 install future pycryptodomex pyserial
+
+
+
+EXPOSE 6817
+EXPOSE 6818
+
+# Install software dependencies
+RUN apt-get update && apt-get install -y libmunge-dev libmunge2 munge wget bzip2 build-essential python python-pip \
+        sudo vim mysql-client libmysqlclient-dev git libjson-c-dev libyaml-dev dh-autoreconf libjansson-dev
+
+# Enable MUNGE daemon
+RUN systemctl enable munge
+
+# INSTALL libjwt
+
+WORKDIR /tf/libjwt
+RUN autoreconf -i && \
+    ./configure && \
+    make all && \
+    make install
+
+WORKDIR /tf/http-parser
+RUN make && \
+    make install
+
+WORKDIR /tf/slurm-slurm-20-02-7-1
+RUN ./configure --enable-debug --enable-slurmrestd --prefix=/usr --sysconfdir=/etc/slurm --with-mysql_config=/usr/bin  --libdir=/usr/lib64 && \
+    make -j4 && \
+    make install && \
+    ldconfig -n /usr/lib64/slurm/
+
+WORKDIR /
+RUN rm -rf /tf/http-parser /tf/libjwt /tf/slurm-slurm-20-02-7-1
+
+# Make necessary files & directories, add slurm user, and set permissions
+RUN mkdir -p /var/run/munge \
+    /var/run/slurmdbd \
+    /home/slurm \
+    /data && \
+    groupadd -g 10181 alc && useradd -u 10181 -g 10181 alc \
+    && groupadd -g 10183 slurm && useradd -u 10183 -g 10183 slurm -G 10181 && \
+    chown -R slurm:slurm /home/slurm && \
+    chown -R alc:alc /var/*/munge* && \
+    printf "slurm     ALL=(ALL) NOPASSWD: ALL\nroot     ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
+
+
+RUN pip2.7 install cython && pip3.6 install cython  && apt-get remove docker docker-engine docker.io containerd runc &&\
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
+    apt-key fingerprint 0EBFCD88 && \
+    add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable" && \
+    apt-get update && \
+    apt-get install -y docker-ce docker-ce-cli containerd.io &&\
+    pip install docker  textx gitpython && \
+    pip3.6 install docker textx gitpython && \
+    apt-get update && apt-get install -y nfs-common && \
+    pip install docker nbzip && \
+    pip3 install docker nbzip && \
+    jupyter serverextension enable --py nbzip --sys-prefix && \
+    jupyter nbextension install --py nbzip && \
+    jupyter nbextension enable --py nbzip
+
+COPY mount_nfs.sh /usr/local/bin/mount_nfs.sh
+COPY slurm_entrypoint.sh /usr/local/bin/slurm_entrypoint.sh
+RUN chmod +x /usr/local/bin/mount_nfs.sh && chmod +x /usr/local/bin/slurm_entrypoint.sh
+
+
+ENTRYPOINT ["/usr/local/bin/slurm_entrypoint.sh"]
+
+
+

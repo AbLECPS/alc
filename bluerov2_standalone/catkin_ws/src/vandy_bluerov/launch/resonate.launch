@@ -1,0 +1,13 @@
+<launch>
+  <arg name="degradation_topic" default="/uuv0/degradation_detector"/>
+  <arg name="reallocation_topic" default="/uuv0/thruster_reallocation"/>
+  <arg name="hazard_rate_topic" default="hazard_rate"/>
+
+  <node name="resonate" pkg="vandy_bluerov" type="resonate.py" output="screen" required="true">
+    <rosparam subst_value="true">
+      degradation_topic: $(arg degradation_topic)
+      reallocation_topic: $(arg reallocation_topic)
+      hazard_rate_topic: $(arg hazard_rate_topic)
+    </rosparam>
+  </node>
+</launch>

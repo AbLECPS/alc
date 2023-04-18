@@ -1,0 +1,32 @@
+{
+  "id": "LaunchVerification",
+  "name": "LaunchVerification",
+  "version": "0.1.0",
+  "description": "Run Verification",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+	  {
+          "name": "name",
+          "displayName": "Execution name",
+          "description": "Optional name for this execution instance",
+          "value": "",
+          "valueType": "string",
+          "readOnly": false
+      },
+      {
+          "name": "setupJupyterNB",
+          "displayName": "Setup Jupyter Notebook",
+          "description": "Setup an instance of the Jupyter Notebook for running the experiment interactively ",
+          "value": false,
+          "valueType": "boolean",
+          "readOnly": false
+      }
+  ]
+}

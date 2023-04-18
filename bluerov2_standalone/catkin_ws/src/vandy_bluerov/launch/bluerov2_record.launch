@@ -1,0 +1,56 @@
+<!--
+File:         bluerov_record.launch
+Description:  Rosbag recording
+-->
+
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+
+  <!-- Rosbag -->
+  <arg name="record" default="false"/>
+  <arg name="small_bagfile" default="true"/>
+  <arg name="bag_filename" default="recording.bag"/>
+
+
+  <!-- Launch rosbag -->
+  <group unless="$(arg small_bagfile)">
+    <node
+        pkg="rosbag"
+        type="record"
+        name="rosbag_recorder"
+        args='-O $(arg bag_filename) -a --lz4 -x "(.*)([Cc]ompressed|[Tt]heora)(.*)"'
+        if="$(arg record)"
+    />
+  </group>
+
+  <group if="$(arg small_bagfile)">
+  <!-- Record all topics excluding compressed images, LEC2 images, and other large message topics -->
+    <node 
+      pkg="rosbag" 
+      type="record" 
+      name="rosbag_recorder"
+      args='record -O $(arg bag_filename) -a --lz4  -x "(.*)([Cc]ompressed|[Tt]heora)(.*)|/BlueROV_tree/(.*)|/gazebo/(.*)|/fls_model/(.*)|/rosout|/rosout(.*)|/clock(.*)|/rosout_agg(.*)|/elevation_profile(.*)|/sonar_lines(.*)|/heightmap(.*)|/heightmap_image(.*)|/(.*)/obstacle_map(.*)|/(.*)/obstacle_map_local(.*)|/(.*)/pipeline_map(.*)|(.*)/fls_waterfall(.*)|/(.*)/fls_output(.*)|/(.*)/forward_sonar(.*)|/sonar/(.*)|/tf(.*)|/sss_sonar/(.*)|/(.*)/sss_(.*)/(.*)|/(.*)/map(.*)|/(.*)/pipeline_map(.*)|/kinect/(.*)|/(.*)/dp_controller/(.*)|/(.*)/camera/(.*)|/(.*)/sonar_(.*)_image(.*)|/(.*)/dvl(.*)|/(.*)/dvl/(.*)|/(.*)/kinect_ir(.*)|/(.*)/kinect_ir/(.*)|/semseg/(.*)|/obstacles(.*)|"'
+      if="$(arg record)"/>
+
+      <!-- For FLS AM test -->
+      <!-- <node 
+      pkg="rosbag" 
+      type="record" 
+      name="rosbag_recorder"
+      args='record -O $(arg bag_filename) -j 
+        /fls_model/fls_output 
+        /uuv0/fls_echosunder 
+        /lec3/fls_output 
+        /uuv0/fls_lec 
+        /uuv0/fls_output 
+        /uuv0/fls_output_gt 
+        /uuv0/fls_lec_uuv_state_gt
+        /uuv0/imu 
+        /uuv0/thruster_cmd_logging 
+        /uuv0/hsd_command 
+        /uuv0/pose_gt_noisy_ned'
+      if="$(arg record)"/> -->
+
+  </group>
+
+</launch>

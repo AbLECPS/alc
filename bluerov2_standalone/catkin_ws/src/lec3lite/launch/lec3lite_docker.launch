@@ -1,0 +1,11 @@
+<launch>
+    <arg name="filename" default="best_model/lec3_quant.tflite"/>
+    <arg name="use_hw_fls"  default="false"/>
+
+
+    <node name="vu_lec3_lite" pkg="lec3lite" type="lec3_lite_node.py" output="screen" >
+        <param name="~filename" type="str" value="$(arg filename)" />  
+        <param name="~use_hw_fls" type="bool" value="$(arg use_hw_fls)"/>      
+    </node>
+    
+</launch>

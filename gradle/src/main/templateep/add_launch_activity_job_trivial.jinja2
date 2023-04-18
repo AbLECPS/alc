@@ -1,0 +1,7 @@
+{{ parent_job }}.add_launch_activity_job(
+  "{{ job_name }}",
+  "{{ activity_name }}",
+  "{{ activity_node }}",
+  {{ previous_job_name_list }},
+  {{ next_job_name_list }}
+)

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4721"
+   height="50"
+   width="50"
+   version="1.1"
+   viewBox="0 0 1002.6824 1002.6823"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="AnomalyOR1.svg">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1181"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="20.306222"
+     inkscape:cx="22.25288"
+     inkscape:cy="23.672333"
+     inkscape:window-x="1916"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g6-5" />
+  <rect
+     style="fill:#4d4d4d;stroke-opacity:0"
+     x="1.1224999"
+     y="1.13"
+     width="1000.4"
+     height="1000.4"
+     id="rect5269" />
+  <ellipse
+     style="fill:#dddddd;stroke:#ffffff;stroke-width:56.42100143"
+     cx="477.90021"
+     cy="523.72968"
+     transform="matrix(0.99927736,-0.0380099,0.03809016,0.99927431,0,0)"
+     id="path6745"
+     rx="438.20117"
+     ry="438.19812" />
+  <g
+     id="g6"
+     transform="translate(5.8252852,355.61016)">
+    <text
+       sodipodi:linespacing="125%"
+       line-height="125%"
+       x="214.02043"
+       y="185.33887"
+       font-size="40px"
+       xml:space="preserve"
+       style="font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000"
+       id="text6747"><tspan
+         y="185.33887"
+         x="214.02043"
+         id="tspan6749" /></text>
+    <flowRoot
+       line-height="125%"
+       style="font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000ff"
+       xml:space="preserve"
+       font-size="40px"
+       id="flowRoot6775"><flowRegion
+         id="flowRegion6777"><rect
+           style="fill:#0000ff"
+           x="556.75"
+           y="141.67999"
+           width="58.662998"
+           height="120.65"
+           id="rect6779" /></flowRegion><flowPara
+         id="flowPara6781" /></flowRoot>    <text
+       sodipodi:linespacing="125%"
+       x="206.00041"
+       y="305.04465"
+       font-size="885.85px"
+       line-height="125%"
+       transform="scale(1.0823,0.92397)"
+       xml:space="preserve"
+       style="font-size:885.84997559px;line-height:125%;font-family:Calibri;letter-spacing:0px;word-spacing:0px;fill:#800000"
+       id="text6783"><tspan
+         style="font-family:Calibri;fill:#800000;stroke-width:31.25"
+         x="206.00041"
+         y="305.04465"
+         id="tspan6785">A</tspan></text>
+  </g>
+  <g
+     id="g6-5"
+     transform="matrix(0.2482934,0,0,0.24317936,237.40592,764.25866)"
+     style="fill:#0000dd;fill-opacity:1">
+    <text
+       sodipodi:linespacing="125%"
+       line-height="125%"
+       x="214.02043"
+       y="185.33887"
+       font-size="40px"
+       xml:space="preserve"
+       style="font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000dd;fill-opacity:1"
+       id="text6747-3"><tspan
+         y="185.33887"
+         x="214.02043"
+         id="tspan6749-5"
+         style="fill:#0000dd;fill-opacity:1" /></text>
+    <flowRoot
+       line-height="125%"
+       style="font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000dd;fill-opacity:1"
+       xml:space="preserve"
+       font-size="40px"
+       id="flowRoot6775-7"><flowRegion
+         id="flowRegion6777-4"><rect
+           style="fill:#0000dd;fill-opacity:1"
+           x="556.75"
+           y="141.67999"
+           width="58.662998"
+           height="120.65"
+           id="rect6779-6" /></flowRegion><flowPara
+         id="flowPara6781-8" /></flowRoot>    <text
+       sodipodi:linespacing="125%"
+       x="229.54567"
+       y="258.39508"
+       font-size="885.85px"
+       line-height="125%"
+       transform="scale(1.236916,0.80846233)"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:949.39624023px;line-height:125%;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#0000dd;fill-opacity:1"
+       id="text6783-3"><tspan
+         sodipodi:role="line"
+         id="tspan3398"
+         x="229.54567"
+         y="258.39508">OR</tspan></text>
+  </g>
+</svg>

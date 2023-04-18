@@ -1,0 +1,20 @@
+From alc_2:latest
+
+RUN mkdir /extension 
+ADD xtext /xtext 
+ADD app /app
+COPY install_extensions.sh /xtext/.
+ADD install_codeserver.sh /
+RUN chmod +x install_codeserver.sh &&  /install_codeserver.sh 
+ENV HOME=/root \
+    DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    DISPLAY=:0.0 \
+    DISPLAY_WIDTH=1024 \
+    DISPLAY_HEIGHT=768 \
+    RUN_XTERM=yes \
+    RUN_FLUXBOX=yes
+EXPOSE 8080
+EXPOSE 6901

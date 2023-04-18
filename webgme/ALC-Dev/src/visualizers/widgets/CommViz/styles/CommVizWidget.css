@@ -1,0 +1,41 @@
+/**
+ * This file is for any css that you may want for this visualizer.
+ *
+ * Ideally, you would use the scss file also provided in this directory 
+ * and then generate this file automatically from that. However, you can 
+ * simply write css if you prefer
+ */
+
+.comm-viz {
+  outline: none; }
+
+#cy {
+  height: 100%;
+  width: 100%;
+}
+
+#re_layout,
+#reset,
+#filter {
+  width: 3em;
+  margin: 0.5em;
+  position: absolute;
+  top: 0;
+  z-index: 999;
+}
+
+#reset {
+  right: 0;
+}
+
+#filter {
+  right: 4em;
+}
+
+#re_layout {
+  right: 8em;
+}
+
+#reset i {
+  transform: rotate(45deg);
+}

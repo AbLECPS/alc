@@ -1,0 +1,87 @@
+- type: Linear
+  id: /k/5
+  next:
+    - /k/a
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 100
+    inputSize: 100
+- type: Linear
+  id: /k/6
+  next:
+    - /k/Y
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 100
+    inputSize: 300
+- type: SoftMax
+  id: /k/O
+  next: []
+  attributes:
+    ctor_arg_order: ''
+- type: Linear
+  id: /k/S
+  next:
+    - /k/y
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 120
+    inputSize: 100
+- type: Linear
+  id: /k/V
+  next:
+    - /k/i
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 300
+    inputSize: 100
+- type: ReLU
+  id: /k/Y
+  next:
+    - /k/5
+  attributes:
+    p: ''
+    ctor_arg_order: p
+- type: Sigmoid
+  id: /k/a
+  next:
+    - /k/S
+  attributes:
+    ctor_arg_order: ''
+- type: RReLU
+  id: /k/i
+  next:
+    - /k/6
+  attributes:
+    l: ''
+    u: ''
+    ip: ''
+    ctor_arg_order: 'l,u,ip'
+- type: Linear
+  id: /k/p
+  next:
+    - /k/O
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 5
+    inputSize: 120
+- type: Reshape
+  id: /k/q
+  next:
+    - /k/V
+  attributes:
+    ctor_arg_order: params
+    params: 100
+- type: LeakyReLU
+  id: /k/y
+  next:
+    - /k/p
+  attributes:
+    negval: ''
+    ip: ''
+    ctor_arg_order: 'negval,ip'

@@ -1,0 +1,5 @@
+{{ var_name }} = ParameterManager()
+{% for parameter_name, parameter_value in parameter_map.items() %}{{ var_name }}.add_parameter("{{ parameter_name }}", {{ parameter_value }})
+{% endfor %}
+with {{ parent_job_name }}.add_while_loop("{{ loop_name }}", {{ previous_job_name_list }}, {{ next_job_name_list }}, lambda workflow_data: not {{ var_name }}.is_complete(workflow_data)) as {{ loop_var }}:
+{{ job_list|join("\n\n")|indent(4, first=True) }}

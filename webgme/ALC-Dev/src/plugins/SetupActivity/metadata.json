@@ -1,0 +1,17 @@
+{
+  "id": "SetupActivity",
+  "name": "SetupActivity",
+  "version": "0.1.0",
+  "description": "Setup Activity",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": true,
+  "configStructure": [
+    
+  ]
+}

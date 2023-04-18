@@ -1,0 +1,42 @@
+<launch>
+  <arg name="uuv_name" default="uuv"/>
+
+ 
+  <arg name="use_ned_frame" default="true"/>
+
+  <arg name="min_speed" default="0.0"/> 
+  <arg name="max_speed" default="1.5"/>
+
+  <arg name="init_heading" default="0.0"/>
+  <arg name="init_speed" default="0.4"/>
+  <arg name="init_depth" default="22"/>
+
+  <arg name="hsd_debug_mode" default="false"/>
+  <arg name="hsd_debug_window" default="30"/>
+
+  <arg name="uuv_degradation_mode" default="x"/>
+
+  <group ns="$(arg uuv_name)">
+    <node pkg="vandy_bluerov"
+          type="hsd_setpoint_controller.py"
+          name="hsd_setpoint_controller"
+          output="screen"
+          required="true"
+          if="$(arg use_ned_frame)">
+      <remap from="odom" to="pose_gt_noisy_ned"/>
+      <rosparam subst_value="true">
+          base_link: base_link
+          debug_mode: $(arg hsd_debug_mode)
+          debug_window: $(arg hsd_debug_window)
+          init_heading: $(arg init_heading)
+          init_speed: $(arg init_speed)
+          init_depth: $(arg init_depth)
+          min_speed: $(arg min_speed)
+          max_speed: $(arg max_speed)
+          uuv_degradation_mode: $(arg uuv_degradation_mode)
+      </rosparam>
+    </node>
+
+  </group>
+
+</launch>

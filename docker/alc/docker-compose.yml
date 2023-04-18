@@ -1,0 +1,303 @@
+version: '2.3'
+
+# Setup any docker networks
+networks:
+  alcnet:
+    external: true
+    name: $ALC_DOCKER_NETWORK
+    driver: $DOCKER_NETWORK_DRIVER
+
+services:
+  # git server
+  gitserver:
+    image: jkarlos/git-server-docker
+    restart: always
+    container_name: alc_gitserver
+    ports:
+      - "$ALC_GITSERVER_PORT:22"
+    volumes:
+    - $ALC_GITSERVER_ROOT/keys:/git-server/keys
+    - $ALC_GITSERVER_ROOT/repos:/git-server/repos
+    networks:
+     - alcnet
+  
+  # docker registry
+  registry:
+    image: registry:2
+    restart: always
+    container_name: alc_registry
+    environment:
+      - REGISTRY_HTTP_ADDR="0.0.0.0:$ALC_REGISTRY_PORT"
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
+      - REGISTRY_HTTP_TLS_KEY=/certs/domain.key
+      - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/data
+      - REGISTRY_PORT=$ALC_REGISTRY_PORT
+    ports:
+      - $ALC_REGISTRY_PORT:$ALC_REGISTRY_PORT
+    volumes:
+    - $ALC_DOCKERFILES/certs:/certs
+    - $ALC_REGISTRY_DATA:/data
+    networks:
+     - alcnet
+
+  # Jupyter container
+  jupyter:
+    #build:
+    #  context: ./jupyter
+    #  dockerfile: Dockerfile
+    #image: alc_jupyter
+    image: alc:latest
+    runtime: nvidia
+    container_name: alc_jupyter
+    restart: always
+    #user: ${ALC_USER}
+    environment:
+      - ALC_HOME=$ALC_HOME
+      - ALC_WORKING_DIR=$ALC_WORKING_DIR
+      - PYTHONPATH=$ALC_HOME:$PYTHONPATH
+      - JUPYTER_WORK_DIR=$ALC_WORKING_DIR/jupyter
+      - LD_LIBRARY_PATH=/opt/ros/melodic/lib:/opt/ros/melodic/lib/x86_64-linux-gnu:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu/gazebo-7/plugins:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu/gazebo-7/plugins:/opt/ros/melodic/lib:/usr/local/cuda/lib64/libcudart.so.9.0
+      - ALC_FILESHARE_CONFIG_FILE=/alc/dockerfiles/config/sftp_config.json
+      - ROS_DISTRO=melodic
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $ALC_WORKSPACE:$ALC_WORKSPACE
+      - $ALC_WORKSPACE:/alc_workspace
+      #- $ALC_WORKING_DIR/ros:/alc_workspace/ros
+      - $ALC_DOCKERFILES/keys:/alc/dockerfiles/.ssh
+      - $ALC_SRC:$ALC_SRC
+      - $ALC_DOCKERFILES/config:/alc/dockerfiles/config
+    entrypoint: /alc_jupyter_entrypoint.sh
+    networks:
+      - alcnet
+
+
+  # NFS Server container
+  nfs_server:
+    image: erichough/nfs-server
+    hostname: alc_nfs_server
+    container_name: alc_nfs_server
+    environment:
+      - NFS_LOG_LEVEL=DEBUG
+    volumes:
+      - $ALC_DOCKERFILES/nfs/etc/exports:/etc/exports:ro
+      - $ALC_WORKSPACE:/workspace
+      - /lib/modules:/lib/modules:ro # Let docker image automatically start NFS kernel module on host with "modprobe"
+    # Retain "CAP_SYS_ADMIN" capability and disable AppArmor. Required to use "mount", and therefore to run NFS.
+    # Running as privileged for time being due to permission issues.
+    #cap_add:
+    #  - SYS_ADMIN
+    #security_opt:
+    #  - apparmor:unconfined
+    #security_opt:
+    #  - apparmor=erichough-nfs
+    privileged: true
+    networks:
+      - alcnet
+
+
+  # NGINX container
+  web:
+    image: nginx:stable
+    restart: always
+    #user: ${ALC_USER}
+    container_name: alc_web
+    # Nginx docker should wait until jupyter, alc dockers have started
+    depends_on:
+      - alc
+      - jupyter
+      - jupyter_matlab
+    volumes:
+      - $ALC_DOCKERFILES/ssl_certs:/ssl_certs
+      - $ALC_DOCKERFILES/nginx/logs:/var/log/nginx
+      - $ALC_DOCKERFILES/nginx/etc:/etc/nginx
+      - $ALC_HOME/doc/sphinx/build/html/:/doc/
+      - $ALC_HOME/doc/sphinx/source/_static/:/doc/_videos
+    networks:
+      - alcnet
+    # Map host ports 8000 & 4430 to the default HTTP and HTTPS ports on the docker network
+    ports:
+      - $ALC_PORT:80
+      - 443:443
+
+  # WebGME container
+  alc:
+    #image: alc_alc:lates
+    image: alc:latest
+    #build:
+    #  context: ./webgme
+    #  dockerfile: Dockerfile.webgme_base
+    #user: ${ALC_USER}
+    restart: always
+    command: ["webgme"]
+    hostname: alc
+    container_name: alc_alc
+    cap_add:
+     - SYS_ADMIN
+    depends_on:
+      - mongo
+    runtime: nvidia
+    environment:
+      - NODE_ENV=docker
+      - ALC_HOME=$ALC_HOME
+      - ALC_WORKING_DIR=$ALC_WORKING_DIR
+      - ALC_WORKSPACE=$ALC_WORKING_DIR
+      - ALC_WORK=$ALC_WORKING_DIR
+      - ALC_SRC=$ALC_SRC
+      - ROS_DISTRO=melodic
+      - PYTHONPATH=$ALC_SRC:$ALC_SRC/alc_utils/LaunchActivity:/alc/webgme/src/common/python:$PYTHONPATH
+      - JUPYTER_WORK_DIR=$ALC_WORK/jupyter
+      - NVIDIA_VISIBLE_DEVICES=all
+      - ALC_FILESHARE_CONFIG_FILE=/alc/dockerfiles/config/sftp_config.json
+      - ALC_FILESHARE_CONFIG_FILE1=/alc/dockerfiles/config/sftp_config.json
+      - ALC_DOCKERFILES=$ALC_DOCKERFILES
+      - REPO_DOCKERFILES=$ALC_DOCKERFILES
+      - ALC_DOCKER_NETWORK=$ALC_DOCKER_NETWORK
+      - DOCKER_NETWORK_DRIVER=$DOCKER_NETWORK_DRIVER
+      - ALC_GITSERVER_HOST=$ALC_GITSERVER_HOST
+      - ALC_GITSERVER_PORT=$ALC_GITSERVER_PORT
+      - ALC_GITSERVER_URL=$ALC_GITSERVER_URL
+      - ALC_REGISTRY_ADDR=$ALC_REGISTRY_ADDR
+      - ALC_SSH_PORT=$ALC_SSH_PORT
+      - ALC_SSH_HOST=$ALC_SSH_HOST
+    volumes:
+      - $ALC_DOCKERFILES/slurm/etc:/etc/slurm
+      - $ALC_DOCKERFILES/slurm/munge:/etc/munge
+      - $ALC_DOCKERFILES/slurm/var:/var/slurm
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $ALC_WORKING_DIR:$ALC_WORKING_DIR
+      - $ALC_HOME:$ALC_HOME
+      #- $ALC_HOME:/alc
+      - $ALC_DOCKERFILES/blob-local-storage:/blob-local-storage
+      - $ALC_DOCKERFILES/token_keys:/token_keys
+      - $ALC_DOCKERFILES/keys:/alc/dockerfiles/.ssh
+      - $ALC_DOCKERFILES/config:/alc/dockerfiles/config
+      - $ALC_WORKING_DIR/workflows:/alc/workflows
+      - $ALC_WORKING_DIR/ros:/alc_workspace/ros
+      - $ALC_HOME/gradle:/alc/webgme/automate/gradle
+      - $ALC_HOME/webgme/ALC-Dev/src:/alc/webgme/src
+      - $ALC_HOME/webgme/ALC-Dev/config:/alc/webgme/config
+      - $ALC_HOME/webgme/ALC-Dev/utils:/alc/webgme/utils
+      - $ALC_HOME/webgme/ALC-Dev/languageservers:/alc/webgme/languageservers
+      - $ALC_WORKING_DIR/ros:$ALC_WORKING_DIR/ros
+      - $ALC_DOCKERFILES/keys:$ALC_DOCKERFILES/keys
+      - $ALC_DOCKERFILES/ssl_certs/:$ALC_DOCKERFILES/ssl_certs/
+      - $ALC_DOCKERFILES/config:$ALC_DOCKERFILES/config
+      - $ALC_DOCKERFILES/sshcontents:$ALC_DOCKERFILES/sshcontents
+      - $ALC_DOCKERFILES/certs:$ALC_DOCKERFILES/certs
+      - $ALC_HOME/docker/alc/alc/slurm_entrypoint.sh:/usr/local/bin/slurm_entrypoint.sh
+    ports:
+      - $ALC_SSH_PORT:22
+      - 15151:5000
+    privileged: true
+    
+    networks:
+      - alcnet
+
+  # MongoDB container
+  mongo:
+    image: mongo:3.4.6
+    container_name: alc_mongo
+    restart: always
+    #user: ${ALC_USER}
+    volumes:
+      - $ALC_DOCKERFILES/db:/data/db
+    networks:
+      - alcnet
+
+  jupyter_matlab:
+    #image: alc_jupyter_matlab:latest
+    image: alc:latest
+    container_name: alc_jupyter_matlab
+    restart: always
+    runtime: nvidia
+    #user: ${ALC_USER}
+    environment:
+      - ALC_HOME=$ALC_HOME
+      - ALC_WORKING_DIR=$ALC_WORKING_DIR
+      - JUPYTER_WORK_DIR=$ALC_WORKING_DIR/jupyter_matlab
+      - MATLAB_PATH=$MATLAB_ROOT
+      - PYTHONPATH=$ALC_HOME/webgme/ALC-Dev/src/plugins/LaunchVerification
+    volumes:
+      - $ALC_WORKSPACE:$ALC_WORKSPACE
+      - $ALC_SRC:$ALC_SRC
+      - $ALC_VERIVITAL_HOME:/verivital
+      - $MATLAB_ROOT:/usr/local/MATLAB/from-host
+      - $MATLAB_ROOT:$MATLAB_ROOT
+      - $MATLAB_SUPPORT_ROOT:$MATLAB_SUPPORT_ROOT  
+      - $MATLAB_LOGS:/var/log/matlab 
+      - /var/run/docker.sock:/var/run/docker.sock
+    mac_address: "$MATLAB_MAC_ADDRESS"
+    entrypoint: "/alc_jupyter_matlab_entrypoint.sh  --config=/jupyter_notebook_matlab_config.py"
+    networks:
+      - alcnet
+
+      
+
+
+  # Primary Slurm execution node
+  alc_slurm_node0:
+    #image: alc_slurm
+    image: alc:latest
+    restart: always
+    command: ["slurmd"]
+    hostname: alc_slurm_node0
+    container_name: alc_slurm_node0
+    runtime: nvidia
+    environment:
+      - NODE_ENV=docker
+      - ALC_HOME=$ALC_HOME
+      - ALC_WORKING_DIR=$ALC_WORKING_DIR
+      - ALC_WORKSPACE=$ALC_WORKING_DIR
+      - ALC_WORK=$ALC_WORKING_DIR
+      - ALC_SRC=$ALC_SRC
+      - ROS_DISTRO=melodic
+      - PYTHONPATH=$ALC_SRC:$ALC_SRC/alc_utils/LaunchActivity:$PYTHONPATH
+      - JUPYTER_WORK_DIR=$ALC_WORK/jupyter
+      - NVIDIA_VISIBLE_DEVICES=all
+      - ALC_FILESHARE_CONFIG_FILE=/alc/dockerfiles/config/sftp_config.json
+      - ALC_FILESHARE_CONFIG_FILE1=/alc/dockerfiles/config/sftp_config.json
+      - ALC_DOCKERFILES=$ALC_DOCKERFILES
+      - REPO_DOCKERFILES=$ALC_DOCKERFILES
+      - ALC_DOCKER_NETWORK=$ALC_DOCKER_NETWORK
+      - DOCKER_NETWORK_DRIVER=$DOCKER_NETWORK_DRIVER
+      - ALC_GITSERVER_HOST=$ALC_GITSERVER_HOST
+      - ALC_GITSERVER_PORT=$ALC_GITSERVER_PORT
+      - ALC_GITSERVER_URL=$ALC_GITSERVER_URL
+      - ALC_REGISTRY_ADDR=$ALC_REGISTRY_ADDR
+      - ALC_SSH_PORT=$ALC_SSH_PORT
+      - ALC_SSH_HOST=$ALC_SSH_HOST
+      - DOCKER_GID=$DOCKER_GID
+    volumes:
+      - $ALC_DOCKERFILES/slurm/etc:/etc/slurm
+      - $ALC_DOCKERFILES/slurm/munge:/etc/munge
+      - $ALC_DOCKERFILES/slurm/var:/var/slurm
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $ALC_WORKING_DIR:$ALC_WORKING_DIR
+      - $ALC_HOME:$ALC_HOME
+      - $ALC_DOCKERFILES/blob-local-storage:/blob-local-storage
+      - $ALC_DOCKERFILES/token_keys:/token_keys
+      - $ALC_DOCKERFILES/keys:/alc/dockerfiles/.ssh
+      - $ALC_DOCKERFILES/config:/alc/dockerfiles/config
+      - $ALC_DOCKERFILES/sshcontents:$ALC_DOCKERFILES/sshcontents
+      - $ALC_WORKING_DIR/workflows:/alc/workflows
+      - $ALC_WORKING_DIR/ros:/alc_workspace/ros
+      - $ALC_HOME/gradle:/alc/webgme/automate/gradle
+      - $ALC_HOME/webgme/ALC-Dev/src:/alc/webgme/src
+      - $ALC_HOME/webgme/ALC-Dev/config:/alc/webgme/config
+      - $ALC_HOME/webgme/ALC-Dev/utils:/alc/webgme/utils
+      - $ALC_WORKING_DIR/ros:$ALC_WORKING_DIR/ros
+      - $ALC_DOCKERFILES/keys:$ALC_DOCKERFILES/keys
+      - $ALC_DOCKERFILES/ssl_certs:$ALC_DOCKERFILES/ssl_certs
+      - $ALC_DOCKERFILES/config:$ALC_DOCKERFILES/config
+      - $ALC_DOCKERFILES/certs:$ALC_DOCKERFILES/certs
+      - $ALC_HOME/docker/alc/alc/slurm_entrypoint.sh:/usr/local/bin/slurm_entrypoint.sh
+    privileged: true
+    networks:
+      - alcnet
+    depends_on:
+      - alc
+      - web
+  
+ 

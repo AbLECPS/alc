@@ -1,0 +1,40 @@
+{
+  "id": "Resonate",
+  "name": "Resonate",
+  "version": "0.1.0",
+  "description": "Python-based plugin for executing ReSonAte analysis",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+    {
+      "name": "analysis_execution_name",
+      "displayName": "Analysis Execution name",
+      "description": "Optional name for this analysis execution",
+      "value": "",
+      "valueType":"string",
+      "readOnly": false
+    },
+    {
+      "name":"execution_path",
+      "displayName":"Analysis Launch Path",
+      "description":"Location where file recorded after simulation is stored",
+      "value": "",
+      "valueType": "string",
+      "readOnly": false
+    },
+    {
+      "name": "execute_recent",
+      "displayName": "Recent Simulation Runner",
+      "description": "Runs analysis on the latest ran experiment. If set to false runs analysis on all simulation data from previous experiments",
+      "value": false,
+      "valueType": "boolean",
+      "readOnly": false
+    }
+  ]
+}

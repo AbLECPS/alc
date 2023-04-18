@@ -1,0 +1,5 @@
+*.pyc
+catkin_ws/results/
+catkin_ws/catkin_ws/
+catkin_ws/src/iai/aa_s4/logs/
+catkin_ws/src/vandy_bluerov/results/

@@ -1,0 +1,2 @@
+#!/bin/sh
+xpra start $XPRA_DISPLAY --pulseaudio=no --start-child="$*" --bind-tcp=0.0.0.0:$XPRA_PORT --no-daemon --exit-with-children

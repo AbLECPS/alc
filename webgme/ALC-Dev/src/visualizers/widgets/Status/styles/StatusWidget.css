@@ -1,0 +1,121 @@
+/**
+ * This file is for any css that you may want for this visualizer.
+ *
+ * Ideally, you would use the scss file also provided in this directory 
+ * and then generate this file automatically from that. However, you can 
+ * simply write css if you prefer
+ */
+
+.st-viz {
+  outline: none; }
+  
+ .st-viz-table{
+  display:table;         
+  background-color:#eee;         
+  border:1px solid  #666666;  
+  border-collapse: collapse;  
+  /*border-spacing:5px;*//*cellspacing:poor IE support for  this*/
+}
+
+.st-viz-heading{
+  display: table-row;
+  height:5px;
+  font-weight: bold;
+  text-align: center;
+  background-color:#ccc; 
+  border-bottom: 1px solid #666666;
+}
+.st-viz-table-row{
+  display:table-row;
+  height:auto;
+  clear:both;
+  text-align: center;
+  background-color:#ccc; 
+  border-bottom: 1px solid #666666;
+  padding:5px;
+}
+.st-viz-table-col{
+  display:table-cell;
+  min-width:100px;
+  font-weight: bold;
+  width:auto;         
+  height:auto;
+   text-align: left;
+  border: 1px solid #666666;
+padding:5px;
+ }
+ .st-viz-table-col-c{
+  display:table-cell;
+  min-width:100px;
+  width:auto;         
+  height:auto;
+   text-align: center;
+  border: 1px solid #666666;
+padding:5px;
+ }
+ .st-viz-table-col1{
+  display:table-cell;
+  min-width:100px;
+  width:100px;         
+  height:auto;
+  text-align: center;
+  border: 1px solid #666666;
+  padding:5px;
+ }
+ .st-viz-table-col-mod{
+  display:table-cell;
+  min-width:100px;
+  width:100px;
+  height:auto;
+  word-wrap: break-word;
+  /*border:1px solid  #666666;  */
+  border: 1px solid #666666;
+padding:5px;
+  text-align: center;
+ }
+
+ input {
+    float: left;
+    margin: 10px 10px;
+	vertical-align: middle;
+}
+ label {
+    display: block;
+    float: left;
+    padding-right: 10px;
+    white-space: nowrap;
+
+}
+
+.collapsiblecol {
+  background-color: #eee;
+  color: black;
+  cursor: pointer;
+  padding: 1px;
+  width: 100%;
+  height: auto;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 10px;
+}
+
+.activecol, .collapsiblecol:hover {
+  background-color: #eee;
+}
+
+.contentcol {
+  padding: 0 1px;
+  display: none;
+  overflow: hidden;
+  background-color: #eee;
+}
+
+.fake-link {
+    color: #1A5276 ;
+    /*text-decoration: underline;*/
+    cursor: pointer;
+}
+
+
+

@@ -1,0 +1,14 @@
+{
+  "id": "JSONOutput",
+  "name": "JSON Output",
+  "version": "0.1.0",
+  "description": "Output JSON",
+  "icon": {
+    "src": "",
+    "class": "glyphicon glyphicon-ok-circle"
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": false,
+  "configStructure": [
+  ]
+}

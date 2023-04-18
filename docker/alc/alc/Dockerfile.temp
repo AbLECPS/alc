@@ -1,0 +1,4 @@
+From alc:latest
+RUN rm /usr/local/bin/slurm_entrypoint.sh 
+COPY slurm_entrypoint.sh /usr/local/bin/slurm_entrypoint.sh
+RUN chmod +x /usr/local/bin/slurm_entrypoint.sh

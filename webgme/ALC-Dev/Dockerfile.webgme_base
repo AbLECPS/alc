@@ -1,0 +1,108 @@
+#From nexus.isis.vanderbilt.edu:8888/alc_alc:2
+#RUN mv /alc /alc_webgme
+
+FROM node:8.9.0
+
+RUN echo '{"allow_root": true}' > /root/.bowerrc && mkdir -p /root/.config/configstore/ && \
+     echo '{}' > /root/.config/configstore/bower-github.json
+
+# Copy build directory contents to webgme directory and install npm packages
+RUN mkdir -p /webgme
+ADD . /webgme
+WORKDIR /webgme
+RUN npm install
+
+#RUN mv /alc /alc_webgme
+
+# Re-base to ALC Slurm image and make sure user is 'root'
+FROM alc_slurm:latest
+USER root
+
+# Copy webgme files from host into this docker image
+RUN mkdir -p /alc/webgme
+COPY --from=0 /webgme /alc/webgme/.
+
+# Remove any existing docker packages, then install latest version.
+RUN apt-get remove docker docker-engine docker.io containerd runc
+RUN add-apt-repository ppa:openjdk-r/ppa -y && \
+    add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && apt-key fingerprint 0EBFCD88
+RUN apt-get update && \
+    apt-get install -y \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg-agent \
+        software-properties-common \
+        docker-ce \
+        docker-ce-cli \
+        containerd.io \
+        openssh-server
+
+RUN pip install docker
+RUN apt purge -y openjdk-10-jdk openjdk-9-jdk openjdk-8-jdk java-common && \
+    apt install -y openjdk-11-jdk unzip jq wget socat
+
+RUN mkdir -p /opt
+COPY java.security /opt/.
+RUN mv /opt/java.security /etc/java-11-openjdk/security/java.security
+RUN dpkg --purge --force-depends ca-certificates-java && \
+    apt install -y ca-certificates-java
+
+# setup directories for mount points
+RUN mkdir -p /alc/webgme/automate/gradle /alc/workflows
+
+# Install NodeJS v8
+RUN apt-get update -yq \
+    && apt-get install curl gnupg -yq \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash \
+    && apt-get install nodejs -yq
+
+
+# Install DeepForge
+#RUN echo '{"allow_root": true}' > /root/.bowerrc && mkdir -p /root/.config/configstore/ && \
+#    echo '{}' > /root/.config/configstore/bower-github.json
+    
+# Configure the worker
+#RUN /alc/webgme/bin/deepforge config blob.dir /data/blob && \
+#    /alc/webgme/bin/deepforge config mongo.dir /data/db && \
+#    /alc/webgme/bin/deepforge config worker.cache.useBlob false && \
+#    /alc/webgme/bin/deepforge config worker.cache.dir /deepforge/worker-cache
+
+# Update pip and install python 2 dependencies
+RUN python -m pip install pip --upgrade --force-reinstall && \
+    python -m pip install -r ./python_requirements.txt && \
+    python -m pip install -r /alc/webgme/python_requirements.txt
+
+# NOTE: Python 3.6 installation is currently done as part of Slurm docker build
+# Install python 3.6 and pip3.6
+#RUN apt-add-repository -y ppa:deadsnakes/ppa
+#RUN apt-get update
+#RUN apt-get install -y python3.6
+#RUN curl https://bootstrap.pypa.io/get-pip.py | python3.6
+
+RUN pip install docker textx gitpython
+RUN pip3.6 install docker textx gitpython
+
+RUN pip3.6 install -e  /alc/assurancecasetools
+RUN pip install -e /alc/resonate 
+
+
+# Install python 3 dependencies
+RUN pip3.6 install addict future http-parser inotify jinja2 pyspark pyxtension webgme_bindings inotify six
+
+# Setup custom python packages
+# FIXME: 'ENV' command does not work as expected. Currently have to set PYTHONPATH in docker_compose file.
+# ENV PYTHONPATH "/alc/webgme/src/common/python:${PYTHONPATH}"
+#RUN echo 'PYTHONPATH=/alc/webgme/automate/gradle/src/main/python3:$PYTHONPATH' >> /root/.bashrc
+RUN echo 'PYTHONPATH=/alc/webgme/automate/gradle/src/main/pythonep:$PYTHONPATH' >> /root/.bashrc
+
+WORKDIR /alc/webgme
+EXPOSE 8888
+EXPOSE 22
+
+CMD ["webgme"]
+

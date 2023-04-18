@@ -1,0 +1,68 @@
+/**
+ * This file is for any css that you may want for this visualizer.
+ *
+ * Ideally, you would use the scss file also provided in this directory 
+ * and then generate this file automatically from that. However, you can 
+ * simply write css if you prefer
+ */
+
+.m-viz {
+  outline: none; }
+  
+ .m-viz-table{
+  display:table;         
+  background-color:#eee;         
+  border:1px solid  #666666;  
+  border-collapse: collapse;  
+  width: 500px;
+  /*border-spacing:5px;*//*cellspacing:poor IE support for  this*/
+}
+
+.m-viz-heading{
+  display: table-row;
+  height:auto;
+  font-weight: bold;
+  text-align: left;
+  background-color:#ccc; 
+  border-bottom: 1px solid #666666;
+}
+.m-viz-table-row{
+  display:table-row;
+  height:auto;
+  clear:both;
+  text-align: left;
+  background-color:#ccc; 
+  border-bottom: 1px solid #666666;
+}
+.m-viz-table-col{
+  display:table-cell;
+  min-width:250px; 
+  width:250px;      
+  height:auto;
+  text-align: left;
+  border: 1px solid #666666;
+  padding:5px;
+ }
+
+ .m-viz-table-col-span{
+  display:table-cell;
+  font-weight: bold;
+  text-align: left;
+  height:auto;
+  padding:5px;
+  -webkit-column-span: all;
+  column-span: all;
+ }
+ 
+ .m-viz-table-col-mod{
+  display:table-cell;
+  min-width:250px; 
+  width:250px;
+  height:auto;
+  text-align: left;
+  word-wrap: break-word;
+  /*border:1px solid  #666666;  */
+  border: 1px solid #666666;
+  padding:5px;
+ }
+

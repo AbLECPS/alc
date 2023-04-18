@@ -1,0 +1,45 @@
+<!--
+File:         random_pipeline_generator.launch
+Description:  Randomly generate pipes
+-->
+
+<launch>
+
+  <!-- Pipe Starting Position Relative to Vehicle -->
+  <arg name="pipe_posx" default="10"/> <!--30-->
+  <arg name="pipe_posy" default="2"/> <!--2--><!-- puts vehicle at start of pipe -->
+  <!-- Random Seed for ROS Nodes and Gazebo Plugins -->
+  <arg name="random_seed" default="0"/>
+  <arg name="num_segments" default="5"/>
+  <arg name="length_min" default="50.0"/>
+  <arg name="length_max" default="100.0"/>
+  <arg name="angle_min" default="-0.7854"/>
+  <arg name="angle_max" default="0.7854"/>
+  <arg name="bury_len_min" default="0.3048"/> 
+  <arg name="bury_len_max" default="6.096"/> 
+  <arg name="pipe_scale" default="3"/>
+  <arg name="ocean_depth" default="60"/>
+  <!--  Number of pipe burying events per meter-->
+  <!-- <arg name="lambda" default="0.01"/>      -->
+  <!-- <arg name="bend_segment_length" default="0.3048"/> -->
+  <!-- <arg name="max_bend_angle" default="0.0873"/> -->
+  
+  <!--Randomly generate pipes -->
+  <node name="random_pipeline_generator" pkg="vandy_bluerov" 
+        type="spawn_pipes.py" output="screen">
+    <rosparam subst_value="true">
+      num_segments: 1
+      angle_min: $(arg angle_min)
+      angle_max: $(arg angle_max)
+      length_min: $(arg length_min)
+      length_min: $(arg length_min)
+      pipe_diameter_scale: $(arg pipe_scale)
+      random_seed: $(arg random_seed)        
+      pipe_posx: $(arg pipe_posx)
+      pipe_posy: $(arg pipe_posy)
+      num_segments: $(arg num_segments)
+      ocean_depth: $(arg ocean_depth)
+    </rosparam>
+  </node>
+  
+  </launch>

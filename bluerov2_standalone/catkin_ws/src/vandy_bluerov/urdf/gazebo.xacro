@@ -1,0 +1,688 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="bluerov2_hydro_model" params="namespace">
+    <!-- List of hydrodynamic models this robot's links -->
+    <link name="${namespace}/base_link">
+      <!-- This flag will make the link neutrally buoyant -->
+      <neutrally_buoyant>0</neutrally_buoyant>
+      <!-- Link's volume -->
+      <volume>${volume}</volume>
+      <!-- Link's bounding box, it is used to recalculate the immersed
+        volume when close to the surface.
+        This is a workaround the invalid bounding box given by Gazebo-->
+      <!--box>
+        <width>${x_size}</width>
+        <length>${y_size}</length>
+        <height>${z_size}</height>
+      </box-->
+      <!-- Center of buoyancy -->
+      <center_of_buoyancy>${cob}</center_of_buoyancy>
+
+      <!-- Fossen's equation of motion for underwater vehicles
+      Reference:
+          [1] Fossen, Thor I. Handbook of marine craft hydrodynamics and motion
+          control. John Wiley & Sons, 2011.
+     -->
+      <hydrodynamic_model>
+          <type>fossen</type>
+          <!-- Added mass: see p.28 in Berg2012 -->
+          <added_mass>
+            1.7182 0 0 0 0 0
+            0 0 0 0 0 0
+            0 0 5.468 0 0 0
+            0 0 0 0 0 0
+            0 0 0 0 1.2481 0
+            0 0 0 0 0 0.4006
+          </added_mass>
+          <!--
+            The linear damping coefficients can be provided as a diagonal (6 elements)
+            or a full matrix (36 coefficients), like the added-mass coefficients above
+            Linear damping: see p.31 in Berg2012
+          -->
+          <linear_damping>
+	    -11.7391      0       0       0       0       0
+            0       -20    0       0       0       10
+            0       0       -31.8678    0       5    0
+            0       0       0       -25     0       0
+            0       0       -5      0       -44.9085     0
+            0       -10       0       0       0       -5
+            <!-- -11.7391, -20 -31.8678 -25 -44.9085 -5 -->
+          </linear_damping>
+          <!--
+            The linear damping coefficients proportional to the forward speed
+            can be provided as a diagonal (6 elements) or a full matrix (36 coefficients),
+            like the added-mass coefficients above.
+            This matrix is mostly useful for slender bodies (e.g. AUVs with torpedo shape)
+          -->
+          <!-- <linear_damping_forward_speed>
+            0 0 0 0 0 0
+          </linear_damping_forward_speed> -->
+          <!--
+            The quadratic damping coefficients can be provided as a diagonal (6 elements)
+            or a full matrix (36 coefficients), like the added-mass coefficients above
+            Non-linear damping: see p.30 in Berg2012
+          -->
+          <!--quadratic_damping>
+            0 0 0 0 0 0
+          </quadratic_damping-->
+
+          <!--
+            In case you want to model a simple surface vessel, you can use the
+            implementation of linear (small angle) theory for boxed shaped vessels
+            by providing the following parameters. If you omit the area of the
+            water level plane area, it will be calculated from the bounding box
+            parameters. Uncomment the lines below in case you are simulating a
+            surface vessel.
+            For more details on these parameters and the computation of buoyancy
+            for vessels using this theory, check:
+              [1] Lecture Notes  TTK 4190 Guidance and Control of Vehicles (T. I. Fossen)
+                  http://www.fossen.biz/wiley/Ch4.pdf
+              [2] Fossen, Thor I. Handbook of marine craft hydrodynamics and motion
+                  control. John Wiley & Sons, 2011.
+          -->
+          <!--
+          <metacentric_width>0.0</metacentric_width>
+          <metacentric_length>0.0</metacentric_length>
+          <water_level_plane_area>0.0</water_level_plane_area>
+          -->
+      </hydrodynamic_model>
+    </link>
+  </xacro:macro>
+
+  <gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <min_angle>-0.2618</min_angle>
+               <max_angle>0.2618</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <min_angle>-0.2618</min_angle>
+               <max_angle>0.2618</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_echosunder</topicName>
+         <frameName>uuv0/base_sonar_front</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.52</fov>
+      </plugin>
+   </sensor>  
+   </gazebo>
+
+
+
+  <gazebo reference="uuv0/base_sonar_bottom">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <min_angle>-0.2618</min_angle>
+               <max_angle>0.2618</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <min_angle>-0.2618</min_angle>
+               <max_angle>0.2618</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/altimeter_echosunder</topicName>
+         <frameName>uuv0/base_sonar_bottom</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.52</fov>
+      </plugin>
+   </sensor>  
+   </gazebo>
+
+ <gazebo reference="uuv0/camera_link_optical">
+    <sensor type="camera" name="camera_camera_sensor">
+      <update_rate>30.0</update_rate>
+      <camera>
+        <pose>0 0 0 0 0 0</pose>
+        <horizontal_fov>1.5708</horizontal_fov>
+        <image>
+          <format>R8G8B8</format>
+          <width>256</width>
+          <height>256</height>
+        </image>
+        <clip>
+          <near>0.01</near>
+          <far>100</far>
+        </clip>
+        <noise>
+        <type>gaussian</type>
+        <!-- Noise is sampled independently per pixel on each frame.
+             That pixel's noise value is added to each of its color
+              channels, which at that point lie in the range [0,1]. -->
+        <mean>0.0</mean>
+        <stddev>0.05</stddev>
+      </noise>
+      </camera>
+
+      <plugin name="camera_camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>20.0</updateRate>
+        <cameraName>camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>uuv0/camera_link_optical</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+
+   </sensor>
+  </gazebo>
+
+<gazebo reference="uuv0/camera_link_depth">
+  <sensor name="uuv0/camera_link_depth_camera" type="depth">
+    <update_rate>20</update_rate>
+    <camera>
+      <horizontal_fov>1.047198</horizontal_fov>
+      <image>
+        <width>640</width>
+        <height>480</height>
+        <format>R8G8B8</format>
+      </image>
+      <clip>
+        <near>0.05</near>
+        <far>100</far>
+      </clip>
+    </camera>
+    <plugin name="uuv0/camera_link_depth_controller" filename="libgazebo_ros_openni_kinect.so">
+      <baseline>0.2</baseline>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>1.0</updateRate>
+      <cameraName>kinect_ir</cameraName>
+      <imageTopicName>/kinect/color/image_raw</imageTopicName>
+      <cameraInfoTopicName>/kinect/color/camera_info</cameraInfoTopicName>
+      <depthImageTopicName>/kinect/depth/image_raw</depthImageTopicName>
+      <depthImageInfoTopicName>/kinect/depth/camera_info</depthImageInfoTopicName>
+      <pointCloudTopicName>/kinect/depth/points</pointCloudTopicName>
+      <frameName>uuv0/camera_link_depth</frameName>
+      <pointCloudCutoff>0.5</pointCloudCutoff>
+      <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+      <distortionK1>0.00000001</distortionK1>
+      <distortionK2>0.00000001</distortionK2>
+      <distortionK3>0.00000001</distortionK3>
+      <distortionT1>0.00000001</distortionT1>
+      <distortionT2>0.00000001</distortionT2>
+      <CxPrime>0</CxPrime>
+      <Cx>0</Cx>
+      <Cy>0</Cy>
+      <focalLength>0</focalLength>
+      <hackBaseline>0</hackBaseline>
+    </plugin>
+  </sensor>
+</gazebo>
+
+<gazebo reference="uuv0/base_sss">
+      <gravity>false</gravity>
+      <sensor name="uuv0/base_sss" type="ray">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <!-- (70 deg + 10deg gap) x 2  -->
+              <min_angle>-0.9599</min_angle>
+              <max_angle>0.9599</max_angle>
+              <!-- <min_angle>-0.6108</min_angle>
+              <max_angle>0.6108</max_angle> -->
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>100</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.05</stddev>
+          </noise>
+        </ray>
+        <plugin name="uuv0/base_sss_plugin" filename="libgazebo_ros_laser.so">
+          <topicName>/uuv0/vu_sss</topicName>
+          <frameName>base_sss</frameName>
+        </plugin>        
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <visualize>false</visualize>
+      </sensor>
+</gazebo>
+
+
+<gazebo reference="uuv0/base_fis">
+      <gravity>false</gravity>
+      <sensor name="uuv0/base_fis" type="ray">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.7854</min_angle>
+              <max_angle>0.7854</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>100</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.05</stddev>
+          </noise>
+        </ray>
+        <plugin name="uuv0/base_fis_plugin" filename="libgazebo_ros_laser.so">
+          <topicName>/uuv0/vu_fis</topicName>
+          <frameName>base_fis</frameName>
+        </plugin>        
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <visualize>false</visualize>
+      </sensor>
+</gazebo>
+
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0.0262</min_angle>
+               <max_angle>0.0262</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0.0262</min_angle>
+               <max_angle>0.0262</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_0</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0.0524</min_angle>
+               <max_angle>0</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0.0262</min_angle>
+               <max_angle>0.0262</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_1</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0</min_angle>
+               <max_angle>0.0524</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0.0262</min_angle>
+               <max_angle>0.0262</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_2</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0.0262</min_angle>
+               <max_angle>0.0262</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0</min_angle>
+               <max_angle>0.0524</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_3</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0.0262</min_angle>
+               <max_angle>0.0262</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0.0524</min_angle>
+               <max_angle>0</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_4</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0.0524</min_angle>
+               <max_angle>0</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0.0524</min_angle>
+               <max_angle>0</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_5</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0</min_angle>
+               <max_angle>0.0524</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0.0524</min_angle>
+               <max_angle>0</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_6</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0.0524</min_angle>
+               <max_angle>0</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0</min_angle>
+               <max_angle>0.0524</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_7</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+<gazebo reference="uuv0/base_sonar_front">        
+   <sensor type="ray" name="TeraRanger">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+         <scan>
+            <horizontal>
+               <samples>10</samples>
+               <resolution>1</resolution> 
+               <!-- 3 deg -->
+               <min_angle>-0</min_angle>
+               <max_angle>0.0524</max_angle>
+            </horizontal>
+            <vertical>
+               <samples>10</samples>
+               <resolution>1</resolution>
+               <!-- 3 deg --> 
+               <min_angle>-0</min_angle>
+               <max_angle>0.0524</max_angle> 
+            </vertical>
+         </scan>
+         <range>
+            <min>0.5</min>
+            <max>30</max>
+            <resolution>0.15</resolution>
+         </range>
+      </ray>
+      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50</updateRate>
+         <topicName>/uuv0/fls_sonar_8</topicName>
+         <frameName>uuv0/base_fls_sonar</frameName>
+         <radiation>ULTRASOUND</radiation>
+         <fov>0.0524</fov>
+      </plugin>
+   </sensor>  
+</gazebo>
+
+</robot>

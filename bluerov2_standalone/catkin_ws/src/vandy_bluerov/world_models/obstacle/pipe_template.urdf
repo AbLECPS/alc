@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot name="pipe{n}">
+
+  <link name="pipe{n}/base_link">
+    <visual>
+      <geometry>
+        <cylinder length="{z}" radius="{x}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+       <cylinder length="{z}" radius="{x}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <mass value="0"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+  
+ <link name="pipe{n}/pose_sensor_link_default">
+    <inertial>
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      <mass value="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </inertial>
+  </link>
+  
+  <joint name="pipe{n}/pose_sensor_default_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <parent link="pipe{n}/base_link"/>
+    <child link="pipe{n}/pose_sensor_link_default"/>
+  </joint>
+  
+  <gazebo>    
+    <plugin name="pipe_uuv_plugin" filename="libuuv_underwater_object_ros_plugin.so">
+      <link name="pipe{n}/base_link">
+        <neutrally_buoyant>1</neutrally_buoyant>
+        <hydrodynamic_model>
+          <type>box</type>
+          <length>10</length>
+          <width>10</width>
+          <height>10</height>
+        </hydrodynamic_model>
+      </link>
+    </plugin>
+
+  </gazebo>
+</robot>

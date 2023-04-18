@@ -1,0 +1,54 @@
+version: '2.3'
+
+# Setup any docker networks
+networks:
+  alcnet:
+    external: true
+    name: $ALC_DOCKER_NETWORK
+    driver: $DOCKER_NETWORK_DRIVER
+
+services:
+  # TODO: Easily configure node name with SLURM master
+  # Worker node
+  alc_slurm_node1:
+    image: alc_slurm$ALC_BRANCH
+    restart: always
+    command: ["slurmd"]
+#    entrypoint: ["sh", "-c", "sleep infinity"]
+    hostname: alc_slurm_node1
+    container_name: alc_slurm_node1
+    runtime: nvidia
+    # Need extra privileges for NFS
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+#    privileged: true
+    environment:
+#      - ALC_HOME=/alc
+#      - ALC_WORKING_DIR=/workspace
+#      - NFS_LOCAL_DIR=/workspace
+#      - JUPYTER_WORK_DIR=/workspace/jupyter
+#      - ALC_FILESHARE_CONFIG_FILE=/alc/dockerfiles/config/sftp_config.json
+      - NFS_SERVER_ADDR=alc_nfs_server
+      - NODE_ENV=docker
+      - ALC_HOME=$ALC_HOME
+      - NFS_LOCAL_DIR=$ALC_WORKING_DIR
+      - ALC_WORKING_DIR=$ALC_WORKING_DIR
+      - PYTHONPATH=$ALC_HOME:$PYTHONPATH
+      - JUPYTER_WORK_DIR=$ALC_WORKING_DIR/jupyter
+      - NVIDIA_VISIBLE_DEVICES=all
+      - ROS_DISTRO=kinetic
+      - DOCKER_GID=$DOCKER_GID
+    volumes:
+#      - $ALC_WORKSPACE:/workspace
+#      - $ALC_SRC:/alc
+#      - $ALC_DOCKERFILES/keys:/alc/dockerfiles/.ssh
+#      - $ALC_DOCKERFILES/config:/alc/dockerfiles/config
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $ALC_DOCKERFILES/slurm/etc:/etc/slurm:ro
+      - $ALC_DOCKERFILES/slurm/munge:/etc/munge:ro
+      - $ALC_SRC:$ALC_SRC
+#      - /lib/modules:/lib/modules:ro
+    networks:
+      - alcnet

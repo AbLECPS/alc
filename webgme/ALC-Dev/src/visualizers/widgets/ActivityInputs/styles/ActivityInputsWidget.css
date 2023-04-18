@@ -1,0 +1,84 @@
+/**
+ * This file is for any css that you may want for this visualizer.
+ *
+ * Ideally, you would use the scss file also provided in this directory 
+ * and then generate this file automatically from that. However, you can 
+ * simply write css if you prefer
+ */
+
+ .activity-inputs {
+  outline: none; }
+
+  /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab .tablinks {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab .tablinks:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab .tablinks.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  border: 1px solid #ccc;
+  padding: 12px 12px;
+  border-top: none;
+}
+
+.activityInputsTable, .activityInputsTd {
+  border: 1px solid black;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.tabcontent:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  line-height: 0;  
+}
+
+.activityInputsH3 {
+  display: inline-block;
+  text-align: left;
+}
+
+.activityInputsInput {
+  width: 175px;
+  height: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.activityInputsSelect {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 175px;
+  text-align-last: center;
+}
+
+.activityInputsInput {
+  text-align: center;
+}

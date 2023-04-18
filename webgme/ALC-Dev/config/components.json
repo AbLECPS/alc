@@ -1,0 +1,362 @@
+{
+    "GenericUIProjectNavigatorController": {
+        "disableProjectActions": false,
+        "rootMenuClass": "gme-root",
+        "rootDisplayName": "ALC",
+        "projectMenuClass": "",
+        "branchMenuClass": ""
+    },
+    "GenericUIWebGMEStart": {
+        "pageTitle": "ALC",
+        "disableProjectsDialog": false,
+        "nodeAtOpen": "",
+        "nodeAtOpen": "",
+        "layout": "DefaultLayout",
+        "byProjectKind": {
+            "layout": {
+                "ALCProject": "DefaultLayout"
+            },
+            "nodeAtOpen": {
+                "ALCProject": "/y"
+            }
+        }
+    },
+    "GenericUITreeBrowserControl": {
+        "filters": {
+            "toggled": {
+                "hideConnections": false,
+                "hideAbstracts": false,
+                "hideLeaves": false,
+                "hideLibraries": false
+            }
+        },
+        "treeRoot": ""
+    },
+    "GenericUIDocumentDecorator": {
+        "parserOptions": {
+            "gfm": true,
+            "tables": true,
+            "breaks": false,
+            "pedantic": false,
+            "sanitize": false,
+            "smartLists": true,
+            "smartypants": false
+        }
+    },
+    "GenericUIPluginNotification": {
+        "useRunningPluginsDrawer": false
+    },
+    "GenericUIProjectNavigatorController": {
+        "disableNodeMenu": true
+    },
+    "GenericUIModelEditorPanel": {
+        "navigationTitle": {
+            "enabled": true,
+            "attribute": "name",
+            "depth": 4
+        }
+    },
+    "AutoViz": {
+        "preloadIds": [
+            "ArchEditor",
+            "ArchIndex",
+            "PipelineIndex",
+            "PipelineEditor",
+            "OperationEditor",
+            "ExecutionView"
+        ],
+        "visualizerOverrides": {
+            "": "ForwardViz",
+            "MyArtifacts": "ArtifactIndex",
+            "MyArchitectures": "ArchIndex",
+            "MyExecutions": "ExecutionIndex",
+            "MyPipelines": "PipelineIndex"
+        }
+    },
+    "MultilineAttributeDecorator": {
+        "textAlign": "left",
+        "attrBlackList": []
+    },
+    "PipelineEditor": {
+        "itemName": "operation"
+    },
+    "ExecutionView": {
+        "itemName": "job"
+    },
+    "ArchEditor": {
+        "hotkeys": "none",
+        "itemName": "layer",
+        "LayerColors": {}
+    },
+    "BreadcrumbHeader": {
+        "pathRule": "history",
+        "disableUserProfile": false,
+        "cachePrefix": "deepforge-header"
+    },
+    "FloatingActionButton": {
+        "hideOnEmpty": true,
+        "pluginUIConfigs": {
+            "GenerateArchitecture": {
+                "icon": "description",
+                "hotkey": "shift enter",
+                "priority": -1
+            },
+            "ExecutePipeline": {
+                "icon": "play_arrow",
+                "hotkey": "shift enter",
+                "color": "green",
+                "priority": 1
+            },
+            "ImportTorch": {
+                "icon": "import_export",
+                "priority": -1
+            }
+        }
+    },
+    "RootViz": {
+        "nodes": [
+            {
+                "nodeName": "MyArchitectures",
+                "title": "Architectures",
+                "icon": "shuffle",
+                "rank": 1,
+                "description": "Neural network architectures are stored here and can be used in pipelines."
+            },
+            {
+                "nodeName": "MyPipelines",
+                "title": "Pipelines",
+                "color": "blue-grey",
+                "icon": "input",
+                "rank": 3,
+                "description": "Pipelines compose operations together to effectively train, test and/or ensemble models."
+            },
+            {
+                "nodeName": "MyArtifacts",
+                "title": "Artifacts",
+                "icon": "view_quilt",
+                "color": "blue-grey",
+                "rank": 5,
+                "description": "Artifacts from pipeline executions are stored here."
+            }
+        ]
+    },
+    "SidebarLayout": {
+        "panels": [
+            {
+                "id": "WorkerHeader",
+                "panel": "WorkerHeader/WorkerHeaderPanel",
+                "container": "header",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "Footer",
+                "panel": "Footer/FooterPanel",
+                "container": "footer",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "MainPanel",
+                "panel": "AutoViz/AutoVizPanel",
+                "container": "center",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "Sidebar",
+                "panel": "Sidebar/SidebarPanel",
+                "container": "sidebar",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "ForgeActionButton",
+                "panel": "ForgeActionButton/ForgeActionButton",
+                "container": "float",
+                "DEBUG_ONLY": false
+            }
+        ]
+    },
+    "DefFloatLayout": {
+        "panels": [
+            {
+                "id": "ForgeActionButton",
+                "panel": "ForgeActionButton/ForgeActionButton",
+                "container": "float",
+                "DEBUG_ONLY": false
+            }
+        ]
+    },
+    "CodeEditor": {
+        "theme": "default",
+        "enableThemeSelection": true,
+        "keyBinding": "sublime",
+        "enableKeybindingSelection": true,
+        "lineWrapping": false,
+        "enableLineWrappingToggle": true,
+        "autoSaveInterval": "2000",
+        "rootTypes": [
+            "MessageLibrary",
+            "Block",
+            "Assemblys",
+            "Utilities",
+            "WorldModels",
+            "ExperimentSetup",
+            "SLTrainingSetUp",
+            "RLTrainingSetup",
+            "RLAgent",
+            "Campaign",
+            "AssuranceMonitorSetup",
+            "EvaluationSetup",
+            "VerificationSetup",
+            "Verification_Model"
+        ],
+        "excludeTypes": [
+            "SignalFlow",
+            "MaterialFlow",
+            "PowerFlow",
+            "Result",
+            "Notebook",
+            "ExecPipeline",
+            "EvalData",
+            "In_Params",
+            "Out_Results",
+            "ResourceRef",
+            "Resource",
+            "LEC_Model_Ref",
+            "File",
+            "ResetConn",
+            "RewardConn",
+            "AgentAction",
+            "State_Action",
+            "Param_Set",
+            "Ver_Flow",
+            "Var"
+        ],
+        "loadDepth": 5,
+        "syntaxToModeMap": {
+            "C++": {
+                "name": "text/x-c++src",
+                "useCPP": true
+            },
+            "JSON": {
+                "name": "application/json"
+            },
+            "Javascript": {
+                "name": "text/javascript"
+            },
+            "gfm": {
+                "name": "gfm"
+            },
+            "ROS": {
+                "name": "text/x-c++src",
+                "keywords": {
+                    "int8": "int8",
+                    "int16": "int16",
+                    "int32": "int32",
+                    "int64": "int64",
+                    "uint8": "uint8",
+                    "uint16": "uint16",
+                    "uint32": "uint32",
+                    "uint64": "uint64",
+                    "bool": "bool",
+                    "string": "string",
+                    "float32": "float32",
+                    "float64": "float64",
+                    "time": "time",
+                    "duration": "duration"
+                },
+                "useCPP": true
+            },
+            "python": {
+                "name": "text/x-python",
+                "singleLineStringErrors": true
+            }
+        },
+        "attrToSyntaxMap": {
+            "Annotation": {
+                "documentation": "gfm"
+            },
+            "MessageType": {
+                "Definition": "ROS"
+            },
+            "ServiceType": {
+                "Definition": "ROS"
+            },
+            "ActionType": {
+                "Definition": "ROS"
+            },
+            "SignalPort": {
+                "MessageType": "python",
+                "Topic": "python"
+            },
+            "Params": {
+                "Definition": "JSON"
+            },
+            "Code": {
+                "code": "python"
+            },
+            "LEC_Model": {
+                "Definition": "python",
+                "DataFormatter": "python",
+                "Dataset":"python",
+                "AMDefinition":"python"
+		    },
+            "AssuranceMonitor": {
+                "ParamDefinition": "JSON"
+            },
+            "Specification": {
+                "Definition": "gfm"
+            },
+            "RLAgent": {
+                "Code": "python",
+                "RLEnvironment": "python"
+            },
+            "Campaign": {
+                "Definition": "JSON"
+            },
+            "PostProcess": {
+                "Code": "python"
+            },
+            "InitSet": {
+                "LowerBound": "python",
+                "UpperBound": "python",
+                "setFunction": "python"
+            },
+            "Transform": {
+                "Definition": "python"
+            },
+            "Ver_Result": {
+                "Definition": "python"
+            },
+            "ROSInfo": {
+                "launchInfo": "gfm",
+                "srcComponentImpl":"python",
+                "srcROSImpl":"python"
+            }
+            
+            
+        },
+        "defaultAttributeMap": {
+            "Annotation": "documentation",
+            "MessageType": "Definition",
+            "ActionType": "Definition",
+            "ServiceType": "Definition",
+            "SignalPort": "MessageType",
+            "ROSInfo": "launchInfo",
+            "Params": "Definition",
+            "Campaign": "Definition",
+            "Code": "code",
+            "Specification": "Definition",
+            "LEC_Model": "Definition",
+            "RLAgent": "Code",
+            "AssuranceMonitor": "ParamDefinition",
+            "PostProcess": "Code",
+            "InitSet":"LowerBound",
+            "Transform":"Definition",
+            "Ver_Result":"Definition"
+        },
+        "nameTemplateMap": {
+            "Internal Transition": "IT: {{{Event}}}",
+            "External Transition": "ET: {{{Event}}}",
+            "Local Transition": "LT: {{{Event}}}"
+        }
+    }
+}

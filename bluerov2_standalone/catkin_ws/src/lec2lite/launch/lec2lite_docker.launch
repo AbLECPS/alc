@@ -1,0 +1,14 @@
+<launch>
+    <arg name="filename" default="lec2.tflite"/>
+
+    <node name="vu_lec2_lite_l" pkg="lec2lite" type="lec2_lite_node.py" output="screen" >
+        <param name="~side" type="str" value="l" />
+        <param name="~filename" type="str" value="$(arg filename)" />        
+    </node>
+    
+    <node name="vu_lec2_lite_r" pkg="lec2lite" type="lec2_lite_node.py" output="screen" >
+        <param name="~side" type="str" value="r" />
+        <param name="~filename" type="str" value="$(arg filename)" />        
+    </node>
+    
+</launch>

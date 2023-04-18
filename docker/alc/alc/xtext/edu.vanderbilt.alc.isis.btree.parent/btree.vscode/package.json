@@ -1,0 +1,65 @@
+{
+    "name": "alc-btree",
+    "displayName": "BTree",
+    "description": "BTree DSL",
+    "version": "0.0.1",
+    "publisher": "vanderbilt",
+    "icon": "images/vu.png",
+    "license": "EPL-1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://git.isis.vanderbilt.edu/alc/btree.git"
+    },
+    "bugs": {
+        "url": "https://git.isis.vanderbilt.edu/alc/btree.git/issues"
+    },
+    "engines": {
+        "vscode": "^1.49.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "activationEvents": [
+        "onLanguage:btree"
+    ],
+    "main": "out/extension",
+    "contributes": {
+        "languages": [
+            {
+                "id": "btree",
+                "aliases": [
+                    "btree"
+                ],
+                "extensions": [
+                    ".bt"
+                ],
+                "configuration": "./bt.configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "btree",
+                "scopeName": "text.bt",
+                "path": "./syntaxes/btree.tmLanguage.json"
+            }
+        ]
+    },
+    "devDependencies": {
+        "@types/node": "^13.13.25",
+        "@types/vscode": "^1.49.0",
+        "typescript": "^3.9.7",
+        "vscode-test": "^1.4.0"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^6.1.3",
+        "vscode-jsonrpc": "^4.0.0",
+        "typescript": "^3.9.7",
+        "@types/node": "^13.13.25"
+    },
+    "scripts": {
+        "prepublish": "tsc -p ./src",
+        "compile": "tsc -p ./src",
+        "watch": "tsc -w -p ./src",
+        "update-vscode": "node ./node_modules/vscode/bin/install"
+    }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "ActivityInit",
+  "name": "ActivityInit",
+  "version": "0.1.0",
+  "description": "Initialize Activity",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "configWidget": "plugin/ActivityInit/ActivityInit/communication.js",
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+    {
+      "name": "activity_name",
+      "displayName": "Name",
+      "description": "Provide a name for the Activity instance",
+      "value": "",
+      "valueType": "string",
+      "readOnly": false
+    }
+  ]
+}

@@ -1,0 +1,389 @@
+#!/usr/bin/env python
+"""
+@package {{packageName}}
+@file {{componentName}}_impl.py
+"""
+import rospy
+import tf
+import actionlib
+{% for pkg_type, cls_type in msgimports %}
+{% if (pkg_type and cls_type) %}
+from {{pkg_type}}.msg import {{cls_type}}
+{% endif %}
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in serviceServers %}
+{% if (pkg_type and cls_type) %}
+from {{pkg_type}}.srv import {{cls_type}}, {{cls_type}}Response
+{% endif %}
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in serviceClients %}
+{% if (pkg_type and cls_type) %}
+from {{pkg_type}}.srv import {{cls_type}}, {{cls_type}}Request
+{% endif %}
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in actionServers %}
+{% if (pkg_type and cls_type) %}
+from {{pkg_type}}.msg import {{cls_type}}Feedback, {{cls_type}}Result, {{cls_type}}Action
+{% endif %}
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in actionClients %}
+{% if (pkg_type and cls_type) %}
+from {{pkg_type}}.msg import {{cls_type}}Goal, {{cls_type}}Feedback, {{cls_type}}Result, {{cls_type}}Action
+{% endif %}
+{% endfor %}
+{% if (lec_info['use'] ==1) %}
+#from alc_ros.msg import AssuranceMonitorConfidence, AssuranceMonitorConfidenceStamped
+{% endif %}
+#********** protected region user include package begin **********#
+{% if pcode['# protected region user include package begin #'] %}
+{{pcode['# protected region user include package begin #']}}
+{% endif %}
+#********** protected region user include package end   **********#
+class {{componentName}}Implementation(object):
+    """
+    Class to contain Developer implementation.
+    """
+    def __init__(self):
+        """
+        Definition and initialization of class attributes
+        """
+        {% if params|length > 0 %}
+        #parameters
+        {% endif %}
+        {% for name,value,reqd in params%}
+        {% if reqd or not value%}
+        self.{{name}} = rospy.get_param("~{{name}}")
+        {% else %}
+        self.{{name}} = rospy.get_param("~{{name}}","{{value}}")
+        {% endif %}
+        {% endfor %}
+        {% if (lec_info['use'] ==1) %}
+        self.deployment_folder = rospy.get_param("~{{lec_info['deployment_key']}}")
+        {% if (lec_info['category'] =='RL') %}
+        self.testing = rospy.get_param("testing",False)
+        self.rlagent = None
+        self.rlenvironment = None
+        {% else %}
+        self.network_interface = None
+        {% endif %}
+        self.assurance_monitor_paths=[];
+        self.ams = ''
+        #self.am_topic_str = "//am_{{lec_info['name']}}"
+        #self.lec_topic_str = "//{{lec_info['name']}}"
+        self.pub_assurance_monitor_output = ''
+        self.pub_lec_input_output = ''
+        {% endif %}
+        {% if (lec_info['use'] ==1) %}
+        {% if (lec_info['category'] =='RL') %}
+        self.init_rl(self.deployment_folder, self.testing)
+        {% else %}
+        self.init_sl(self.deployment_folder)
+        {% endif %}
+        #self.init_am(self.deployment_folder)
+        #self.init_lec_input_output_publisher()
+        {% endif %}
+        {% for s in subInfoKeys%}
+        {% if (subInfo[s]["type"]) %}
+        {% if (subInfo[s]["topic"]) %}
+        self.topic_sub_{{subInfo[s]["name"]}} = rospy.get_param("~topic_sub_{{subInfo[s]["name"]}}","{{subInfo[s]["topic"]}}")
+        {% else %}
+        self.topic_sub_{{subInfo[s]["name"]}} = rospy.get_param("~topic_sub_{{subInfo[s]["name"]}}")
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% for p in pubInfoKeys%}
+        {% if (pubInfo[p]["type"]) %}
+        {% if (pubInfo[p]["topic"]) %}
+        self.topic_pub_{{pubInfo[p]["name"]}} = rospy.get_param("~topic_pub_{{pubInfo[p]["name"]}}","{{pubInfo[p]["topic"]}}")
+        {% else %}
+        self.topic_pub_{{pubInfo[p]["name"]}} = rospy.get_param("~topic_pub_{{pubInfo[p]["name"]}}")
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in serviceServers%}
+        {% if (cls_type) %}
+        {% if (topic) %}
+        self.topic_service_{{name}} = rospy.get_param("~topic_service_{{name}}","{{topic}}")
+        {% else %}
+        self.topic_service_{{name}} = rospy.get_param("~topic_service_{{name}}")
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in serviceClients%}
+        {% if (cls_type) %}
+        {% if (topic) %}
+        self.topic_client_{{name}} = rospy.get_param("~topic_client_{{name}}","{{topic}}")
+        {% else %}
+        self.topic_client_{{name}} = rospy.get_param("~topic_client_{{name}}")
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in actionServers%}
+        {% if (cls_type) %}
+        {% if (topic) %}
+        self.topic_as_{{name}} = rospy.get_param("~topic_as_{{name}}","{{topic}}")
+        {% else %}
+        self.topic_as_{{name}} = rospy.get_param("~topic_as_{{name}}")
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in actionClients%}
+        {% if (cls_type) %}
+        {% if (topic) %}
+        self.topic_ac_{{name}} = rospy.get_param("~topic_ac_{{name}}","{{topic}}")
+        {% else %}
+        self.topic_ac_{{name}} = rospy.get_param("~topic_ac_{{name}}")
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% if subInfoKeys|length > 0 %}
+        #subscribers
+        {% endif %}
+        {% for s in subInfoKeys%}
+        {% if (subInfo[s]["type"]) %}
+        self.{{subInfo[s]["name"]}}_sub = rospy.Subscriber(self.topic_sub_{{subInfo[s]["name"]}}, {{subInfo[s]["type"]}}, self.callback_{{subInfo[s]["name"]}}_sub, queue_size = {{subInfo[s]["queue_size"]}})
+        self.in_{{subInfo[s]["name"]}} = {{subInfo[s]["type"]}}()
+        self.in_{{subInfo[s]["name"]}}_updated = bool()
+        {% endif %}
+        {% endfor %}
+        {% if pubInfoKeys|length > 0 %}
+        #publishers
+        {% endif %}
+        {% for p in pubInfoKeys%}
+        {% if (pubInfo[p]["type"]) %}
+        self.{{pubInfo[p]["name"]}}_pub = rospy.Publisher(self.topic_pub_{{pubInfo[p]["name"]}}, {{pubInfo[p]["type"]}}, queue_size={{pubInfo[p]["queue_size"]}})
+        self.out_{{pubInfo[p]["name"]}} = {{pubInfo[p]["type"]}}()
+        self.out_{{pubInfo[p]["name"]}}_active = bool()
+        {% endif %}
+        {% endfor %}
+        {% if serviceServers|length > 0 %}
+        #services
+        {% endif %}
+        {% for pkg_type, cls_type, name,topic in serviceServers%}
+        {% if (cls_type) %}
+        self.{{name}}_service = rospy.Service(self.topic_service_{{name}}, {{cls_type}}, self.callback_{{name}}_service)
+        {% endif %}
+        {% endfor %}
+        {% if serviceClients|length > 0 %}
+        #clients
+        {% endif %}
+        {% for pkg_type, cls_type, name,topic in serviceClients%}
+        {% if (cls_type) %}
+        self.client_{{name}} = rospy.ServiceProxy(self.topic_client_{{name}}, {{cls_type}});
+        {% endif %}
+        {% endfor %}
+        {% if actionServers|length > 0 %}
+        #action server
+        {% endif %}
+        {% for pkg_type, cls_type, name,topic in actionServers%}
+        {% if (cls_type) %}
+        self.as_{{name}} = actionlib.SimpleActionServer(self.topic_as_{{name}}, {{cls_type}}Action,  execute_cb=self.callback_{{name}}_as, auto_start=False)
+        self.as_{{name}}.start()
+        {% endif %}
+        {% endfor %}
+        {% if actionClients|length > 0 %}
+        #action clients
+        {% endif %}
+        {% for pkg_type, cls_type, name,topic in actionClients%}
+        {% if (cls_type) %}
+        self.ac_{{name}} = actionlib.SimpleActionClient(self.topic_ac_{{name}},{{cls_type}}Action)
+        rospy.loginfo("Waiting for action server {}".format(remap))
+        self.ac_{{name}}.wait_for_server()
+        {% endif %}
+        {% endfor %}
+        
+        #********** protected region user member variables begin **********#
+{% if pcode['# protected region user member variables begin #'] %}
+{{pcode['# protected region user member variables begin #']}}
+{% endif %}
+        #********** protected region user member variables end   **********#
+
+    
+    {% for pkg_type, cls_type, name,topic in serviceServers%}
+    {% if (cls_type) %}
+
+    #callback for service - {{name}}
+    def callback_{{name}}_service(self, req):
+        """
+        @brief callback of service {{name}}
+        @param self The object
+        @param req({{cls_type}}) input parameter
+        @return ({{cls_type}}Response) service output
+        """
+        result = {{cls_type}}Response()
+
+        #********** protected region user implementation of service callback for {{name}} begin **********#
+{% if pcode['# protected region user implementation of service callback for '+name+' begin #'] %}
+{{pcode['# protected region user implementation of service callback for '+name+' begin #']}}
+{% endif %}
+        #********** protected region user implementation of service callback for {{name}} end   **********#
+
+        return result
+    {% endif %}
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in actionServers%}
+    {% if (cls_type) %}
+
+    #callback for action server - {{name}}
+    def callback_{{name}}_as(self, goal):
+        """
+        @brief callback of service {name}
+        @param self The object
+        @param goal({{cls_type}}) goal provided
+        @return ({{cls_type}}Response) action output
+        @warning may send some feedback during the task execution
+        """
+        feedback = {{cls_type}}Feedback()
+        result  = {{cls_type}}Result()
+
+        #********** protected region user implementation of action callback for {{name}} begin **********#
+{% if pcode['# protected region user implementation of action callback for '+name+' begin #'] %}
+{{pcode['# protected region user implementation of action callback for '+name+' begin #']}}
+{% endif %}
+        #********** protected region user implementation of action callback for {{name}} end   **********#
+
+        return result
+    {% endif %}
+    {% endfor %}
+    {% for pkg_type, cls_type, name,topic in subscribers%}
+    {% if (cls_type) %}
+
+    #callback for subscriber - {{name}}
+    def callback_{{name}}_sub(self, msg):
+        """
+        callback at reception of message on topic {{name}}
+        """
+        self.in_{{name}} = msg
+        self.in_{{name}}_updated = True
+
+        #********** protected region user implementation of subscriber callback for {{name}} begin **********#
+{% if pcode['# protected region user implementation of subscriber callback for '+name+' begin #'] %}
+{{pcode['# protected region user implementation of subscriber callback for '+name+' begin #']}}
+{% endif %}
+        #********** protected region user implementation of subscriber callback for {{name}} end   **********#
+        pass
+    {% endif %}
+    {% endfor %}
+
+    {% if (lec_info['use'] ==1) %}
+    {% if (lec_info['category'] =='RL') %}
+   #initialize rl 
+    def init_rl(self , model_folder,testing, **kwargs):
+        from alc_utils.rl_agent import load as loadagent
+        from alc_utils.rl_environment import load as loadenv
+        RLAgentClass = loadagent(model_folder)
+        RLEnvClass = loadenv(model_folder)
+        self.rlenvironment = RLEnvClass()
+        self.rlagent = RLAgentClass(model_folder,testing=testing,env=self.rlenvironment.env,**kwargs)
+    {% else %}
+    #initialize_sl
+    def init_sl(self,model_folder,**kwargs):
+        from alc_utils.network_interface import NetworkInterface
+        self.network_interface = NetworkInterface()
+        self.network_interface.load(model_folder)
+    {% endif %}
+
+    #initialize assurance monitor
+    def init_am(self, model_folder):
+        self.assurance_monitor_paths.append(model_folder);
+        import alc_utils.assurance_monitor
+        self.ams = alc_utils.assurance_monitor.MultiAssuranceMonitor()
+        self.ams.load(self.assurance_monitor_paths)
+
+        #set up publisher for assurance monitor
+        if (self.ams and self.ams.assurance_monitors):
+            self.pub_assured_network_output = rospy.Publisher(self.am_topic_str, AssuranceMonitorConfidenceStamped, queue_size=1)
+    
+    #initialize assurance monitor
+    def init_lec_input_output_publisher(self):
+        #need one or more message types
+        #self.pub_lec_input_output = rospy.Publisher(self.lec_topic_str, LEC_Input_Output_Message_Type, queue_size=1)
+        pass
+
+
+    {% if (lec_info['category'] =='RL') %}
+    def update_rl(self):
+        # once the data is there, create the observation/state dictionary.
+        # observation = self.create_state_dictionary()
+        # states, actions, reward, terminate = self.execute_rl(observation)
+        # if terminate:
+        #    sys.exit(0);
+        # self.step_am(states,actions)
+        pass
+
+    #invoke this method when the observations are available
+    # returns the inputs to lec - states, outputs of lec - actions, reward and if the node should terminate  
+    def execute_rl(self, observations):
+        
+        #init learning
+        states, terminal, reward = self.rlenvironment.step(observations, self.rlagent.action)
+        actions, terminate = self.rlagent.step(states,reward,terminal)
+        if ((self.rlagent) and (not self.testing) and (i%10 ==0)):
+            self.rlagent.save()
+
+        return states, actions, reward, terminate
+    {% else %}
+    def execute_sl(self, raw_input, use_batch_mode=True):
+        return self.network_interface.predict(raw_input,batch_mode=use_batch_mode)
+    {% endif %}
+
+    
+    def publish_lec_input_output(self,states, actions):
+        #convert states and actions to message and publish
+        # return lec_input_msg( i.e state) and lec_output_msg (i.e. action)
+        pass
+
+    
+
+    def step_am(self, states, actions):
+        #do this for assurance monitors
+        #lec_input_msg, lec_output_msg = self.publish_lec_input_output(states, actions)
+        
+        #invoke assurance monitor with the messages
+        #if (self.ams and self.ams.assurance_monitors and self.pub_assurance_monitor_output):
+        #    assurance_result = self.ams.evaluate(lec_input_msg,lec_output_msg)
+        #    if (assurance_result is not None):
+        #        assurance_msg = AssuranceMonitorConfidenceStamped()
+        #        assurance_msg.header.stamp = rospy.Time.now()
+        #        for i in range(0, len(assurance_result)):
+        #            confidence_msg = AssuranceMonitorConfidence()
+        #            confidence_msg.type = AssuranceMonitorConfidence.TYPE_SVDD
+        #            confidence_level_bounds = assurance_result[i][:3]
+        #            confidence_msg.values = confidence_level_bounds
+        #            assurance_msg.confs.append(confidence_msg)
+        #        self.pub_assured_network_output.publish(assurance_msg)
+        pass
+    {% endif %}
+
+    {%if componentFrequency > 0 %}
+    def update(self, event):
+        #********** protected region user update functions begin **********#
+{% if pcode['# protected region user update functions begin #'] %}
+{{pcode['# protected region user update functions begin #']}}
+{% endif %}
+        #********** protected region user update functions end   **********#
+        return
+    {% endif %}
+
+#********** protected region user additional functions begin **********#
+{% if pcode['# protected region user additional functions begin #'] %}
+{{pcode['# protected region user additional functions begin #']}}
+{% endif %}
+#********** protected region user additional functions end   **********#
+
+
+def main():
+    """
+    @brief Entry point of the package.
+    Instanciate the node interface containing the Developer implementation
+    @return nothing
+    """
+    rospy.init_node("{{componentName}}", anonymous=False)
+    node = {{componentName}}Implementation()
+    {%if componentFrequency > 0 %}
+    rospy.Timer(rospy.Duration(1.0/{{componentFrequency}}), node.update)
+    {% endif %}
+    rospy.spin()
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,241 @@
+{
+    "buildRoot": "/alc/workflows/automate/CP_Loop",
+    "genericActiveNode": "/y",
+    "jobs": [
+        {
+            "activities_map": {
+                "DataGen_Multi_Obstacle": "/y/V/V/I",
+                "DataGen_St_Obstacle": "/y/V/V/f"
+            },
+            "check": 0,
+            "inits": [
+                {
+                    "dst": [
+                        "/y/V/V/f",
+                        "/y/V/V/I"
+                    ],
+                    "dst_lec": "/BQCx/b/rXn/9qYht/o",
+                    "loop": "",
+                    "name": "Assembly_LEC_Setup",
+                    "src": [
+                        "/y/V/z/t/F/1"
+                    ]
+                }
+            ],
+            "inputs": [],
+            "job_name": "DataGeneration",
+            "job_subtype": "",
+            "job_type": "ALC_Job",
+            "loop_iter_vars": "",
+            "loop_jobs": [],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [],
+            "loop_start_path": [],
+            "loop_type": "",
+            "loop_vars": {},
+            "next_branch_false": [],
+            "next_branch_false_paths": [],
+            "next_branch_true": [],
+            "next_branch_true_paths": [],
+            "next_job_paths": [
+                "/y/n/h/G"
+            ],
+            "next_jobs": [
+                "LEC2_HyperParamSearch"
+            ],
+            "prev_jobs": [],
+            "script": "''"
+        },
+        {
+            "activities_map": {},
+            "check": 0,
+            "inits": [],
+            "inputs": [
+                {
+                    "dst": [],
+                    "dst_lec": "",
+                    "in_loop": false,
+                    "input_job": [
+                        "DataGeneration"
+                    ],
+                    "loop": "",
+                    "port": "",
+                    "task_name": ""
+                }
+            ],
+            "job_name": "LEC2_HyperParamSearch",
+            "job_subtype": "",
+            "job_type": "Loop",
+            "loop_jobs": [
+                {
+                    "activities_map": {
+                        "LEC-2": "/y/V/z/Y"
+                    },
+                    "check": 0,
+                    "inits": [],
+                    "inputs": [
+                        {
+                            "dst": [
+                                "/y/V/z/Y"
+                            ],
+                            "dst_lec": "",
+                            "in_loop": false,
+                            "input_job": [
+                                "DataGeneration"
+                            ],
+                            "loop": "all",
+                            "name": "Training_Data_Setup",
+                            "port": "",
+                            "task_name": "Jobs_Input"
+                        }
+                    ],
+                    "job_name": "SLModelTraining",
+                    "job_subtype": "",
+                    "job_type": "ALC_Job",
+                    "loop_iter_vars": "",
+                    "loop_jobs": [],
+                    "loop_parent": [
+                        "LEC2_HyperParamSearch"
+                    ],
+                    "loop_parent_path": "/y/n/h/G",
+                    "loop_start": [],
+                    "loop_start_path": [],
+                    "loop_type": "",
+                    "loop_vars": {},
+                    "next_branch_false": [],
+                    "next_branch_false_paths": [],
+                    "next_branch_true": [],
+                    "next_branch_true_paths": [],
+                    "next_job_paths": [],
+                    "next_jobs": [],
+                    "prev_jobs": [],
+                    "script": "''",
+                    "use_parameters": [
+                        "EPOCHS"
+                    ]
+                }
+            ],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [
+                "SLModelTraining"
+            ],
+            "loop_start_path": [
+                "/y/n/h/G/t"
+            ],
+            "loop_type": "FOR",
+            "next_branch_false": [],
+            "next_branch_false_paths": [],
+            "next_branch_true": [],
+            "next_branch_true_paths": [],
+            "next_job_paths": [
+                "/y/n/h/T"
+            ],
+            "next_jobs": [
+                "Filter"
+            ],
+            "parameter_update_script": "'def adjust_parameters(workflow_data):\n\n    parameter_updates = workflow_data.get_parameter_updates()\n    results = workflow_data.get_results_relative([\"SLModelTraining\"])\n\n    parameter_updates.EPOCHS = results[0].parameters.EPOCHS + 1 if results else 2\n'",
+            "prev_jobs": [
+                "DataGeneration"
+            ],
+            "script": "'def iterate(workflow_data):\n    return workflow_data.get_num_iterations() < 3\n'"
+        },
+        {
+            "activities_map": {},
+            "check": 0,
+            "inits": [],
+            "inputs": [
+                {
+                    "dst": [],
+                    "dst_lec": "",
+                    "in_loop": false,
+                    "input_job": [
+                        "LEC2_HyperParamSearch",
+                        "SLModelTraining"
+                    ],
+                    "loop": "",
+                    "port": "",
+                    "task_name": ""
+                }
+            ],
+            "job_name": "Filter",
+            "job_subtype": "Filter",
+            "job_type": "Transform",
+            "loop_iter_vars": "",
+            "loop_jobs": [],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [],
+            "loop_start_path": [],
+            "loop_type": "",
+            "loop_vars": {},
+            "next_branch_false": [],
+            "next_branch_false_paths": [],
+            "next_branch_true": [],
+            "next_branch_true_paths": [],
+            "next_job_paths": [
+                "/y/n/h/x"
+            ],
+            "next_jobs": [
+                "Deploy_and_Test"
+            ],
+            "prev_jobs": [
+                "LEC2_HyperParamSearch"
+            ],
+            "script": "'def fun1(inp_lecs):\n  if (len(inp_lecs)<=1):\n      return inp_lecs\n\n  loss_val = 100000\n  ret_lec = None\n  for lec in inp_lecs:\n      lec_loss = lec.loss\n      if (lec_loss < loss_val):\n          loss_val = lec_loss\n          ret_lec =  lec\n\n  return [ret_lec]\n\n\n       '"
+        },
+        {
+            "activities_map": {
+                "Dep_AM_Tracking": "/y/V/k/W"
+            },
+            "check": 0,
+            "inits": [],
+            "inputs": [
+                {
+                    "dst": [
+                        "/y/V/k/W"
+                    ],
+                    "dst_lec": "/BQCx/b/MEe9h/9qYht/o",
+                    "in_loop": false,
+                    "input_job": [
+                        "Filter"
+                    ],
+                    "loop": "",
+                    "name": "Assembly_LEC_Setup",
+                    "port": "",
+                    "task_name": "LEC"
+                }
+            ],
+            "job_name": "Deploy_and_Test",
+            "job_subtype": "",
+            "job_type": "ALC_Job",
+            "loop_iter_vars": "",
+            "loop_jobs": [],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [],
+            "loop_start_path": [],
+            "loop_type": "",
+            "loop_vars": {},
+            "next_branch_false": [],
+            "next_branch_false_paths": [],
+            "next_branch_true": [],
+            "next_branch_true_paths": [],
+            "next_job_paths": [],
+            "next_jobs": [],
+            "prev_jobs": [
+                "Filter"
+            ],
+            "script": "''"
+        }
+    ],
+    "maxIterations": {},
+    "owner": "alc",
+    "projectName": "wk_models",
+    "start_jobs": [
+        "DataGeneration"
+    ],
+    "statusPath": "",
+    "workflowName": "Adaptive_Loop"
+}

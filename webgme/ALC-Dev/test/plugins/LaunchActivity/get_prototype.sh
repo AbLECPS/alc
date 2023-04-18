@@ -1,0 +1,2 @@
+#!/bin/sh
+node /alc/webgme/node_modules/webgme-engine/src/bin/run_plugin.js LaunchActivity ep_test_robustness -o admin -a /V -u alc:alc -l http://localhost:8888 -j /alc/webgme/test/plugins/LaunchActivity/get_prototype.json -n ALC_EP_Meta

@@ -1,0 +1,494 @@
+{
+  "components": {
+    "plugins": {
+      "GenerateYaml": {
+        "src": "src/plugins/GenerateYaml",
+        "test": "test/plugins/GenerateYaml"
+      },
+      "ImportYaml": {
+        "src": "src/plugins/ImportYaml",
+        "test": "test/plugins/ImportYaml"
+      },
+      "ExecutePipeline": {
+        "src": "src/plugins/ExecutePipeline",
+        "test": "test/plugins/ExecutePipeline"
+      },
+      "ExecuteExpt": {
+        "src": "src/plugins/ExecuteExpt"
+      },
+      "CreateExecution": {
+        "src": "src/plugins/CreateExecution",
+        "test": "test/plugins/CreateExecution"
+      },
+      "Export": {
+        "src": "src/plugins/Export",
+        "test": "test/plugins/Export"
+      },
+      "ImportArtifact": {
+        "src": "src/plugins/ImportArtifact",
+        "test": "test/plugins/ImportArtifact"
+      },
+      "ExecuteJob": {
+        "src": "src/plugins/ExecuteJob",
+        "test": "test/plugins/ExecuteJob"
+      },
+      "CheckUpdates": {
+        "src": "src/plugins/CheckUpdates",
+        "test": "test/plugins/CheckUpdates"
+      },
+      "UpdateLibrarySeed": {
+        "src": "src/plugins/UpdateLibrarySeed",
+        "test": "test/plugins/UpdateLibrarySeed"
+      },
+      "GenerateJob": {
+        "src": "src/plugins/GenerateJob",
+        "test": "test/plugins/GenerateJob"
+      },
+      "UploadSeedToBlob": {
+        "src": "src/plugins/UploadSeedToBlob",
+        "test": "test/plugins/UploadSeedToBlob"
+      },
+      "ImportLibrary": {
+        "src": "src/plugins/ImportLibrary",
+        "test": "test/plugins/ImportLibrary"
+      },
+      "ApplyUpdates": {
+        "src": "src/plugins/ApplyUpdates",
+        "test": "test/plugins/ApplyUpdates"
+      },
+      "ROSLaunchImporter": {
+        "src": "src/plugins/ROSLaunchImporter",
+        "test": "test/plugins/ROSLaunchImporter"
+      },
+      "Resonate": {
+        "src": "src/plugins/Resonate",
+        "test": "test/plugins/Resonate"
+      },
+      "AssuranceCaseConstruction":{
+        "src": "src/plugins/AssuranceCaseConstruction",
+        "test": "test/plugins/AssuranceCaseConstruction"
+      }
+    },
+    "layouts": {
+      "SidebarLayout": {
+        "src": "src/layouts/SidebarLayout"
+      },
+      "DefFloatLayout": {
+        "src": "src/layouts/DefFloatLayout"
+      }
+    },
+    "visualizers": {
+      "ArchEditor": {
+        "src": "panels/ArchEditor/ArchEditorPanel",
+        "title": "ArchEditor",
+        "panel": "src/visualizers/panels/ArchEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ArchEditor"
+      },
+      "TextEditor": {
+        "src": "panels/TextEditor/TextEditorPanel",
+        "title": "TextEditor",
+        "panel": "src/visualizers/panels/TextEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/TextEditor"
+      },
+      "OperationEditor": {
+        "src": "panels/OperationEditor/OperationEditorPanel",
+        "title": "OperationEditor",
+        "panel": "src/visualizers/panels/OperationEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/OperationEditor"
+      },
+      "ForgeActionButton": {
+        "src": "panels/ForgeActionButton/ForgeActionButtonPanel",
+        "title": "ForgeActionButton",
+        "panel": "src/visualizers/panels/ForgeActionButton",
+        "secondary": true,
+        "widget": "src/visualizers/widgets/ForgeActionButton"
+      },
+      "PipelineEditor": {
+        "src": "panels/PipelineEditor/PipelineEditorPanel",
+        "title": "PipelineEditor",
+        "panel": "src/visualizers/panels/PipelineEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/PipelineEditor"
+      },
+      "ExecutionView": {
+        "src": "panels/ExecutionView/ExecutionViewPanel",
+        "title": "ExecutionView",
+        "panel": "src/visualizers/panels/ExecutionView",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ExecutionView"
+      },
+      "RootViz": {
+        "src": "panels/RootViz/RootVizPanel",
+        "title": "RootViz",
+        "panel": "src/visualizers/panels/RootViz",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/RootViz"
+      },
+      "TilingViz": {
+        "src": "panels/TilingViz/TilingVizPanel",
+        "title": "TilingViz",
+        "panel": "src/visualizers/panels/TilingViz",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/TilingViz"
+      },
+      "OperationCodeEditor": {
+        "src": "panels/OperationCodeEditor/OperationCodeEditorPanel",
+        "title": "OperationCodeEditor",
+        "panel": "src/visualizers/panels/OperationCodeEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/OperationCodeEditor"
+      },
+      "OperationInterfaceEditor": {
+        "src": "panels/OperationInterfaceEditor/OperationInterfaceEditorPanel",
+        "title": "OperationInterfaceEditor",
+        "panel": "src/visualizers/panels/OperationInterfaceEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/OperationInterfaceEditor"
+      },
+      "DataTypeEditor": {
+        "src": "panels/DataTypeEditor/DataTypeEditorPanel",
+        "title": "DataTypeEditor",
+        "panel": "src/visualizers/panels/DataTypeEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/DataTypeEditor"
+      },
+      "SerializeEditor": {
+        "src": "panels/SerializeEditor/SerializeEditorPanel",
+        "title": "SerializeEditor",
+        "panel": "src/visualizers/panels/SerializeEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/SerializeEditor"
+      },
+      "DeserializeEditor": {
+        "src": "panels/DeserializeEditor/DeserializeEditorPanel",
+        "title": "DeserializeEditor",
+        "panel": "src/visualizers/panels/DeserializeEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/DeserializeEditor"
+      },
+      "Footer": {
+        "src": "panels/Footer/FooterPanel",
+        "title": "Footer",
+        "panel": "src/visualizers/panels/Footer",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/Footer"
+      },
+      "LogViewer": {
+        "src": "panels/LogViewer/LogViewerPanel",
+        "title": "LogViewer",
+        "panel": "src/visualizers/panels/LogViewer",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/LogViewer"
+      },
+      "PipelineIndex": {
+        "src": "panels/PipelineIndex/PipelineIndexPanel",
+        "title": "PipelineIndex",
+        "panel": "src/visualizers/panels/PipelineIndex",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/PipelineIndex"
+      },
+      "Sidebar": {
+        "src": "panels/Sidebar/SidebarPanel",
+        "title": "Sidebar",
+        "panel": "src/visualizers/panels/Sidebar",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/Sidebar"
+      },
+      "JobEditor": {
+        "src": "panels/JobEditor/JobEditorPanel",
+        "title": "JobEditor",
+        "panel": "src/visualizers/panels/JobEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/JobEditor"
+      },
+      "OutputViewer": {
+        "src": "panels/OutputViewer/OutputViewerPanel",
+        "title": "OutputViewer",
+        "panel": "src/visualizers/panels/OutputViewer",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/OutputViewer"
+      },
+      "LineGraph": {
+        "src": "panels/LineGraph/LineGraphPanel",
+        "title": "LineGraph",
+        "panel": "src/visualizers/panels/LineGraph",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/LineGraph"
+      },
+      "ImageViewer": {
+        "src": "panels/ImageViewer/ImageViewerPanel",
+        "title": "ImageViewer",
+        "panel": "src/visualizers/panels/ImageViewer",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ImageViewer"
+      },
+      "ExecutionIndex": {
+        "src": "panels/ExecutionIndex/ExecutionIndexPanel",
+        "title": "ExecutionIndex",
+        "panel": "src/visualizers/panels/ExecutionIndex",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ExecutionIndex"
+      },
+      "WorkerHeader": {
+        "src": "panels/WorkerHeader/WorkerHeaderPanel",
+        "title": "WorkerHeader",
+        "panel": "src/visualizers/panels/WorkerHeader",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/WorkerHeader"
+      },
+      "ArtifactIndex": {
+        "src": "panels/ArtifactIndex/ArtifactIndexPanel",
+        "title": "ArtifactIndex",
+        "panel": "src/visualizers/panels/ArtifactIndex",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ArtifactIndex"
+      },
+      "ResourceIndex": {
+        "src": "panels/ResourceIndex/ResourceIndexPanel",
+        "title": "ResourceIndex",
+        "panel": "src/visualizers/panels/ResourceIndex",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ResourceIndex"
+      },
+      "ForwardViz": {
+        "src": "panels/ForwardViz/ForwardVizPanel",
+        "title": "ForwardViz",
+        "panel": "src/visualizers/panels/ForwardViz",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ForwardViz"
+      },
+      "TabbedTextEditor": {
+        "src": "panels/TabbedTextEditor/TabbedTextEditorPanel",
+        "title": "TabbedTextEditor",
+        "panel": "src/visualizers/panels/TabbedTextEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/TabbedTextEditor"
+      },
+      "NotebookVisualizer": {
+        "src": "panels/NotebookVisualizer/NotebookVisualizerPanel",
+        "title": "TabbedTextEditor",
+        "panel": "src/visualizers/panels/NotebookVisualizer",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/NotebookVisualizer"
+      }
+    },
+    "addons": {},
+    "decorators": {
+      "OperationDecorator": {
+        "src": "src/decorators/OperationDecorator"
+      },
+      "JobDecorator": {
+        "src": "src/decorators/JobDecorator"
+      },
+      "OpIntDecorator": {
+        "src": "src/decorators/OpIntDecorator"
+      },
+      "OpIntPtrDecorator": {
+        "src": "src/decorators/OpIntPtrDecorator"
+      },
+      "DcOpDecorator": {
+        "src": "src/decorators/DcOpDecorator"
+      },
+      "ArtifactOpDecorator": {
+        "src": "src/decorators/ArtifactOpDecorator"
+      }
+    },
+    "seeds": {
+      "pipeline": {
+        "src": "src/seeds/pipeline"
+      },
+      "project": {
+        "src": "src/seeds/project"
+      }
+    },
+    "routers": {
+      "JobLogsAPI": {
+        "src": "src/routers/JobLogsAPI",
+        "mount": "execution/logs"
+      },
+      "JobOriginAPI": {
+        "src": "src/routers/JobOriginAPI",
+        "mount": "job/origins"
+      },
+      "ExecPulse": {
+        "src": "src/routers/ExecPulse",
+        "test": "test/routers/ExecPulse",
+        "mount": "execution/pulse"
+      },
+      "SlurmRouter": {
+        "src": "src/routers/SlurmRouter",
+        "test": "test/routers/SlurmRouter",
+        "mount": "slurm"
+      },
+      "ALCModelUpdater": {
+        "src": "src/routers/ALCModelUpdater",
+        "test": "test/routers/ALCModelUpdater",
+        "mount": "alcmodelupdater"
+      }
+    }
+  },
+  "dependencies": {
+    "plugins": {
+      "SimpleNodes": {
+        "project": "webgme-simple-nodes",
+        "path": "node_modules/webgme-simple-nodes/src/plugins/SimpleNodes"
+      },
+      "GenerateKerasMeta": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/plugins/GenerateKerasMeta"
+      },
+      "GenerateKeras": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/plugins/GenerateKeras"
+      },
+      "ValidateKeras": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/plugins/ValidateKeras"
+      },
+      "ExamplePlugin": {
+        "project": "webgme-simple-nodes",
+        "path": "node_modules/webgme-simple-nodes/src/plugins/ExamplePlugin"
+      },
+      "MinimalExample": {
+        "project": "webgme-simple-nodes",
+        "path": "node_modules/webgme-simple-nodes/src/plugins/MinimalExample"
+      },
+      "CreateKerasMeta": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/plugins/CreateKerasMeta"
+      }
+    },
+    "layouts": {
+      "CHFLayout": {
+        "project": "webgme-chflayout",
+        "path": "node_modules/webgme-chflayout/src/layouts/CHFLayout",
+        "enabled": false
+      }
+    },
+    "visualizers": {
+      "FloatingActionButton": {
+        "src": "panels/FloatingActionButton/FloatingActionButtonPanel",
+        "title": "FloatingActionButton",
+        "panel": "src/visualizers/panels/FloatingActionButton",
+        "secondary": true,
+        "widget": "src/visualizers/widgets/FloatingActionButton",
+        "project": "webgme-fab"
+      },
+      "BreadcrumbHeader": {
+        "src": "panels/BreadcrumbHeader/BreadcrumbHeaderPanel",
+        "title": "BreadcrumbHeader",
+        "panel": "src/visualizers/panels/BreadcrumbHeader",
+        "secondary": true,
+        "project": "webgme-breadcrumbheader"
+      },
+      "AutoViz": {
+        "src": "panels/AutoViz/AutoVizPanel",
+        "title": "AutoViz",
+        "panel": "src/visualizers/panels/AutoViz",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/AutoViz",
+        "project": "webgme-autoviz"
+      },
+      "EasyDAG": {
+        "src": "panels/EasyDAG/EasyDAGPanel",
+        "title": "EasyDAG",
+        "panel": "src/visualizers/panels/EasyDAG",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/EasyDAG",
+        "project": "webgme-easydag"
+      },
+      "KerasArchEditor": {
+        "src": "panels/KerasArchEditor/KerasArchEditorPanel",
+        "title": "KerasArchEditor",
+        "panel": "src/visualizers/panels/KerasArchEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/KerasArchEditor",
+        "project": "deepforge-keras"
+      },
+      "GenericAttributeEditor": {
+        "src": "panels/GenericAttributeEditor/GenericAttributeEditorPanel",
+        "title": "GenericAttributeEditor",
+        "panel": "src/visualizers/panels/GenericAttributeEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/GenericAttributeEditor",
+        "project": "deepforge-keras"
+      },
+      "AssetManager": {
+        "src": "panels/AssetManager/AssetManagerPanel",
+        "title": "AssetManager",
+        "panel": "src/visualizers/panels/AssetManager",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/AssetManager",
+        "project": "webgme-asset-manager-viz"
+      },
+      "CodeEditor": {
+        "src": "panels/CodeEditor/CodeEditorPanel",
+        "title": "CodeEditor",
+        "panel": "src/visualizers/panels/CodeEditor",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/CodeEditor",
+        "project": "webgme-codeeditor"
+      },
+      "HFSMViz": {
+        "src": "panels/HFSMViz/HFSMVizPanel",
+        "title": "HFSMViz",
+        "panel": "src/visualizers/panels/HFSMViz",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/HFSMViz",
+        "project": "webgme-hfsm"
+      }
+    },
+    "addons": {},
+    "decorators": {
+      "EllipseDecorator": {
+        "project": "webgme-easydag",
+        "path": "node_modules/webgme-easydag/src/decorators/EllipseDecorator"
+      },
+      "LayerDecorator": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/decorators/LayerDecorator"
+      }
+    },
+    "seeds": {
+      "dev": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/seeds/dev"
+      },
+      "base": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/seeds/base"
+      },
+      "keras": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/seeds/keras"
+      },
+      "tests": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/seeds/tests"
+      },
+      "Example": {
+        "project": "webgme-easydag",
+        "path": "node_modules/webgme-easydag/src/seeds/Example"
+      },
+      "ExampleModel": {
+        "project": "webgme-simple-nodes",
+        "path": "node_modules/webgme-simple-nodes/src/seeds/ExampleModel"
+      }
+    },
+    "routers": {
+      "KerasAnalysis": {
+        "project": "deepforge-keras",
+        "path": "node_modules/deepforge-keras/src/routers/KerasAnalysis",
+        "mount": "routers/KerasAnalysis"
+      },
+      "BindingsDocs": {
+        "project": "webgme-bindings",
+        "path": "node_modules/webgme-bindings/src/routers/BindingsDocs",
+        "mount": "bindings-docs"
+      }
+    }
+  }
+}

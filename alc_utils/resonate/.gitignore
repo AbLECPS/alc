@@ -1,0 +1,16 @@
+# Datasets
+evaluation_data/
+estimation_data/
+saved_images/
+*.bag
+*.csv
+
+# Compiled python files
+*.pyc
+
+# Pip setup/build files
+*.egg-info/
+.DS_Store
+
+# PyCharm IDE directory
+.idea/

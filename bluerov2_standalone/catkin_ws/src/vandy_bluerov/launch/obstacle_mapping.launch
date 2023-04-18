@@ -1,0 +1,57 @@
+<launch>
+
+	<!-- publish static transform between map and world -->
+	<arg name="uuv_name" default="uuv0"/>
+	<arg name="generate_ais_data"  default="false"/>
+	<arg name="predict_ais_data"  default="false"/>
+	<arg name="random_seed"  default="0"/>
+	<arg name="dynamic_obstacles_count" default="20"/>
+	<arg name="obstacle_avoidance_source" default="fls_echosounder"/>
+	<arg name="no_go_zone_list" default="''"/>
+	<!-- <arg name="use_hw_fls"  default="true"/> -->	
+	<arg name="use_hw_fls"  default="false"/>
+	<arg name="vae_path" default="/jupyter/admin_BlueROV/LEC3Lite_AM/vae"/>
+    <arg name="lec3_filename" default="best_model/lec3_quant.tflite"/>
+
+	<!-- <arg name="no_go_zone_list" default="[[[600, 450],[740, 450],[740, 650],[700, 500]],[[600, 200],[650, 200],[650, 250],[600, 250]]]"/> -->
+	<!-- <arg name="no_go_zone_list" default="[[[600, 450],[740, 450],[740, 650],[700, 500]],[[560, 540],[550, 520],[560, 500],[570, 520]]]"/> -->
+
+
+	<!-- <include file="$(find depthimage_to_laserscan)/launch/depth_to_laser.launch">
+	</include> -->
+    <group ns="$(arg uuv_name)">
+		<node pkg="vandy_bluerov" type="forward_looking_sonar.py" name="forward_looking_sonar" output="screen" >
+           <rosparam subst_value="true">
+                use_hw_fls: $(arg use_hw_fls)
+            </rosparam>
+        </node>
+
+		<!-- <node pkg="vandy_bluerov" type="fls_midas_fusion.py" name="fls_midas_fusion" output="screen" /> -->
+
+		<node pkg="tf" type="static_transform_publisher" name="fixed_map" args="0 0 0 0 0 0   /uuv0/obstacle_map /world 100" />
+		<node pkg="vandy_bluerov" type="obstacle_mapping.py" name="obstacle_map_publisher" output="screen" >
+           <rosparam subst_value="true">
+                generate_ais_data: $(arg generate_ais_data)
+                predict_ais_data: $(arg predict_ais_data)
+                seed: $(arg random_seed)
+                dynamic_obstacles_count: $(arg dynamic_obstacles_count)
+                obstacle_avoidance_source: $(arg obstacle_avoidance_source)
+                no_go_zone_list: $(arg no_go_zone_list)
+            </rosparam>
+        </node>
+
+		<include file="$(find lec3lite)/launch/lec3lite_docker.launch">
+       		<arg name="filename" value="$(arg lec3_filename)"/>
+			<arg name="use_hw_fls" value="$(arg use_hw_fls)"/>
+		</include>
+
+		<!-- AM for LEC3LITE input (FLS Scan) -->
+		
+		<node name="lec3lite_am_vae" pkg="lec3lite" type="lec3_lite_am.py" output="screen" >
+			<param name="~am_type" type="str" value="vae" />
+			<param name="~path" type="str" value="$(arg vae_path)" />
+		</node>
+
+
+	</group>
+</launch>

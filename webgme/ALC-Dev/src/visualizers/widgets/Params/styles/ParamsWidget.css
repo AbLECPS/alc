@@ -1,0 +1,70 @@
+/**
+ * This file is for any scss that you may want for this visualizer.
+ */
+.params {
+  outline: none; }
+  .params.read-only .top-bar .create-btn {
+    display: none; }
+  .params.read-only table .action-btn.delete-btn {
+    cursor: not-allowed;
+    color: gray; }
+  .params .top-bar {
+    display: inline-flex;
+    margin-bottom: auto; }
+    .params .top-bar .top-bar-title {
+      font-size: 24px; }
+    .params .top-bar .input-group {
+      width: 200px;
+      position: absolute;
+      left: calc(50% - 200px); }
+      .params .top-bar .input-group .asset-filter {
+        border-radius: 10px;
+        font-size: 12px; }
+    .params .top-bar .create-btn {
+      position: absolute;
+      top: 38px;
+      right: 40px;
+      font-size: 24px;
+      color: green;
+      cursor: pointer; }
+  .params table {
+    width: 100%;
+    font-size: 14px; }
+    .params table .glyphicon {
+      padding: 5px; }
+    .params table .in-place-edit {
+      font-size: 14px !important; }
+    .params table .action-btn {
+      cursor: copy;
+      padding-top: 8px; }
+      .params table .action-btn.delete-btn {
+        cursor: pointer; }
+      .params table .action-btn:hover {
+        color: #3160ab; }
+        .params table .action-btn:hover.delete-btn {
+          color: darkred; }
+    .params table th {
+      font-weight: bold; }
+      .params table th.header-name {
+        cursor: pointer; }
+    .params table td.row-name {
+      min-width: 80px;
+      width: calc(10% - 20px); }
+    .params table td.row-desc {
+      width: calc(15% - 20px);
+      font-style: italic; }
+    .params table td.row-asset {
+      min-width: 200px;
+      width: calc(15% - 20px); }
+      .params table td.row-asset .tree-parent {
+        width: 100%;
+        height: 40px;
+        background-color: transparent; }
+        .params table td.row-asset .tree-parent .blob-download-link {
+          padding-top: 14px;
+          font-size: 12px; }
+    .params table td.row-edit {
+      text-align: center;
+      width: 90px; }
+    .params table tr:hover {
+      background-color: #1b7ebb26; }

@@ -1,0 +1,12 @@
+<launch>
+
+	<!-- publish static transform between map and world -->
+	<arg name="uuv_name" default="uuv0"/>
+	<arg name="random_seed"  default="0"/>
+
+    <group ns="$(arg uuv_name)">
+		<!-- Start the nav_occupancy grid node-->
+  		<node name="rrt_planner" pkg="vandy_bluerov" type="rrt_planner.py" output="screen"/>
+		<node name="rrt_hsd_publisher" pkg="vandy_bluerov" type="rrt_hsd_publisher.py" output="screen"/>
+	</group>
+</launch>

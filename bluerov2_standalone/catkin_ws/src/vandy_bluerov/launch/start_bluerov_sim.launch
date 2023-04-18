@@ -1,0 +1,258 @@
+<!--
+File:         start_bluerov_sim.launch
+Description:  Creates simulated world.
+-->
+
+<launch>
+    <!-- ############################### -->
+    <!--           SIM ARGS              -->
+    <!-- ############################### -->
+
+    <arg name="uuv_name" default="uuv0"/>
+
+    <!--Output parameters-->
+    <arg name="standard_output" default="screen"/>
+
+    <!-- Logging -->
+    <arg name="results_directory" default="$(find vandy_bluerov)/results"/>
+
+    <!-- Fishing net generation -->
+    <arg name="enable_fishnet" default="false"/>
+
+    <!-- FDR -->
+    <arg name="generate_fdr" default="true"/>
+
+    <arg name="uuv_max_speed" default="0.9"/>
+    <arg name="batt_charge" default="0.99"/>
+
+    <!-- Pipeline generator -->
+    <!-- Pipe Starting Position Relative to Vehicle -->
+    <arg name="pipe_posx" default="10"/> <!--30-->
+    <arg name="pipe_posy" default="2"/> <!--2--><!-- puts vehicle at start of pipe -->
+    <!-- Random Seed for ROS Nodes and Gazebo Plugins -->
+    <arg name="num_segments" default="5"/>
+    <arg name="length_min" default="50.0"/>
+    <arg name="length_max" default="100.0"/>
+    <arg name="angle_min" default="-0.7854"/>
+    <arg name="angle_max" default="0.7854"/>
+    <arg name="bury_len_min" default="0.3048"/> 
+    <arg name="bury_len_max" default="6.096"/> 
+    <arg name="pipe_scale" default="3"/>
+
+    <!-- Degradation Detector LEC enable -->
+    <arg name="enable_fault_detection" default="false"/>
+
+    <!-- Thruster motor failure for thrust loss and amper drop in thruster power -->
+    <arg name="thruster_motor_failure" default="false"/>
+    <arg name="thruster_id" default="0"/>  <!-- 0..5 -->
+    <arg name="thruster_thrust_force_efficiency" default="0.81"/> <!-- 0.0 to 1.0 -->
+    <arg name="thruster_motor_fail_duration" default="65535"/>
+    <arg name="thruster_motor_fail_starting_time" default="50"/>
+    <!-- Secondaty thruster failure -->
+    <arg name="dual_thruster_failure" default="false"/>
+    <arg name="second_thruster_id" default="0"/>  <!-- 0..5 -->
+    <arg name="second_thruster_thrust_force_efficiency" default="0.31"/> <!-- 0.0 to 1.0 -->
+    <arg name="second_thruster_motor_fail_duration" default="65535"/>
+    <arg name="second_thruster_motor_fail_starting_time" default="100"/>
+
+    <arg name="enable_fault_detection_tester" default="false"/>
+
+    <!-- RPM sensor failure -->
+    <arg name="failed_rpm_sensor" default="2"/>
+    <arg name="failed_rpm_sensor_enable" default="False"/>
+    <arg name="failed_rpm_sensor_start" default="50"/>
+    
+    <!--Argument for number of obstacles-->
+    <!-- <arg name="num_obstacles" default="100"/>
+    <arg name="obs_distance" default="60"/> -->
+
+    <!-- static and dynamic obstacles-->
+    <arg name="enable_obstacles" default="false" />
+    <arg name="enable_debris" default="false" />
+    <arg name="enable_dynamic_obstacles" default="false" />
+    <arg name="lambda_low" default="30" />
+    <arg name="lambda_high" default="60" />
+    <arg name="lambda_low_static" default="30" />
+    <arg name="lambda_high_static" default="60" />
+    <arg name="avg_uuv_speed" default="0.9" />
+    <arg name="box_distance_variance" default="0" />
+    <arg name="box_distance_static" default="65" />
+    <arg name="box_distance_x" default="40" />
+    <arg name="box_distance_y" default="25" />
+    <arg name="box_velocity_x" default="0.0" />
+    <arg name="box_velocity_y" default="-2.5" />
+    <arg name="box_max_cnt" default="10" />
+    <arg name="box_size_x" default="10" />
+    <arg name="box_size_y" default="10" />
+    <arg name="box_size_z" default="10" />
+    <arg name="enable_wall" default="False" />
+    <arg name="enable_random" default="False" />
+    <arg name="obstacle_filename_static" default="''" />
+    <arg name="obstacle_filename_dynamic" default="''" />
+    <arg name="random_box_density" default="1" />
+
+    <!-- Less often modified params: -->    
+
+    <!--Thruster blade failure for IMU noise-->
+    <arg name="thruster_blade_failure" default="false"/> <!--true of false for the entire simulation-->
+
+    <!-- BlueROV2 launch params-->
+    <arg name="mode" default="noisy"/>  <!--noisy/default-->
+
+    <!-- Use NED -->
+    <arg name="use_ned" default="true"/>
+
+    <!-- Random Seed for ROS Nodes and Gazebo Plugins -->
+    <arg name="random_seed" default="0"/>
+
+    <!-- Gazebo World Parameters-->
+    <arg name="ocean_depth" default="60"/>
+    <arg name="paused" default="true"/>
+    <!-- <arg name="headless" default="true"/> -->
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="false"/>
+    <arg name="timeout" default="600"/>
+    <arg name="gz_debug" default="false"/>
+
+    <!-- Vehicle's initial position -->
+    <!-- appx 2km south of world origin-->
+    <!--<arg name="vehicle_latitude" default="38.95320298"/>
+    <arg name="vehicle_longitude" default="-76.398000"/>-->
+
+    <arg name="vehicle_latitude" default="38.971203"/>
+    <arg name="vehicle_longitude" default="-76.398464"/>
+    <arg name="vehicle_altitude" default="45"/>
+    <!-- NED Orientation -->
+    <arg name="vehicle_roll" default="0"/>
+    <arg name="vehicle_pitch" default="0"/>
+    <arg name="vehicle_yaw" default="0"/>
+
+    <!-- World Origin in lat long -->
+    <arg name="origin_latitude" default="38.971203"/> <!-- 38.971203 -->
+    <arg name="origin_longitude" default="-76.398464"/> <!-- -76.398464 -->
+    <arg name="origin_altitude" default="0"/>
+ 
+    <arg name="upenn_sysid" default="false"/>
+    <arg name="rviz" default="$(arg gui)"/>
+
+    <!-- Pencilbeam FLS params -->
+    <arg name="max_range" default="50.0"/>
+
+    <!-- ############################### -->
+    <!--          INCLUDES               -->
+    <!-- ############################### -->
+
+    <!-- Add the bluerov2 vehicle to the world simulation -->
+    <include file="$(find vandy_bluerov)/launch/upload_bluerov2.launch">
+        <arg name="namespace" value="$(arg uuv_name)"/>
+        <arg name="z" value="$(arg vehicle_altitude)"/>
+        <arg name="yaw" value="$(arg vehicle_yaw)"/>
+        <arg name="use_ned" value="$(arg use_ned)"/>
+        <arg name="mode" value="$(arg mode)"/>
+        <arg name="thruster_blade_failure" value="$(arg thruster_blade_failure)"/>
+        <arg name="use_geodetic" value="true"/>
+        <arg name="latitude" value="$(arg vehicle_latitude)"/>
+        <arg name="longitude" value="$(arg vehicle_longitude)"/>
+        <arg name="depth" value="$(eval arg('vehicle_altitude'))"/>
+        <arg name="latitude_ref" value="$(arg origin_latitude)"/>
+        <arg name="longitude_ref" value="$(arg origin_longitude)"/>
+        <arg name="altitude_ref" value="$(arg origin_altitude)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/pixhawk_hw_emulation.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="batt_charge" value="$(arg batt_charge)"/>  <!--100% -->
+        <arg name="failed_rpm_sensor" value="$(arg failed_rpm_sensor)"/>
+        <arg name="failed_rpm_sensor_enable" value="$(arg failed_rpm_sensor_enable)"/>
+        <arg name="failed_rpm_sensor_start" value="$(arg failed_rpm_sensor_start)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/thruster_failure.launch">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="thruster_blade_failure" value="$(arg thruster_blade_failure)"/> <!--true of false for the entire simulation-->
+        <arg name="thruster_motor_failure" value="$(arg thruster_motor_failure)"/> 
+        <!--Thruster motor failure for thrust loss and amper drop in thruster power-->
+        <arg name="thruster_id" value="$(arg thruster_id)"/>  <!-- 0..5 -->
+        <arg name="thruster_thrust_force_efficiency" value="$(arg thruster_thrust_force_efficiency)"/> <!-- 0.0 to 1.0 -->
+        <arg name="thruster_motor_fail_duration" value="$(arg thruster_motor_fail_duration)"/> 
+        <arg name="thruster_motor_fail_starting_time" value="$(arg thruster_motor_fail_starting_time)"/>
+
+        <arg name="dual_thruster_failure" value="$(arg dual_thruster_failure)"/> 
+
+        <arg name="second_thruster_id" value="$(arg second_thruster_id)"/>  <!-- 0..5 -->
+        <arg name="second_thruster_thrust_force_efficiency" value="$(arg second_thruster_thrust_force_efficiency)"/> <!-- 0.0 to 1.0 -->
+        <arg name="second_thruster_motor_fail_duration" value="$(arg second_thruster_motor_fail_duration)"/> 
+        <arg name="second_thruster_motor_fail_starting_time" value="$(arg second_thruster_motor_fail_starting_time)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/degradation_tester.launch" if="$(arg enable_fault_detection_tester)">
+        <arg name="uuv_name" value="$(arg uuv_name)"/>
+        <arg name="random_seed" value="$(arg random_seed)"/>
+    </include>
+
+    <!-- FDR Tx/Rx -->
+    <include file="$(find vandy_bluerov)/launch/fdr_sim.launch">
+        <arg name="generate_fdr" value="$(arg generate_fdr)"/>
+        <arg name="random_seed" value="$(arg random_seed)"/>
+        <arg name="ocean_depth" value="$(arg ocean_depth)"/>
+    </include>
+
+    <!-- Launch rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" output="$(arg standard_output)"
+          args="-d $(find vandy_bluerov)/rviz/bluerov2_control.rviz"
+          if="$(arg rviz)"/>
+
+    <!-- Launch gazebo with the world-->
+    <include file="$(find vandy_bluerov)/launch/gazebo_empty_world.launch">
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <!-- <arg name="headless" value="$(arg headless)"/> -->
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="random_seed" value="$(arg random_seed)"/>
+        <arg name="debug" value="$(arg gz_debug)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/random_pipeline_generator.launch">
+        <arg name="pipe_posx" value="$(arg pipe_posx)"/> <!--30-->
+        <arg name="pipe_posy" value="$(arg pipe_posy)"/> 
+        <arg name="pipe_scale" value="$(arg pipe_scale)"/>
+        <arg name="random_seed" value="$(arg random_seed)"/>
+        <arg name="length_min" value="$(arg length_min)"/>
+        <arg name="length_max" value="$(arg length_max)"/>
+        <arg name="angle_min" value="$(arg angle_min)"/>
+        <arg name="angle_max" value="$(arg angle_max)"/>
+        <arg name="ocean_depth" value="$(arg ocean_depth)"/>
+        <arg name="num_segments" value="$(arg num_segments)"/>
+    </include>
+
+    <include file="$(find vandy_bluerov)/launch/generate_obstacles.launch">
+        <arg name="enable_obstacles" value="$(arg enable_obstacles)"/>
+        <arg name="enable_dynamic_obstacles" value="$(arg enable_dynamic_obstacles)"/>
+        <arg name="enable_debris" value="$(arg enable_debris)" />
+        <arg name="enable_fishnet" value="$(arg enable_fishnet)" />
+        <arg name="random_seed" value="$(arg random_seed)"/>
+        <arg name="lambda_low" value="$(arg lambda_low)" />
+        <arg name="lambda_high" value="$(arg lambda_high)" />
+        <arg name="lambda_low_static" value="$(arg lambda_low_static)" />
+        <arg name="lambda_high_static" value="$(arg lambda_high_static)" />
+        <arg name="avg_uuv_speed" value="$(arg avg_uuv_speed)" />
+        <arg name="box_distance_variance" value="$(arg box_distance_variance)" />
+        <arg name="box_distance_static" value="$(arg box_distance_static)" />
+        <arg name="box_distance_x" value="$(arg box_distance_x)" />
+        <arg name="box_distance_y" value="$(arg box_distance_y)" />
+        <arg name="box_velocity_x" value="$(arg box_velocity_x)" />
+        <arg name="box_velocity_y" value="$(arg box_velocity_y)" />
+        <arg name="box_max_cnt" value="$(arg box_max_cnt)" />
+        <arg name="box_size_x" value="$(arg box_size_x)" />
+        <arg name="box_size_y" value="$(arg box_size_y)" />
+        <arg name="box_size_z" value="$(arg box_size_z)" />
+        <arg name="enable_wall" value="$(arg enable_wall)" />
+        <arg name="enable_random" value="$(arg enable_random)" />
+        <arg name="obstacle_filename_static" value="$(arg obstacle_filename_static)" />
+        <arg name="obstacle_filename_dynamic" value="$(arg obstacle_filename_dynamic)" />
+        <arg name="random_box_density" value="$(arg random_box_density)"/>
+
+    </include>  
+
+</launch>
+

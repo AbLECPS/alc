@@ -1,0 +1,4 @@
+#From jpetazzo/dind
+From alc_dind:latest
+COPY run_dind.sh /
+RUN chmod +x /run_dind.sh

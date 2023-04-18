@@ -1,0 +1,13 @@
+<!--
+File:         ros_timeout.launch
+Description:  ROS Timeout for ALC
+-->
+
+<launch>
+  <arg name="timeout" default="15"/>
+ 
+  <node name="ros_timeout" type="ros_timeout.py" pkg="vandy_bluerov" required="true">
+    <param name="timeout" value="$(arg timeout)"/>     
+  </node>
+
+</launch>

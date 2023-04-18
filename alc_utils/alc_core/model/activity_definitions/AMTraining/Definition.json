@@ -1,0 +1,225 @@
+{
+  "AMTraining": {
+    "Choices": "vae,svdd,vae_regression,SaliencyMap,selective_classification",
+    "Label": "am_training",
+    "Category": "AMTraining",
+    "name": "AMTraining",
+    "context": {
+      "AM_Model": {
+        "Required": false,
+        "name": "AM_Model",
+        "type": "LEC",
+        "Label": "LECModel",
+        "parameters": {
+          "model_definition": {
+            "type": "code",
+            "filename": "lec_model.py",
+            "name": "model_definition"
+          },
+          "input_shape": {
+            "type": "array",
+            "name": "input_shape"
+          }
+        }
+      }
+    },
+    "input": {
+      "CalibrationData": {
+        "name": "CalibrationData",
+        "Label": "calibration_data",
+        "type": "Data",
+        "multi_dataset": true
+      },
+      "lec_model": {
+        "name": "lec_model",
+        "Label": "lec_model",
+        "type": "LEC"
+      },
+      "TrainingData": {
+        "name": "TrainingData",
+        "Label": "training_data",
+        "type": "Data",
+        "multi_dataset": true
+      },
+      "ValidationData": {
+        "name": "ValidationData",
+        "Label": "validation_data",
+        "type": "Data",
+        "multi_dataset": true
+      }
+    },
+    "output": {
+      "trainedAM": {
+        "type": "LEC",
+        "Label": "trainedAM",
+        "name": "trainedAM",
+        "attributes": {
+          "accuracy": {
+            "type": "Number",
+            "name": "accuracy"
+          },
+          "am_path": {
+            "type": "string",
+            "name": "am_path"
+          },
+          "loss": {
+            "type": "Number",
+            "name": "loss"
+          },
+          "fileformat": {
+            "type": "string",
+            "name": "fileformat"
+          },
+          "lec_path": {
+            "type": "string",
+            "name": "lec_path"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "DataProcessing": {
+        "Label": "data_process",
+        "name": "DataProcessing",
+        "isTable": true,
+        "parameters": {
+          
+          "custom_loader": {
+            "name": "custom_loader",
+            "type": "code"
+          },
+          "formatter": {
+            "name": "formatter",
+            "type": "code"
+          },
+          "dataset_name": {
+            "defaultValue": "rosbag",
+            "name": "dataset_name",
+            "value_choices": "rosbag\nrosbag_hdf5\ncsv\npng\ncustom"
+          }
+        }
+      },
+      "lec_info": {
+        "ChoiceList": "SaliencyMap,VAE_w_Regression",
+        "name": "lec_info",
+        "Label": "lec_info",
+        "parameters": {
+          "lec_definition": {
+            "type": "code",
+            "required": true,
+            "isTable": false,
+            "name": "lec_definition"
+          }
+        }
+      },
+      "AMTrainingParams": {
+        "Tag": "TrainingParams",
+        "name": "AMTrainingParams",
+        "parameters": {
+          "training_data_fraction": {
+            "defaultValue": "0.8",
+            "value": "",
+            "type": "float",
+            "name": "training_data_fraction"
+          },
+          "epsilon": {
+            "type": "float",
+            "defaultValue": "0.75",
+            "name": "epsilon"
+          },
+          "rng_seed": {
+            "type": "integer",
+            "defaultValue": "42",
+            "name": "rng_seed"
+          },
+          "window_size": {
+            "defaultValue": "10",
+            "type": "integer",
+            "name": "window_size"
+          },
+          "num_epochs": {
+            "defaultValue": "450",
+            "name": "num_epochs",
+            "isTable": false,
+            "type": "integer"
+          },
+          "soft_boundary": {
+            "defaultValue": "False",
+            "name": "soft_boundary",
+            "isTable": false,
+            "type": "boolean"
+          },
+          "lr": {
+            "defaultValue": "0.0001",
+            "name": "lr",
+            "isTable": false,
+            "type": "float"
+          },
+          "milestone": {
+            "defaultValue": "[250,350]",
+            "name": "milestone",
+            "isTable": false,
+            "type": "array"
+          },
+          "nu": {
+            "defaultValue": "0.1",
+            "name": "nu",
+            "isTable": false,
+            "type": "float"
+          },
+          "weight_decay": {
+            "defaultValue": "0.5e-6",
+            "name": "weight_decay ",
+            "isTable": false,
+            "type": "float"
+          },
+          "amsgrad": {
+            "defaultValue": "False",
+            "name": "amsgrad",
+            "isTable": false,
+            "type": "boolean"
+          },
+          "gamma": {
+            "defaultValue": "0.1",
+            "name": "gamma",
+            "isTable": false,
+            "type": "float"
+          }
+        }
+      },
+      "AM_Model": {
+        "Label": "model",
+        "name": "Model",
+      "parameters": {
+        "am_model_definition": {
+          "type": "code",
+          "filename": "lec_model.py",
+          "name": "model_definition"
+        },
+        "input_shape": {
+          "type": "array",
+          "name": "input_shape"
+        }
+      }
+      },
+      "Execution": {
+        "category": "Execution",
+        "category_choices": "Execution",
+        "name": "Execution",
+        "description":"Parameters for simulation execution",
+        "parameters": {
+            "timeout": {
+                "min": "-1",
+                "defaultValue": "7220",
+                "isTable": false,
+                "type": "float",
+                "index":2,
+                "description":"Maximum time for training(s)",
+                "name": "timeout"
+            }
+            
+        }
+    }
+    }
+  }
+}

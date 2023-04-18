@@ -1,0 +1,16 @@
+langservers:
+  python:
+    - Microsoft.Python.LanguageServer
+  btree:
+    - "/xtext/edu.vanderbilt.alc.isis.btree.websockets-1.0.0-SNAPSHOT/bin/edu-vanderbilt-alc-isis-btree-websocket"
+  expression:
+   - "/stdio/com.novomind.language.server.expression.websockets/bin/composer-language-server-expression-websocket"
+  dockerfile:
+   - docker-langserver
+   - --stdio
+  json:
+   - vscode-json-languageserver
+   - --stdio
+  yaml:
+   - yaml-language-server
+   - --stdio

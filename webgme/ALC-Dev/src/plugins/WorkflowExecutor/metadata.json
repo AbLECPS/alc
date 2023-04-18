@@ -1,0 +1,24 @@
+{
+  "id": "WorkflowExecutor",
+  "name": "Workflow Executor",
+  "version": "0.1.0",
+  "description": "Executes a workflow",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": true,
+  "configStructure": [
+    {
+      "name": "Name",
+      "displayName": "Workflow Name",
+      "description": "Workflow Name referenced in Result Metadata",
+      "value": "WF",
+      "valueType": "string",
+      "readOnly": false
+    }
+  ]
+}

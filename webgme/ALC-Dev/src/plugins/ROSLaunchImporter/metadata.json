@@ -1,0 +1,40 @@
+{
+  "id": "ROSLaunchImporter",
+  "name": "ROSLaunchImporter",
+  "version": "0.1.0",
+  "description": "",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+    {
+          "name": "launch_file",
+          "displayName": "ROS Launch File",
+          "description": "ROS Launch File to be imported into a ROS Info block.",
+          "value": "",
+          "valueType": "asset",
+          "readOnly": false
+    },
+    {
+          "name": "launch_path",
+          "displayName": "ROS Launch File Path (Recommended)",
+          "description": "ROS-readable location where launch file can be found.\nExample: $(find uuv_trajectory_control)/launch/auv_geometric_tracking_controller.launch",
+          "value": "",
+          "valueType": "string",
+          "readOnly": false
+    },
+    {
+          "name": "import_as_parameters",
+          "displayName": "Import as Parameter Block",
+          "description": "Import arguments from launch file into a parameter block. Typically used for system-level parameters shared between many components.",
+          "value": "false",
+          "valueType": "boolean",
+          "readOnly": false
+    }
+  ]
+}

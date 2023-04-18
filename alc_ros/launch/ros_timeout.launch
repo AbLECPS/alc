@@ -1,0 +1,9 @@
+<launch>
+    <arg name="timeout" default="0"/>
+
+    <node name="ros_timeout" type="ros_timeout.py" pkg="alc_ros" required="true">
+        <rosparam subst_value="true">
+            timeout : $(arg timeout)
+        </rosparam>
+    </node>
+</launch>

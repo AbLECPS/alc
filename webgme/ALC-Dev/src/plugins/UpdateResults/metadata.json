@@ -1,0 +1,15 @@
+{
+  "id": "UpdateResults",
+  "name": "UpdateResults",
+  "version": "0.1.0",
+  "description": "Updates Results from backend working folder",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [ ]
+}

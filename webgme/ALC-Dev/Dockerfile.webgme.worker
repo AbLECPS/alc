@@ -1,0 +1,17 @@
+FROM alc_alc:latest
+# Install DeepForge
+RUN echo '{"allow_root": true}' > /root/.bowerrc && mkdir -p /root/.config/configstore/ && \
+    echo '{}' > /root/.config/configstore/bower-github.json
+    
+# Configure the worker
+RUN /alc/webgme/bin/deepforge config blob.dir /data/blob && \
+    /alc/webgme/bin/deepforge config mongo.dir /data/db && \
+    /alc/webgme/bin/deepforge config worker.cache.useBlob false && \
+    /alc/webgme/bin/deepforge config worker.cache.dir /deepforge/worker-cache
+
+
+RUN chmod +x /alc/webgme/alc_worker_entrypoint.sh
+ENTRYPOINT ["/alc/webgme/alc_worker_entrypoint.sh"]
+CMD ["http://alc:8888"]
+
+

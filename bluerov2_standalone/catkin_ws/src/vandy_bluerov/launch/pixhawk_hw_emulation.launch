@@ -1,0 +1,34 @@
+<!--
+File:         pixhawk_hw_emulation.launch
+Description:  Emulation pixhawk (BlueROV2) sensor data for ALC simulation
+-->
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+  <arg name="batt_voltage" default="16.8"/> <!--[v] - Stock LiIon battery 4x3.7 nominal, 4x4.2 fully charged-->
+  <arg name="batt_capacity" default="18"/> <!-- [Ah] - Stock LiIon battery -->
+  <arg name="batt_charge" default="1.0"/>  <!--100% -->
+  <arg name="thruster_failure" default="-1"/> <!-- -1 for no failure, [0..5] for thruster [0..5] failure -->
+  <!--<arg name="thruster_failure_val" default="0.5"/>  50% thrust loss due to degradation -->
+  <arg name="failed_rpm_sensor" default="2"/>
+  <arg name="failed_rpm_sensor_enable" default="False"/>
+  <arg name="failed_rpm_sensor_start" default="50"/>
+ 
+  <group ns="$(arg uuv_name)">
+    <node pkg="vandy_bluerov"
+          type="pixhawk_hw_emulation.py"
+          name="pixhawk_hw_emulation"
+          output="screen">
+      <rosparam subst_value="true">
+          batt_voltage: $(arg batt_voltage)
+          batt_capacity: $(arg batt_capacity)
+          batt_charge: $(arg batt_charge)
+          thruster_failure: $(arg thruster_failure)
+          failed_rpm_sensor: $(arg failed_rpm_sensor)
+          failed_rpm_sensor_enable: $(arg failed_rpm_sensor_enable)
+          failed_rpm_sensor_start: $(arg failed_rpm_sensor_start)
+      </rosparam>
+    </node>
+
+  </group>
+
+</launch>

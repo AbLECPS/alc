@@ -1,0 +1,16 @@
+<!--
+File:         send_hsd.launch
+Description:  Send initial HSD command
+-->
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+  <arg name="heading" default="0"/>
+  <arg name="speed" default="2.0"/>
+  <arg name="depth" default="45"/>
+
+  <group ns="$(arg uuv_name)">
+         <node name="send_hsd" pkg="vandy_bluerov" type="send_hsd.py" output="screen"
+                args="$(arg heading) $(arg speed) $(arg depth)"/>
+  </group>
+
+</launch>

@@ -1,0 +1,5 @@
+exceptions_file_key = "exceptions_file"
+failing_task_path_key = "failing_task_path"
+script_file_key = "script_file"
+stderr_file_key = "stderr_file"
+stdout_file_key = "stdout_file"

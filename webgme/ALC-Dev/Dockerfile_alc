@@ -1,0 +1,23 @@
+#From nexus.isis.vanderbilt.edu:8888/alc_alc:2
+#RUN mv /alc /alc_webgme
+
+FROM alc_alc:latest
+
+COPY package.json /alc/webgme/.
+RUN npm install
+
+RUN npm install -g jsonrpc-ws-proxy js-yaml
+RUN SERVER_XML="$(curl -sSL "https://pvsc.blob.core.windows.net/python-language-server-stable?restype=container&comp=list&prefix=Python-Language-Server-linux-x64")" &&\
+    NUPKG_LINK="$(echo "$SERVER_XML" | grep -Eo 'https://[^<]+\.nupkg' | tail -n1)" && \
+    wget -nv "${NUPKG_LINK}" && \
+    unzip -d /opt/mspyls Python-Language-Server-linux-x64.*.nupkg && \
+    chmod +x /opt/mspyls/Microsoft.Python.LanguageServer && \
+    ln -s /opt/mspyls/Microsoft.Python.LanguageServer /usr/local/bin/Microsoft.Python.LanguageServer && \
+    rm Python-Language-Server-linux-x64.*.nupkg
+
+WORKDIR /alc/webgme
+EXPOSE 8888
+EXPOSE 22
+
+CMD ["webgme"]
+

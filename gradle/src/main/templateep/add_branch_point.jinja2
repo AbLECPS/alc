@@ -1,0 +1,9 @@
+with {{ parent_job }}.add_branch_point(
+    "{{ job_name }}",
+    {{ previous_job_name_list }},
+    {{ false_job_name_list }},
+    {{ condition }},
+    {{ true_job_name_list }}
+) as {{ var_name }}:
+    {{ var_name }}{% for call in call_list %} \
+        .{{ call | indent(8) }}{% endfor %}

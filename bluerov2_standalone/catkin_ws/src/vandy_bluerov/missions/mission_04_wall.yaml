@@ -1,0 +1,37 @@
+home: [ 0, 0 ]
+missions:
+  - type: waypoint_following
+    waypoints:
+      - [0,  0, 45, 1]
+      - [-250, 10, 45, 1]
+      - [0, 50, 45, 1]
+      - [-250, 50, 45, 1]
+      - [-250, 100, 45, 1]
+      - [0, 100, 45, 1]
+      - [0, 150, 45, 1]
+      - [-250, 150, 45, 1]
+    max_forward_speed: 1.5
+    heading: 0
+    use_fixed_heading: False
+    waypoint_reached_distance: 5.0
+    avoidance_operating_depth: 10
+    avoidance_learning: true
+    loiter_box_size: 9.0
+    termination_conditions:
+      - type: final_waypoint_reached
+        distance: 5.0
+        actions:
+          - surface
+      - type: min_obstacle_standoff
+        distance: 4.0
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home
+      - topic: "/degradation_detector"
+        decision_threshold: -0.145
+

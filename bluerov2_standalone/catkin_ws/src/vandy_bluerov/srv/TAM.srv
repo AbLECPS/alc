@@ -1,0 +1,5 @@
+# This is a service for Iver/BlueROV2's TAM reallocation commands
+
+float64[] allocation_matrix
+---
+bool success

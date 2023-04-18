@@ -1,0 +1,192 @@
+{
+  "SLTraining": {
+    "Category": "SLTraining",
+    "name": "SLTraining",
+    "context": {
+      "Model": {
+        "name": "Model",
+        "type": "LEC",
+        "Label": "LECModel",
+        "parameters": {
+          "model_definition": {
+            "type": "code",
+            "filename": "lec_model.py",
+            "name": "model_definition"
+          }
+        }
+      }
+    },
+    "input": {
+      "ParentLECModel": {
+        "type": "LEC",
+        "Label": "parentLECModel",
+        "name": "ParentLECModel"
+      },
+      "TestData": {
+        "name": "TestData",
+        "Label": "training_data",
+        "type": "Data",
+        "multi_dataset": true
+      },
+      "TrainingData": {
+        "name": "TrainingData",
+        "Label": "training_data",
+        "type": "Data",
+        "multi_dataset": true
+      },
+      "ValidationData": {
+        "name": "ValidationData",
+        "Label": "training_data",
+        "type": "Data",
+        "multi_dataset": true
+      }
+    },
+    "output": {
+      "trainedLEC": {
+        "type": "LEC",
+        "Label": "trainedLEC",
+        "name": "trainedLEC",
+        "attributes": {
+          "accuracy": {
+            "type": "Number",
+            "name": "accuracy"
+          },
+          "fileformat": {
+            "type": "string",
+            "name": "fileformat"
+          },
+          "path": {
+            "type": "string",
+            "name": "path"
+          },
+          "loss": {
+            "type": "Number",
+            "name": "loss"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "DataProcessing": {
+        "Label": "data_process",
+        "name": "DataProcessing",
+        "parameters": {
+          "custom_loader": {
+            "name": "custom_loader",
+            "type": "code"
+          },
+          "formatter": {
+            "name": "formatter",
+            "type": "code"
+          },
+          "dataset_name": {
+            "value_choices": "rosbag\nrosbag_hdf5\ncsv\npng\ncustom",
+
+            "type": "string",
+            "name": "dataset_name"
+          }
+        }
+      },
+      "TrainingParams": {
+        "Tag": "TrainingParams",
+        "name": "TrainingParams",
+        "parameters": {
+          "beta_2": {
+            "type": "float",
+            "name": "beta_2",
+            "defaultValue": 0.9999
+          },
+          "loss": {
+            "defaultValue": "MSE",
+            "type": "string",
+            "name": "loss"
+          },
+          "lr": {
+            "defaultValue": "0.001",
+            "type": "float",
+            "name": "lr",
+            "value": ""
+          },
+          "epochs": {
+            "name": "epochs",
+            "type": "integer",
+            "defaultValue": 10
+          },
+          "batch_size": {
+            "name": "batch_size",
+            "type": "integer",
+            "defaultValue": 32
+          },
+          "training_data_fraction": {
+            "defaultValue": "0.5",
+            "name": "training_data_fraction",
+            "type": "float"
+          },
+          "useful_data_fraction": {
+            "defaultValue": "0.5",
+            "name": "useful_data_fraction",
+            "type": "float"
+          },
+          "optimizer": {
+            "type": "string",
+            "name": "optimizer"
+          },
+          "callbacks": {
+            "type": "string",
+            "name": "callbacks"
+          },
+          "verbose": {
+            "defaultValue": "true",
+            "type": "boolean",
+            "name": "verbose"
+          },
+          "ml_library": {
+            "defaultValue": "keras",
+            "type": "string",
+            "value_choices":"keras\npytorch-semseg",
+            "name": "ml_library"
+          },
+          "metrics": {
+            "defaultValue": "[\"mse\", \"accuracy\"]",
+            "type": "array",
+            "name": "metrics"
+          },
+          "beta_1": {
+            "type": "float",
+            "name": "beta_1",
+            "defaultValue": 0.9
+          }
+        }
+      },
+      "Execution": {
+        "category": "Execution",
+        "category_choices": "Execution",
+        "name": "Execution",
+        "description":"Parameters for simulation execution",
+        "parameters": {
+            "timeout": {
+                "min": "-1",
+                "defaultValue": "7220",
+                "isTable": false,
+                "type": "float",
+                "index":2,
+                "description":"Maximum time for training(s)",
+                "name": "timeout"
+            }
+            
+        }
+    },
+    "Model": {
+      "Label": "model",
+      "name": "Model",
+      "parameters": {
+        "model_definition": {
+          "type": "code",
+          "filename": "lec_model.py",
+          "name": "model_definition"
+        }
+      }
+    }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<!--
+File:         thruster_failure.launch
+Description:  Adds thruster failure to vehicle model.
+-->
+
+<launch>
+        <arg name="uuv_name" default="uuv0"/>
+
+        <!--Thruster blade failure for IMU noise-->
+        <arg name="thruster_blade_failure" default="false"/> <!--true of false for the entire simulation-->
+        <arg name="thruster_motor_failure" default="true"/> 
+        <!--Thruster motor failure for thrust loss and amper drop in thruster power-->
+        <arg name="thruster_id" default="0"/>  <!-- 0..5 -->
+        <arg name="thruster_thrust_force_efficiency" default="0.0"/> <!-- 0.0 to 1.0 -->
+        <arg name="thruster_motor_fail_duration" default="20"/> 
+        <arg name="thruster_motor_fail_starting_time" default="20"/>
+
+        <arg name="dual_thruster_failure" default="false"/> 
+        <arg name="second_thruster_id" default="0"/>  <!-- 0..5 -->
+        <arg name="second_thruster_thrust_force_efficiency" default="0.31"/> <!-- 0.0 to 1.0 -->
+        <arg name="second_thruster_motor_fail_duration" default="65535"/> 
+        <arg name="second_thruster_motor_fail_starting_time" default="50"/>
+
+  <include file="$(find uuv_control_utils)/launch/set_thruster_output_efficiency.launch" if="$(arg thruster_motor_failure)">
+          <arg name="uuv_name" value="$(arg uuv_name)"/>
+          <arg name="starting_time" value="$(arg thruster_motor_fail_starting_time)" />
+          <arg name="thruster_id" value="$(arg thruster_id)" />
+          <arg name="efficiency" value="$(arg thruster_thrust_force_efficiency)"/>
+          <arg name="duration" value="$(arg thruster_motor_fail_duration)"/>      
+  </include>
+
+<include file="$(find uuv_control_utils)/launch/set_thruster_output_efficiency.launch" if="$(arg dual_thruster_failure)">
+          <arg name="uuv_name" value="$(arg uuv_name)"/>
+          <arg name="starting_time" value="$(arg second_thruster_motor_fail_starting_time)" />
+          <arg name="thruster_id" value="$(arg second_thruster_id)" />
+          <arg name="efficiency" value="$(arg second_thruster_thrust_force_efficiency)"/>
+          <arg name="duration" value="$(arg second_thruster_motor_fail_duration)"/>      
+  </include>
+
+  <include file="$(find uuv_control_utils)/launch/set_thruster_output_efficiency.launch" if="$(arg thruster_blade_failure)">
+          <arg name="uuv_name" value="$(arg uuv_name)"/>
+          <arg name="starting_time" value="1" />
+          <arg name="thruster_id" value="1" />
+          <arg name="efficiency" value="0.7"/>
+          <arg name="duration" value="65535"/>      
+  </include>
+
+</launch>

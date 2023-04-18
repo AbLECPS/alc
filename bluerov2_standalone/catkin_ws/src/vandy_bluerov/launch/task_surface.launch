@@ -1,0 +1,17 @@
+<!--
+File:         task_surface.launch
+-->
+
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+  <arg name="surface_helix_turnrate" default="30"/>
+
+  <group ns="$(arg uuv_name)">  
+    <remap from="odom" to="pose_gt_noisy_ned"/>
+    <node name="task_surface" pkg="vandy_bluerov" type="task_surface.py" output="screen" >
+      <rosparam subst_value="true">
+            surface_helix_turnrate: $(arg surface_helix_turnrate)
+          </rosparam>
+      </node>
+  </group>
+</launch>

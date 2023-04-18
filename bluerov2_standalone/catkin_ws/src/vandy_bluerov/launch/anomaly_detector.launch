@@ -1,0 +1,22 @@
+<!--
+File:         anomaly_detector.launch
+-->
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+  <arg name="enable_anomaly_detector" default="False"/>
+
+      <group if="$(arg enable_anomaly_detector)">
+            <node name="anomaly_detector_input" 
+                  pkg="vandy_bluerov" 
+                  type="anomaly_detector_input.py" 
+                  output="screen">
+            </node>
+
+            <node name="anomaly_detector_lec" 
+                  pkg="vandy_bluerov" 
+                  type="anomaly_detector_lec.py" 
+                  output="screen">
+            </node>
+      </group>
+
+</launch>

@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+"""
+@package {{packageName}}
+@file {{componentName}}_ros.py
+"""
+
+import rospy
+import tf
+import actionlib
+
+
+{% for pkg_type, cls_type in msgimports%}
+from {{pkg_type}}.msg import {{cls_type}}
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in serviceServers%}
+from {{pkg_type}}.srv import {{cls_type}}, {{cls_type}}Response
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in serviceClients%}
+from {{pkg_type}}.srv import {{cls_type}}, {{cls_type}}Request
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in actionServers%}
+from {{pkg_type}}.msg import {{cls_type}}Feedback, {{cls_type}}Result, {{cls_type}}Action
+{% endfor %}
+{% for pkg_type, cls_type, name, topic in actionClients%}
+from {{pkg_type}}.msg import {{cls_type}}Goal, {{cls_type}}Feedback, {{cls_type}}Result, {{cls_type}}Action
+{% endfor %}
+
+# other includes
+from {{packageName}} import {{componentName}}_impl
+
+
+# protected region user include package begin #
+{% if pcode['# protected region user include package begin #'] %}
+{{pcode['# protected region user include package begin #']}}
+{% endif %}
+# protected region user include package end #
+
+
+class {{componentName}}ROS(object):
+    """
+    Class to contain Developer implementation.
+    """
+    def __init__(self):
+        """
+        Definition and initialisation of class attributes
+        """
+        self.comp_impl_ = {{componentName}}_impl.{{componentName}}Implementation()
+        {% for name,value in params%}
+        self.comp_impl_.{{name}} = rospy.get_param("~{{name}}",{{value}})
+        {% endfor %}
+        {% for p in pubInfoKeys%}
+        self.{{pubInfo[p]["name"]}}_pub = rospy.Publisher('{{pubInfo[p]["topic"]}}', {{pubInfo[p]["type"]}}, queue_size={{pubInfo[p]["queue_size"]}})
+        {% endfor %}
+        {% for s in subInfoKeys%}
+        self.{{subInfo[s]["name"]}}_sub = rospy.Subscriber('{{subInfo[s]["topic"]}}', {{subInfo[s]["type"]}}, self.comp_impl_.callback_{{subInfo[s]["name"]}}, queue_size = {{subInfo[s]["queue_size"]}})
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in serviceServers%}
+        self.{{name}}_server = rospy.Service('{{topic}}', {{cls_type}}, self.comp_impl_.callback_{{name}})
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in serviceClients%}
+        self.comp_impl_.client_{{name}} = rospy.ServiceProxy('{{topic}}', {{cls_type}});
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in actionServers%}
+        remap = rospy.get_param("~{{topic}}_remap", "{{topic}}")
+        self.comp_impl_.as_{{name}} = actionlib.SimpleActionServer(remap, {{cls_type}}Action,  execute_cb=self.comp_impl_.callback_{{name}}, auto_start=False)
+        self.comp_impl_.as_{{name}}.start()
+        {% endfor %}
+        {% for pkg_type, cls_type, name,topic in actionClients%}
+        remap = rospy.get_param("~{{topic}}_remap", "{{topic}}")
+        self.comp_impl_.ac_{{name}} = actionlib.SimpleActionClient(remap,{{cls_type}}Action)
+        rospy.loginfo("Waiting for action server {}".format(remap))
+        self.comp_impl_.ac_{{name}}.wait_for_server()
+        {% endfor %}
+        # protected region user member variables begin #
+{% if pcode['# protected region user member variables begin #'] %}
+{{pcode['# protected region user member variables begin #']}}
+{% endif %}
+    def update(self, event):
+        """
+        @brief update function
+        @param      self The object
+        @param      event The event
+        """
+        self.comp_impl_.activate_all_output()
+        self.comp_impl_.set_all_input_read()
+        self.comp_impl_.update()
+        try:
+            {% for pkg_type, cls_type, name, topic in publishers%}
+            if self.comp_impl_.out_{{name}}_active:
+                self.{{name}}_pub.publish(self.comp_impl_.out_{{name}})
+            {% endfor %}
+        except rospy.ROSException as error:
+            rospy.logerr("Exception: {}".format(error))
+# protected region user additional functions begin #
+{% if pcode['# protected region user additional functions begin #'] %}
+{{pcode['# protected region user additional functions begin #']}}
+{% endif %}
+# protected region user additional functions end #
+def main():
+    """
+    @brief Entry point of the package.
+    Instanciate the node interface containing the Developer implementation
+    @return nothing
+    """
+    rospy.init_node("{{componentName}}", anonymous=False)
+    node = {{componentName}}ROS()
+    rospy.Timer(rospy.Duration(1.0 / {{componentFrequency}}), node.update)
+    rospy.spin()

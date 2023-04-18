@@ -1,0 +1,60 @@
+- type: Tanh
+  id: /t/5
+  next:
+    - /t/H
+  attributes: {}
+- type: Tanh
+  id: /t/D
+  next:
+    - /t/b
+  attributes: {}
+- type: Linear
+  id: /t/H
+  next: []
+  attributes:
+    bias: ''
+    outputSize: 7
+    inputSize: 80
+- type: Linear
+  id: /t/I
+  next:
+    - /t/O
+  attributes:
+    bias: ''
+    outputSize: 30
+    inputSize: 150
+- type: Linear
+  id: /t/M
+  next:
+    - /t/j
+  attributes:
+    bias: ''
+    outputSize: 150
+    inputSize: 100
+- type: Concat
+  id: /t/O
+  next:
+    - /t/5
+  attributes:
+    dimension: 1
+- type: Linear
+  id: /t/b
+  next:
+    - /t/O
+  attributes:
+    bias: ''
+    outputSize: 50
+    inputSize: 150
+- type: Linear
+  id: /t/e
+  next:
+    - /t/D
+  attributes:
+    bias: ''
+    outputSize: 150
+    inputSize: 100
+- type: Tanh
+  id: /t/j
+  next:
+    - /t/I
+  attributes: {}

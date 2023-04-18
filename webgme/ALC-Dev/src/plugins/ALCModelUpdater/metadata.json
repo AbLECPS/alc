@@ -1,0 +1,25 @@
+{
+  "id": "ALCModelUpdater",
+  "name": "ALCModelUpdater",
+  "version": "0.1.0",
+  "description": "ALC Model Updater",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+    {
+      "name": "task",
+      "displayName": "task filename",
+      "description": "tasks to execute",
+      "value": "",
+      "valueType": "string",
+      "readOnly": false
+    }
+    
+  ]
+}

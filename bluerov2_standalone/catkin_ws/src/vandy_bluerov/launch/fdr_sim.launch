@@ -1,0 +1,18 @@
+<!--
+File:         fdr.launch
+Description:  Flight Data Recorder simulation package
+-->
+<launch>
+  <arg name="random_seed" default="0"/>
+  <arg name="ocean_depth" default="60"/>
+  <arg name="generate_fdr" default="true"/>
+
+    <group if="$(arg generate_fdr)">
+        <node name="fdr_tx" pkg="vandy_bluerov" type="fdr_tx.py" output="screen">
+            <rosparam subst_value="true">
+                random_seed: $(arg random_seed)
+                ocean_depth: $(arg ocean_depth)
+            </rosparam>
+        </node>
+    </group>
+</launch>

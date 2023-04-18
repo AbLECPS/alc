@@ -1,0 +1,27 @@
+{
+    "buildRoot": "/alc/workflows/automate/DataStore_ex_2",
+    "datastores": [
+        {
+            "job": {
+                "job": [
+                    "DS"
+                ],
+                "workflow": "DegradationLEC_AM"
+            },
+            "job_name": "USE_OTHER_WORKFLOW"
+        }
+    ],
+    "genericActiveNode": "/y",
+    "jobs": [],
+    "maxIterations": {},
+    "owner": "alc",
+    "projectName": "bl_datastore",
+    "start_jobs": [
+        [
+            "TrainingLoop"
+        ]
+    ],
+    "statusPath": "",
+    "workflowName": "",
+    "working_dir": ""
+}

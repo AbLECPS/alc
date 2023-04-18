@@ -1,0 +1,12 @@
+
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+  <group ns="$(arg uuv_name)">
+    <node pkg="vandy_bluerov"
+          type="speed_publisher.py"
+          name="speed_publisher"
+          output="screen">
+      <remap from="odom" to="pose_gt_noisy_ned"/>
+    </node>
+  </group>
+</launch>

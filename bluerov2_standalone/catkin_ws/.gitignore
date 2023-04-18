@@ -1,0 +1,6 @@
+# Ignore generated catkin files/directories
+/CMakeLists.txt
+/.catkin_tools/
+/build/
+/devel/
+/logs/

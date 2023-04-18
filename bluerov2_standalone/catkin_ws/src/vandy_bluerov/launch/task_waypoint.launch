@@ -1,0 +1,31 @@
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+  <arg name="waypoint_radius" default="5"/>
+  <arg name="max_turnrate" default="30"/>
+  <arg name="random_waypoints" default="false"/>
+  <arg name="random_seed" default="0"/>
+  <arg name="num_waypoints" default="5"/>
+  <arg name="min_distance" default="15"/>
+  <arg name="max_distance" default="30"/>
+  <arg name="min_heading" default="-1.5708"/>
+  <arg name="max_heading" default="1.5708"/>
+  <arg name="x_track_error" default="false"/>
+
+  <group ns="$(arg uuv_name)">
+    <node name="task_waypoint" pkg="vandy_bluerov" type="task_waypoint.py" output="screen">
+          <rosparam subst_value="true">
+            waypoint_radius: $(arg waypoint_radius)
+            max_turnrate: $(arg max_turnrate)
+            random_waypoints: $(arg random_waypoints)
+            random_seed: $(arg random_seed)
+            num_waypoints: $(arg num_waypoints)
+            min_distance: $(arg min_distance)
+            max_distance: $(arg max_distance)
+            min_heading: $(arg min_heading)
+            max_heading: $(arg max_heading)
+            x_track_error: $(arg x_track_error)
+          </rosparam>
+    </node>
+  </group>
+
+</launch>

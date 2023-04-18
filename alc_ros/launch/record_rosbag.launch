@@ -1,0 +1,12 @@
+<launch>
+    <arg name="record" default="false"/>
+    <arg name="bag_filename" default="recording.bag" />
+
+    <node
+        pkg="rosbag"
+        type="record"
+        name="rosbag_recorder"
+        args='-O $(arg bag_filename) -a -x "(.*)([Cc]ompressed|[Tt]heora)(.*)"'
+        if="$(arg record)"
+    />
+</launch>

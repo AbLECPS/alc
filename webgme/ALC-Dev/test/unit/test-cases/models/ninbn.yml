@@ -1,0 +1,419 @@
+- type: SpatialConvolution
+  id: /G/5
+  next:
+    - /G/x
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 256
+    nInputPlane: 256
+- type: ReLU
+  id: /G/8
+  next:
+    - /G/U
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialBatchNormalization
+  id: /G/9
+  next:
+    - /G/T
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 1024
+- type: SpatialConvolution
+  id: /G/56
+  next:
+    - /G/9
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 1
+    padW: 1
+    dH: 1
+    dW: 1
+    kH: 3
+    kW: 3
+    nOutputPlane: 1024
+    nInputPlane: 384
+- type: LogSoftMax
+  id: /G/rn
+  next: []
+  attributes:
+    ctor_arg_order: ''
+- type: SpatialConvolution
+  id: /G/y
+  next:
+    - /G/r
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 5
+    padW: 5
+    dH: 4
+    dW: 4
+    kH: 11
+    kW: 11
+    nOutputPlane: 96
+    nInputPlane: 3
+- type: SpatialBatchNormalization
+  id: /G/r
+  next:
+    - /G/d
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 96
+- type: ReLU
+  id: /G/d
+  next:
+    - /G/L
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialConvolution
+  id: /G/L
+  next:
+    - /G/t
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 96
+    nInputPlane: 96
+- type: SpatialBatchNormalization
+  id: /G/t
+  next:
+    - /G/M
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 96
+- type: ReLU
+  id: /G/M
+  next:
+    - /G/o
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialConvolution
+  id: /G/o
+  next:
+    - /G/O
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 96
+    nInputPlane: 96
+- type: SpatialBatchNormalization
+  id: /G/O
+  next:
+    - /G/8
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 96
+- type: SpatialMaxPooling
+  id: /G/U
+  next:
+    - /G/P
+  attributes:
+    ctor_arg_order: 'kW,kH,dW,dH,padW,padH'
+    padH: 1
+    padW: 1
+    dH: 2
+    dW: 2
+    kH: 3
+    kW: 3
+- type: SpatialConvolution
+  id: /G/P
+  next:
+    - /G/N
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 2
+    padW: 2
+    dH: 1
+    dW: 1
+    kH: 5
+    kW: 5
+    nOutputPlane: 256
+    nInputPlane: 96
+- type: SpatialBatchNormalization
+  id: /G/N
+  next:
+    - /G/Q
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 256
+- type: ReLU
+  id: /G/Q
+  next:
+    - /G/5
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialBatchNormalization
+  id: /G/x
+  next:
+    - /G/p
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 256
+- type: ReLU
+  id: /G/p
+  next:
+    - /G/na
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialConvolution
+  id: /G/na
+  next:
+    - /G/w
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 256
+    nInputPlane: 256
+- type: SpatialBatchNormalization
+  id: /G/w
+  next:
+    - /G/F
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 256
+- type: ReLU
+  id: /G/F
+  next:
+    - /G/E
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialMaxPooling
+  id: /G/E
+  next:
+    - /G/us
+  attributes:
+    ctor_arg_order: 'kW,kH,dW,dH,padW,padH'
+    padH: 1
+    padW: 1
+    dH: 2
+    dW: 2
+    kH: 3
+    kW: 3
+- type: SpatialConvolution
+  id: /G/us
+  next:
+    - /G/D
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 1
+    padW: 1
+    dH: 1
+    dW: 1
+    kH: 3
+    kW: 3
+    nOutputPlane: 384
+    nInputPlane: 256
+- type: SpatialBatchNormalization
+  id: /G/D
+  next:
+    - /G/g
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 384
+- type: ReLU
+  id: /G/g
+  next:
+    - /G/9J
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialConvolution
+  id: /G/9J
+  next:
+    - /G/1l
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 384
+    nInputPlane: 384
+- type: SpatialBatchNormalization
+  id: /G/1l
+  next:
+    - /G/Jw
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 384
+- type: ReLU
+  id: /G/Jw
+  next:
+    - /G/qA
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialConvolution
+  id: /G/qA
+  next:
+    - /G/HW
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 384
+    nInputPlane: 384
+- type: SpatialBatchNormalization
+  id: /G/HW
+  next:
+    - /G/Ev
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 384
+- type: ReLU
+  id: /G/Ev
+  next:
+    - /G/ky
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialMaxPooling
+  id: /G/ky
+  next:
+    - /G/56
+  attributes:
+    ctor_arg_order: 'kW,kH,dW,dH,padW,padH'
+    padH: 1
+    padW: 1
+    dH: 2
+    dW: 2
+    kH: 3
+    kW: 3
+- type: ReLU
+  id: /G/T
+  next:
+    - /G/zi
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialConvolution
+  id: /G/zi
+  next:
+    - /G/J
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 1024
+    nInputPlane: 1024
+- type: SpatialBatchNormalization
+  id: /G/J
+  next:
+    - /G/Tq
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 1024
+- type: ReLU
+  id: /G/Tq
+  next:
+    - /G/jy
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialConvolution
+  id: /G/jy
+  next:
+    - /G/3g
+  attributes:
+    ctor_arg_order: 'nInputPlane,nOutputPlane,kW,kH,dW,dH,padW,padH'
+    padH: 0
+    padW: 0
+    dH: 1
+    dW: 1
+    kH: 1
+    kW: 1
+    nOutputPlane: 1024
+    nInputPlane: 1024
+- type: SpatialBatchNormalization
+  id: /G/3g
+  next:
+    - /G/cl
+  attributes:
+    ctor_arg_order: 'nOutput,eps,momentum,affine'
+    eps: 0.001
+    nOutput: 1024
+- type: ReLU
+  id: /G/cl
+  next:
+    - /G/xs
+  attributes:
+    ctor_arg_order: p
+    p: true
+- type: SpatialAveragePooling
+  id: /G/xs
+  next:
+    - /G/CK
+  attributes:
+    padW: ''
+    padH: ''
+    count_include_pad: true
+    ctor_arg_order: 'kW,kH,dW,dH,padW,padH'
+    dH: 1
+    dW: 1
+    kH: 7
+    kW: 7
+- type: View
+  id: /G/CK
+  next:
+    - /G/b
+  attributes:
+    ctor_arg_order: params
+    params: -1
+    numInputDims: 3
+- type: Linear
+  id: /G/b
+  next:
+    - /G/rn
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 1000
+    inputSize: 1024

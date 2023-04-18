@@ -1,0 +1,134 @@
+{
+    "buildRoot": "/alc/workflows/automate/DataStore",
+    "datastores": [
+        {
+            "data": [
+                {
+                    "path": "/y/V/V/F/g/AM",
+                    "result_metadata": {
+                        "description": "No Upload",
+                        "directory": "/hdd2/alc-repo/alc_workspace/jupyter/admin_BlueROV/Camp_DG_Degradation/1611606239376/1611606239376/config-2",
+                        "exptParams": {
+                            "angle_max": 0.7854,
+                            "angle_min": -0.7854,
+                            "bend_segment_length": 0.3048,
+                            "bury_len_max": 6,
+                            "bury_len_min": 0.3,
+                            "enable_fault_detection": false,
+                            "enable_training_data_collection": true,
+                            "enable_waypoint_following": true,
+                            "failsafe_rth_enable": false,
+                            "length_max": 500,
+                            "length_min": 300,
+                            "max_bend_angle": 0.0873,
+                            "pipe_posx": -30,
+                            "pipe_posy": -5,
+                            "project_name": "admin_BlueROV",
+                            "random_seed": 27168,
+                            "record": true,
+                            "testing": 0,
+                            "thruster_id": 4,
+                            "thruster_motor_fail_starting_time": 1,
+                            "thruster_motor_failure": true,
+                            "thruster_thrust_force_efficiency": 0.999,
+                            "timeout": 350,
+                            "unpause_timeout": 15,
+                            "waypoint_filename": "training_pattern.yaml"
+                        },
+                        "hash": "1b1940d84550a2a6c6b32144baf3f88e04a10932",
+                        "result_url": "admin_BlueROV/Camp_DG_Degradation/1611606239376/1611606239376/config-2/result.ipynb",
+                        "upload_prefix": null
+                    }
+                },
+                {
+                    "path": "/y/V/V/F/g/j",
+                    "result_metadata": {
+                        "description": "No Upload",
+                        "directory": "/hdd2/alc-repo/alc_workspace/jupyter/admin_BlueROV/Camp_DG_Degradation/1611606239376/1611606239376/config-0",
+                        "exptParams": {
+                            "angle_max": 0.7854,
+                            "angle_min": -0.7854,
+                            "bend_segment_length": 0.3048,
+                            "bury_len_max": 6,
+                            "bury_len_min": 0.3,
+                            "enable_fault_detection": false,
+                            "enable_training_data_collection": true,
+                            "enable_waypoint_following": true,
+                            "failsafe_rth_enable": false,
+                            "length_max": 500,
+                            "length_min": 300,
+                            "max_bend_angle": 0.0873,
+                            "pipe_posx": -30,
+                            "pipe_posy": -5,
+                            "project_name": "admin_BlueROV",
+                            "random_seed": 27168,
+                            "record": true,
+                            "testing": 0,
+                            "thruster_id": 2,
+                            "thruster_motor_fail_starting_time": 1,
+                            "thruster_motor_failure": true,
+                            "thruster_thrust_force_efficiency": 0.999,
+                            "timeout": 350,
+                            "unpause_timeout": 15,
+                            "waypoint_filename": "training_pattern.yaml"
+                        },
+                        "hash": "39a8d036dd1c0b95245a6634e65ef267ac26168e",
+                        "result_url": "admin_BlueROV/Camp_DG_Degradation/1611606239376/1611606239376/config-0/result.ipynb",
+                        "upload_prefix": null
+                    }
+                },
+                {
+                    "path": "/y/V/V/F/g/U",
+                    "result_metadata": {
+                        "description": "No Upload",
+                        "directory": "/hdd2/alc-repo/alc_workspace/jupyter/admin_BlueROV/Camp_DG_Degradation/1611606239376/1611606239376/config-1",
+                        "exptParams": {
+                            "angle_max": 0.7854,
+                            "angle_min": -0.7854,
+                            "bend_segment_length": 0.3048,
+                            "bury_len_max": 6,
+                            "bury_len_min": 0.3,
+                            "enable_fault_detection": false,
+                            "enable_training_data_collection": true,
+                            "enable_waypoint_following": true,
+                            "failsafe_rth_enable": false,
+                            "length_max": 500,
+                            "length_min": 300,
+                            "max_bend_angle": 0.0873,
+                            "pipe_posx": -30,
+                            "pipe_posy": -5,
+                            "project_name": "admin_BlueROV",
+                            "random_seed": 27168,
+                            "record": true,
+                            "testing": 0,
+                            "thruster_id": 3,
+                            "thruster_motor_fail_starting_time": 1,
+                            "thruster_motor_failure": true,
+                            "thruster_thrust_force_efficiency": 0.999,
+                            "timeout": 350,
+                            "unpause_timeout": 15,
+                            "waypoint_filename": "training_pattern.yaml"
+                        },
+                        "hash": "0c7a13d93ef15e1223b4fbd9b74d3001bf66360d",
+                        "result_url": "admin_BlueROV/Camp_DG_Degradation/1611606239376/1611606239376/config-1/result.ipynb",
+                        "upload_prefix": null
+                    }
+                }
+            ],
+            "job_name": "DS"
+        }
+    ],
+    "genericActiveNode": "/y",
+    "jobs": [],
+    "maxIterations": {},
+    "owner": "alc",
+    "projectName": "BlueROV_datastore",
+    "start_jobs": [
+        [
+            "TrainingLoop"
+        ]
+    ],
+    "statusPath": "",
+    "workflowName": "",
+    "working_dir": ""
+}

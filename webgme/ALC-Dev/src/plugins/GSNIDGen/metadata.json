@@ -1,0 +1,14 @@
+{
+  "id": "GSNIDGen",
+  "name": "GSNIDGen",
+  "version": "0.1.0",
+  "description": "",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": false,
+  "configStructure": []
+
+}

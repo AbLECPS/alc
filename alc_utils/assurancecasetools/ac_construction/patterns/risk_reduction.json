@@ -1,0 +1,141 @@
+{
+  "name": "risk_reduction",
+  "parameters": {
+    "formal_parameters": [
+      {
+        "id": "A",
+        "type": ["SystemModel"]
+      },
+      {
+        "id": "B",
+        "type": ["Hazard"]
+      },
+      {
+        "id": "C",
+        "type": ["hazard.severity"]
+      }
+    ],
+    "edges": [
+      {
+        "source": "A",
+        "dest": "B",
+        "type": "multiplicity",
+        "multiplicity": "(1, inf)"
+      },
+      {
+        "source": "B",
+        "dest": "C",
+        "type": "multiplicity",
+        "multiplicity": "(1, 1)"
+      }
+    ]
+  },
+  "nodes": {
+    "outlines": [
+      {
+        "id": "G1",
+        "type": "Goal",
+        "desc": "Hazards for {A} addressed in accordance with ALARP Principle.",
+        "undeveloped": false,
+        "formal_parameters": [
+          "A"
+        ]
+      },
+      {
+        "id": "S1",
+        "type": "Strategy",
+        "desc": "Argument by risk reduction of each identified hazard.",
+        "undeveloped": false,
+        "formal_parameters": []
+      },
+      {
+        "id": "G3",
+        "type": "Goal",
+        "desc": "Risk from {B} has been reduced as low as reasonably practicable.",
+        "undeveloped": true,
+        "formal_parameters": [
+          "B"
+        ]
+      },
+      {
+        "id": "C2",
+        "type": "Context",
+        "desc": "Assigned severity class is {C}.",
+        "undeveloped": false,
+        "formal_parameters": ["C"]
+      },
+      {
+        "id": "G2",
+        "type": "Goal",
+        "desc": "No intolerable risks present in the system.",
+        "undeveloped": false,
+        "formal_parameters": []
+      },
+      {
+        "id": "C1",
+        "type": "Context",
+        "desc": "Definition of 'intolerable'",
+        "undeveloped": false,
+        "formal_parameters": []
+      },
+      {
+        "id": "S2",
+        "type": "Strategy",
+        "desc": "Argue that risk posed by any remaining hazards is negligible.",
+        "undeveloped": true,
+        "formal_parameters": []
+      },
+      {
+        "id": "S3",
+        "type": "Strategy",
+        "desc": "Argue that no other risks have been identified.",
+        "undeveloped": true,
+        "formal_parameters": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "G1",
+        "dest": "S1",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "S1",
+        "dest": "G2",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "S1",
+        "dest": "G3",
+        "type": "SupportedBy",
+        "multiplicity": "(1, inf)"
+      },
+      {
+        "source": "G2",
+        "dest": "C1",
+        "type": "InContextOf",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G3",
+        "dest": "C2",
+        "type": "InContextOf",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G2",
+        "dest": "S2",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      },
+      {
+        "source": "G2",
+        "dest": "S3",
+        "type": "SupportedBy",
+        "multiplicity": "(1, 1)"
+      }
+    ]
+  }
+}

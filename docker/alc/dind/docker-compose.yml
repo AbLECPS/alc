@@ -1,0 +1,60 @@
+version: '2.3'
+
+# Setup any docker networks
+networks:
+   alcnet:
+     external: true
+     name: $ALC_DOCKER_NETWORK
+     driver: $DOCKER_NETWORK_DRIVER
+
+
+services:
+  codeserver:
+    image: alc_codeserver:latest
+    runtime: nvidia
+    container_name: alc_codeserver
+    restart: always
+    hostname: codeserver
+    user: root
+    #user: alc
+    environment:
+      - VSCODE_START_DIR=$VSCODE_START_DIR
+      - ALC_HOME_ORIG=$ALC_HOME
+      - ALC_HOME=$REPO_HOME
+      - REPO_HOME=$REPO_HOME
+      - ALC_WORKING_DIR=$ALC_WORKING_DIR
+      - ALC_DOCKERFILES=$ALC_DOCKERFILES
+      - ALC_USERNAME=$ALC_USERNAME 
+      - REGISTRY_ADDR=$REGISTRY_ADDR
+      - GIT_SERVER_URL=$GIT_SERVER_URL 
+      - GIT_SERVER_IP=$GIT_SERVER_IP 
+      - GIT_SERVER_PORT=$GIT_SERVER_PORT
+      - ALC_SSH_HOST=$ALC_SSH_HOST 
+      - ALC_SSH_PORT=$ALC_SSH_PORT
+      - PYTHONPATH=$ALC_HOME:$ALC_HOME/alc_utils:$PYTHONPATH
+      - JUPYTER_WORK_DIR=$ALC_WORKING_DIR/jupyter
+      - LD_LIBRARY_PATH=/opt/ros/melodic/lib:/opt/ros/melodic/lib/x86_64-linux-gnu:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu/gazebo-7/plugins:/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu/gazebo-7/plugins:/opt/ros/melodic/lib:/usr/local/cuda/lib64/libcudart.so.9.0
+      - ROS_DISTRO=melodic
+      - PASSWORD=vanderbilt1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - DISPLAY_WIDTH=1900 
+      - DISPLAY_HEIGHT=1200
+      - RUN_XTERM=no
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $ALC_WORKING_DIR:$ALC_WORKING_DIR
+      - $ALC_DOCKERFILES/keys:/alc/dockerfiles/.ssh
+      - $ALC_DOCKERFILES/ssl_certs:/ssl_certs
+      - $ALC_DOCKERFILES/sshcontents:$ALC_DOCKERFILES/sshcontents
+      - $ALC_DOCKERFILES/certs:$ALC_DOCKERFILES/certs
+      - $ALC_SRC:$ALC_SRC
+      - $REPO_HOME:$REPO_HOME
+      - $ALC_DOCKERFILES/config:/alc/dockerfiles/config
+    entrypoint: /app/entrypoint.sh
+    command: ""
+    ports:
+     - 8080:8080
+     - 6901:6901
+     - 6900:6900
+    networks:
+     - alcnet

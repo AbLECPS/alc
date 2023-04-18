@@ -1,0 +1,10 @@
+{
+  "lb": [ 25, 24.5, 16, 7, -4, 0],
+  "ub": [ 30, 25, 23.2, 15.1, 4, 5],
+  "procedure": "reach",
+  "method": "exact-star",
+  "nn-file": "/full/path/to/matrix-file.mat",
+  "function_file": "/full/path/to/function-file.m",
+  "function_name": "my-function",
+  "function_args": [ "nn-file", "lb", "ub", "procedure", "method" ]
+}

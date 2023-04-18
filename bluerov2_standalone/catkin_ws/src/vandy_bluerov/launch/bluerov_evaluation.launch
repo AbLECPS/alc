@@ -1,0 +1,16 @@
+<!--
+File:         send_hsd.launch
+Description:  Send initial HSD command
+-->
+<launch>
+  <arg name="results_directory" default="$(find vandy_bluerov)/results"/>
+  <arg name="bluerov_eval" default="true"/>
+
+    <node if="$(arg bluerov_eval)"
+          name="bluerov_evaluation" 
+          pkg="vandy_bluerov" 
+          type="bluerov_eval.py" 
+          output="screen">
+        <param name="results_directory" type="string" value="$(arg results_directory)" />
+    </node>
+</launch>

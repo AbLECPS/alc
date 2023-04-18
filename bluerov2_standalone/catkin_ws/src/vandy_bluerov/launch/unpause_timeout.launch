@@ -1,0 +1,26 @@
+<!--
+File:         unpause_timeout.launch
+Description:  
+      Unpause timeout, this is done to allow Gazebo and its plugins to properly
+      start before all other ROS nodes. Otherwise it can happen that ROS nodes
+      start before some services or topics are available, leading to some
+      initialization issues.
+-->
+
+<launch>
+    <arg name="results_directory" default="$(find vandy_bluerov)/results"/>    
+    <arg name="uuv_name" default="uuv0"/>
+    <arg name="timeout" default="0"/>
+    <group ns="$(arg uuv_name)">
+        <node name="unpause_simulation" pkg="uuv_assistants" type="unpause_simulation.py" output="screen">
+            <rosparam subst_value="true">
+                timeout: $(arg timeout)
+            </rosparam>
+        </node>
+    </group>
+    <node name="gazebo_timeout" pkg="vandy_bluerov" type="gazebo_timeout.py" output="screen" required="true">
+        <rosparam subst_value="true">
+                results_directory: $(arg results_directory)
+        </rosparam>
+    </node>
+</launch>

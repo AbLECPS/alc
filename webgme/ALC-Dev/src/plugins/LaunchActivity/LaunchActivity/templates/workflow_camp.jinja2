@@ -1,0 +1,78 @@
+{
+    "buildRoot": "/alc/workflows/automate/WF-Campaign-{{activity_exec_name}}",
+    "datastores": [],
+    "genericActiveNode": "{{alc_node_path}}",
+    "jobs": [
+        {
+            "activities_map": {},
+            "check": 0,
+            "inits": [],
+            "inputs": {},
+            "job_name": "Campaign_{{activity_name}}_Loop",
+            "job_subtype": "",
+            "job_type": "Loop",
+            "loop_iter_vars": "{{campaign_variable_names}}",
+            "loop_jobs": [
+                {
+                    "activities_map": {
+                        "{{activity_name}}": "{{activity_node_path}}"
+                    },
+                    "activities_name": "{{activity_name}}",
+                    "check": 0,
+                    "inits": [],
+                    "inputs": { },
+                    "job_name": "Campaign_{{activity_name}}",
+                    "job_subtype": "",
+                    "job_type": "LaunchActivity",
+                    "loop_iter_vars": "",
+                    "loop_jobs": [],
+                    "loop_parent": [
+                        "Campaign_{{activity_name}}_Loop"
+                    ],
+                    "loop_parent_path": "",
+                    "loop_start": [],
+                    "loop_start_path": [],
+                    "loop_type": "",
+                    "loop_vars": {},
+                    "next_jobs_false": [],
+                    "next_jobs_true": [],
+                    "previous_jobs": [],
+                    "script": "''",
+                    "use_parameters": {{campaign_variable_list|string}}
+                    
+                }
+            ],
+            "loop_parent": "",
+            "loop_parent_path": "",
+            "loop_start": [
+                [
+                    "Campaign_{{activity_name}}_Loop",
+                    "Campaign_{{activity_name}}"
+                ]
+            ],
+            "loop_start_path": [],
+            "loop_type": "FOR",
+            "loop_vars": {{campaign_variable_map|string}},
+            "next_jobs_false": [],
+            "next_jobs_true": [],
+            "previous_jobs": [],
+            "script": "''",
+            "use_parameters": []
+        }
+    ],
+    "maxIterations": {},
+    "owner": "{{owner_name}}",
+    "projectName": "{{project_name}}",
+    "prototypes": {
+        "{{activity_name}}": "{{activity_node_path}}"
+    },
+    "start_jobs": [
+        [
+            "Campaign_{{activity_name}}_Loop"
+        ]
+    ],
+    "statusPath": "",
+    "workflowName": "WF-Campaign-{{activity_exec_name}}",
+    "working_dir": "{{working_dir}}",
+    "repo_home_dir": "{{repo_home_dir}}"
+}

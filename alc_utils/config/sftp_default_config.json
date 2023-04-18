@@ -1,0 +1,5 @@
+{"port": 22,
+"host": "127.0.0.1",
+"user": "fileshare",
+"key": "/home/alc/.ssh/fileshare_rsa",
+"path_prefix": "alc_workspace/"}

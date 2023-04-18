@@ -1,0 +1,55 @@
+/**
+ * This file is for any css that you may want for this visualizer.
+ *
+ * Ideally, you would use the scss file also provided in this directory 
+ * and then generate this file automatically from that. However, you can 
+ * simply write css if you prefer
+ */
+
+.t-viz {
+  outline: none; }
+  
+ .t-viz-table{
+  display:table;         
+  background-color:#eee;         
+  border:1px solid  #666666;  
+  border-collapse: collapse;  
+  /*border-spacing:5px;*//*cellspacing:poor IE support for  this*/
+}
+
+.t-viz-heading{
+  display: table-row;
+  top: 50;
+  left: auto
+  height:auto;
+  font-weight: bold;
+  text-align: center;
+  background-color:#ccc; 
+  border-bottom: 1px solid #666666;
+}
+.t-viz-table-row{
+  display:table-row;
+  height:auto;
+  clear:both;
+  text-align: center;
+  background-color:#ccc; 
+  border-bottom: 1px solid #666666;
+}
+.t-viz-table-col{
+  display:table-cell;
+  min-width:200px;
+  height:auto;
+  border: 1px solid #666666;
+  padding:5px;
+ }
+ 
+ .t-viz-table-col-mod{
+  display:table-cell;
+  width:200px;
+  height:auto;
+  word-wrap: break-word;
+
+  /*border:1px solid  #666666;  */
+  border: 1px solid #666666;
+  padding:5px;
+ }

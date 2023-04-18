@@ -1,0 +1,24 @@
+{
+  "id": "ROSGen",
+  "name": "ROS Generator",
+  "version": "0.1.0",
+  "description": "Generates ROS code skeleton.",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+    {
+      "name": "folder",
+      "displayName": "Folder",
+      "description": "Folder where the files should be generated",
+      "value": "$ALC_WORKING_DIR/ros/src/$PACKAGE_NAME/src",
+      "valueType": "string",
+      "readOnly": true
+    }
+  ]
+}

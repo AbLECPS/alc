@@ -1,0 +1,37 @@
+plugins {
+	id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+dependencies {
+	compile project(':edu.vanderbilt.alc.isis.btree')
+	compile "org.eclipse.xtext:org.eclipse.xtext.ide:${xtextVersion}"
+	compile "org.eclipse.xtext:org.eclipse.xtext.xbase.ide:${xtextVersion}"
+}
+
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+mainClassName = "org.eclipse.xtext.ide.server.ServerLauncher"
+applicationName = 'btree-server'
+
+shadowJar {
+	from(project.convention.getPlugin(JavaPluginConvention).sourceSets.main.output)
+	configurations = [project.configurations.runtime]
+	exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA','schema/*',
+		'.options', '.api_description', '*.profile', '*.html', 'about.*', 'about_files/*',
+		'plugin.xml', 'systembundle.properties', 'profile.list')
+	classifier = 'ls'
+	append('plugin.properties')
+}
+
+// Add another start script for the standalone / self-contained case
+task standaloneStartScript(type: CreateStartScripts) {
+        mainClassName = 'org.eclipse.xtext.ide.server.ServerLauncher'
+        applicationName = 'btree-standalone'
+        outputDir = new File(project.buildDir, 'scripts')
+        classpath = jar.outputs.files + project.configurations.runtime
+}
+
+applicationDistribution.into("bin") {
+        from(standaloneStartScript)
+        fileMode = 0755
+}

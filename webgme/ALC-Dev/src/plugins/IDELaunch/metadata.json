@@ -1,0 +1,27 @@
+{
+  "id": "IDELaunch",
+  "name": "IDELaunch",
+  "version": "0.1.0",
+  "description": "launch ide",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": true,
+  "configStructure": [
+    {
+      "name": "Operation",
+      "displayName": "Start/Stop",
+      "description": "",
+      "value": "Start",
+      "valueType": "string",
+      "valueItems": [
+        "Start",
+        "Stop"
+      ]
+    }
+  ]
+}

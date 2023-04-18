@@ -1,0 +1,32 @@
+- type: Linear
+  id: /Q/E
+  next:
+    - /Q/e
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 300
+    inputSize: 100
+- type: Linear
+  id: /Q/Q
+  next: []
+  attributes:
+    bias: ''
+    ctor_arg_order: 'inputSize,outputSize,bias'
+    outputSize: 10
+    inputSize: 300
+- type: HardTanh
+  id: /Q/e
+  next:
+    - /Q/Q
+  attributes:
+    min_value: ''
+    max_value: 1
+    ctor_arg_order: 'min_value,max_value'
+- type: Reshape
+  id: /Q/j
+  next:
+    - /Q/E
+  attributes:
+    ctor_arg_order: params
+    params: 100

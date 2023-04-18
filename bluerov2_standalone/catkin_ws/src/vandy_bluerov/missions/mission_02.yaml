@@ -1,0 +1,71 @@
+# enum class MissionType { UNKNOWN, LOITERING, PIPE_FOLLOWING, WAYPOINT_FOLLOWING, PATH_FOLLOWING, COLLISION_AVOIDANCE, ASSURANCE, TERMINAL };                    
+home: [ 0, 0 ]
+missions:
+  - type: waypoint_following
+    waypoints:
+      #- [ x, y, depth, speed ]
+      - [ 0, 0, 45, 1.5 ]
+      - [ 0, 10, 45, 1.5 ]
+    waypoint_reached_distance: 5.0
+    avoidance_operating_depth: 10
+    avoidance_learning: true
+    loiter_box_size: 9.0
+    termination_conditions:
+      - type: final_waypoint_reached
+        distance: 5.0
+        actions:
+          - surface
+      - type: min_obstacle_standoff
+        distance: 4.0
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home
+  - type: waypoint_following
+    waypoints:
+      #- [ x, y, depth, speed ]
+      - [  0, 20, 45, 1.5]
+      - [-25, 20, 45, 1.5]
+      - [-25, 30, 45, 1.5]
+      - [ 25, 30, 45, 1.5]
+      - [ 25, 40, 45, 1.5]
+      - [-25, 40, 45, 1.5]
+    waypoint_reached_distance: 5.0
+    avoidance_operating_depth: 10
+    avoidance_learning: true
+    loiter_box_size: 9.0
+    termination_conditions:
+      - type: final_waypoint_reached
+        distance: 5.0
+        actions:
+          - surface
+      - type: min_obstacle_standoff
+        distance: 4.0
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home
+  - type: pipe_following
+    waypoint_reached_distance: 5.1
+    avoidance_operating_depth: 10.1
+    avoidance_learning: false
+    loiter_box_size: 9.1
+    termination_conditions:
+      - type: min_obstacle_standoff
+        distance: 4.1
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home

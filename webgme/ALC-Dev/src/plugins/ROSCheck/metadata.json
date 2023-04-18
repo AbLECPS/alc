@@ -1,0 +1,17 @@
+{
+  "id": "ROSCheck",
+  "name": "ROSCheck",
+  "version": "0.1.0",
+  "description": "Check for ROS Node Interface violations",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+    
+  ]
+}

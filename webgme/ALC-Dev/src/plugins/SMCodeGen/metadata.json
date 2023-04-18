@@ -1,0 +1,14 @@
+{
+  "id": "SMCodeGen",
+  "name": "State Machine Code Gen",
+  "version": "0.1.0",
+  "description": "State Machine Code Generator",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": false,
+  "writeAccessRequired": false,
+  "configStructure": []
+}

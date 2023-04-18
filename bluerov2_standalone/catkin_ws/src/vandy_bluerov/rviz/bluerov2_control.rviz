@@ -1,0 +1,1313 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 0
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /RobotModel1/Status1
+        - /TF1/Tree1
+        - /Odometry noisy1
+        - /Odometry noisy1/Shape1
+      Splitter Ratio: 0.47555556893348694
+    Tree Height: 239
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: true
+    Name: Time
+    SyncMode: 1
+    SyncSource: VU_SSS
+  - Class: rviz/Displays
+    Help Height: 0
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /TF1/Frames1
+      Splitter Ratio: 0.5778443217277527
+    Tree Height: 449
+Preferences:
+  PromptSaveOnExit: true
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 10
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        uuv0/base_fis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/base_sonar_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/base_sonar_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/base_sss:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/battery_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/camera_link_depth:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/camera_link_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/dvl_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/dvl_sonar0_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/dvl_sonar1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/dvl_sonar2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/dvl_sonar3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/gps_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/pose_sensor_link_default:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/pose_sensor_link_noisy:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        uuv0/pressure_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/thruster_0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/thruster_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/thruster_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/thruster_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/thruster_4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        uuv0/thruster_5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: RobotModel
+      Robot Description: uuv0/robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz/TF
+      Enabled: false
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        {}
+      Update Interval: 0
+      Value: false
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /world_models
+      Name: World models
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: false
+      Enabled: true
+      Keep: 500
+      Name: Odometry noisy
+      Position Tolerance: 0.25
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 138; 226; 52
+        Head Length: 0.30000001192092896
+        Head Radius: 0.30000001192092896
+        Shaft Length: 0
+        Shaft Radius: 0
+        Value: Arrow
+      Topic: /uuv0/pose_gt_noisy_ned
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Arrow Width: 0.30000001192092896
+      Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 1
+      Force Color: 53; 98; 204
+      Hide Small Values: true
+      History Length: 1
+      Name: Thrust Wrench 0
+      Topic: /uuv0/thrusters/0/thrust_wrench
+      Torque Arrow Scale: 2
+      Torque Color: 204; 204; 51
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Arrow Width: 0.30000001192092896
+      Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 1
+      Force Color: 53; 98; 204
+      Hide Small Values: true
+      History Length: 1
+      Name: Thrust Wrench 1
+      Topic: /uuv0/thrusters/1/thrust_wrench
+      Torque Arrow Scale: 2
+      Torque Color: 204; 204; 51
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Arrow Width: 0.30000001192092896
+      Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 1
+      Force Color: 53; 98; 204
+      Hide Small Values: true
+      History Length: 1
+      Name: Thrust Wrench 2
+      Topic: /uuv0/thrusters/2/thrust_wrench
+      Torque Arrow Scale: 2
+      Torque Color: 204; 204; 51
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Arrow Width: 0.30000001192092896
+      Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 1
+      Force Color: 53; 98; 204
+      Hide Small Values: true
+      History Length: 1
+      Name: Thrust Wrench 3
+      Topic: /uuv0/thrusters/3/thrust_wrench
+      Torque Arrow Scale: 2
+      Torque Color: 204; 204; 51
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Arrow Width: 0.30000001192092896
+      Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 1
+      Force Color: 53; 98; 204
+      Hide Small Values: true
+      History Length: 1
+      Name: Thrust Wrench 4
+      Topic: /uuv0/thrusters/4/thrust_wrench
+      Torque Arrow Scale: 2
+      Torque Color: 204; 204; 51
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Arrow Width: 0.30000001192092896
+      Class: rviz/WrenchStamped
+      Enabled: true
+      Force Arrow Scale: 1
+      Force Color: 53; 98; 204
+      Hide Small Values: true
+      History Length: 1
+      Name: Thrust Wrench 5
+      Topic: /uuv0/thrusters/5/thrust_wrench
+      Torque Arrow Scale: 2
+      Torque Color: 204; 204; 51
+      Unreliable: false
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /uuv0/waypoint_markers
+      Name: Wayppoints
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /spawn_box_obstacles/collision_objects
+      Name: Obstacles
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Alpha: 0.15000000596046448
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: true
+      Enabled: true
+      Name: Obstacle Map
+      Topic: /uuv0/obstacle_map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.75
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: true
+      Enabled: true
+      Name: Pipeline Map
+      Topic: /uuv0/pipeline_map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: false
+      Enabled: true
+      Name: AIS Map
+      Topic: /uuv0/ais_map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Local Map
+      Topic: /uuv0/local_map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.05000000074505806
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 255
+      Enabled: true
+      Name: Range FLS
+      Queue Size: 100
+      Topic: /uuv0/fls_echosunder
+      Unreliable: false
+      Value: true
+    - Alpha: 0.5
+      Buffer Length: 1
+      Class: rviz/Range
+      Color: 255; 255; 255
+      Enabled: false
+      Name: Range Altimeter
+      Queue Size: 100
+      Topic: /uuv0/altimeter_echosunder
+      Unreliable: false
+      Value: false
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box1_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box1/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box1/current_velocity_marker
+      Name: box1_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box1_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box1/pose_gt
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box2/current_velocity_marker
+      Name: box2_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box2_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box2/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box2_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box2/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box3/current_velocity_marker
+      Name: box3_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box3_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box3/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box3_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box3/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box4/current_velocity_marker
+      Name: box4_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box4_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box4/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box4_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box4/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box5/current_velocity_marker
+      Name: box5_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box5_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box5/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box5_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box5/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box6/current_velocity_marker
+      Name: box6_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box6_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box6/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box6_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box6/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box7/current_velocity_marker
+      Name: box7_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box7_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box7/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box7_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box7/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box8/current_velocity_marker
+      Name: box8_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box8_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box8/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box8_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box8/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box9/current_velocity_marker
+      Name: box9_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box9_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box9/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box9_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box9/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /box10/current_velocity_marker
+      Name: box10_marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: box10_odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /box10/pose_gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: box10_pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /ground_truth_to_tf_box10/pose
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /fdr0/marker
+      Name: FDR
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Alpha: 0.30000001192092896
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: false
+      Enabled: true
+      Name: Local Obstacle Map
+      Topic: /uuv0/obstacle_map_local
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /spawn_fishnet/fisnhet_objects
+      Name: Fishnet
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /reach_hull
+      Name: rtreach
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /uuv0/camera/image_raw
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: UUV Camera
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /midas_topic
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: MiDaS_Output
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /uuv0/midas_absolute
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: MiDaS_Absolute
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 27.658187866210938
+        Min Value: -51.310123443603516
+        Value: true
+      Axis: X
+      Channel Name: x
+      Class: rviz/PointCloud
+      Color: 186; 189; 182
+      Color Transformer: AxisColor
+      Decay Time: 10
+      Enabled: false
+      Invert Rainbow: true
+      Max Color: 255; 255; 255
+      Max Intensity: 59.993675231933594
+      Min Color: 0; 0; 0
+      Min Intensity: 10.100013732910156
+      Name: MiDaS_PointCloud
+      Position Transformer: XYZ
+      Queue Size: 1
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 1
+      Style: Boxes
+      Topic: /midas_pointcloud
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: -59.38259506225586
+        Min Value: -60.15446090698242
+        Value: true
+      Axis: Z
+      Channel Name: z
+      Class: rviz/LaserScan
+      Color: 239; 41; 41
+      Color Transformer: FlatColor
+      Decay Time: 0.10000000149011612
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: -45.45785903930664
+      Min Color: 0; 0; 0
+      Min Intensity: -60.158226013183594
+      Name: VU_SSS
+      Position Transformer: XYZ
+      Queue Size: 1
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.10000000149011612
+      Style: Flat Squares
+      Topic: /uuv0/vu_sss
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: VU_FIS
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.10000000149011612
+      Style: Flat Squares
+      Topic: /uuv0/vu_fis
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /vu_sss/waterfall_r
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: VU SSS R
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /vu_sss/waterfall_l
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: VU SSS L
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /pipeline/marker
+      Name: Pipeline_gen
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /vu_sss/lec2lite_l
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: VU SSS LEC2_Lite L
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /vu_sss/lec2lite_r
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: VU SSS LEC2_Lite R
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /lec3lite/waterfall
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: VU FLS LEC3_Lite
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: world
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Theta std deviation: 0.2617993950843811
+      Topic: /initialpose
+      X std deviation: 0.5
+      Y std deviation: 0.5
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Angle: 0
+      Class: rviz/TopDownOrtho
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Scale: 4.512037754058838
+      Target Frame: uuv0/base_link
+      Value: TopDownOrtho (rviz)
+      X: 0
+      Y: 0
+    Saved:
+      - Angle: 0
+        Class: rviz/TopDownOrtho
+        Enable Stereo Rendering:
+          Stereo Eye Separation: 0.05999999865889549
+          Stereo Focal Distance: 1
+          Swap Stereo Eyes: false
+          Value: false
+        Invert Z Axis: false
+        Name: TopDownOrtho
+        Near Clip Distance: 0.009999999776482582
+        Scale: 2.348705291748047
+        Target Frame: uuv0/base_link
+        Value: TopDownOrtho (rviz)
+        X: -4.257664680480957
+        Y: 52.7950439453125
+      - Angle: 0
+        Class: rviz/TopDownOrtho
+        Enable Stereo Rendering:
+          Stereo Eye Separation: 0.05999999865889549
+          Stereo Focal Distance: 1
+          Swap Stereo Eyes: false
+          Value: false
+        Invert Z Axis: false
+        Name: TopDownOrtho
+        Near Clip Distance: 0.009999999776482582
+        Scale: 2.348705291748047
+        Target Frame: uuv0/base_link
+        Value: TopDownOrtho (rviz)
+        X: -4.257664680480957
+        Y: 52.7950439453125
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1052
+  Hide Left Dock: false
+  Hide Right Dock: true
+  MiDaS_Absolute:
+    collapsed: false
+  MiDaS_Output:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd000000040000000000000150000002e4fc0200000026fb0000001200530065006c0065006300740069006f006e00000000cf000000610000004900fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000d4000001240000009b00fffffffb0000000a0049006d00610067006501000002e6000000d00000000000000000fb000000140053006f006e006100720020004c00650066007401000000fc000000160000000000000000fb00000036004c0045004300320020004c006500660074002000730065006d00730065006700200063006f006e0066006900640065006e0063006500000002190000007e0000000000000000fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d00610067006500000004e6000002fe0000000000000000fb000000200053006f006e0061007200200050006f0072007400200049006d006100670065010000031d000000770000000000000000fb000000140050006f0072007400200053006f006e00610072000000038a000000160000000000000000fb0000001e00530074006100720062006f00610072006400200053006f006e0061007200000003a0000000160000000000000000fb000000200053006f006e0061007200200050006f0072007400200049006d00610067006501000002ed000000c90000000000000000fb0000001400530065006d007300650067004c00650066007400000002e0000000b40000000000000000fb000000100044006900730070006c00610079007300000002470000016f0000009b00fffffffb00000014005200470042005f00430061006d006500720061000000021c000001840000000000000000fb0000002200490041004900200053006f006e006100720020004c00650066007400200047005400000000ed000000da0000000000000000fb00000036004c0045004300320020004c006500660074002000730065006d00730065006700200063006f006e0066006900640065006e0063006500000001fe0000003d0000000000000000fb0000001c004e0047004300200053006f006e006100720020004c0065006600740000000130000000270000000000000000fb00000020004c0045004300320020004c006500660074002000730065006d00730065006700000002c0000000bf0000000000000000fb00000038004c004500430032002000520069006700680074002000730065006d00730065006700200063006f006e0066006900640065006e00630065000000013e000000260000000000000000fb0000001c004e0047004300200053006f006e006100720020004c00650066007400000002260000001b0000000000000000fb00000022004e0047004300200053006f006e006100720020006c006500660074002000470054000000014c000000290000000000000000fb0000002200490041004900200053006f006e006100720020004c00650066007400200047005400000002450000011a0000000000000000fb0000000c00430061006d0065007200610000000275000000160000000000000000fb00000022004e0047004300200053006f006e006100720020006c00650066007400200047005400000003630000001d0000000000000000fb00000014005200470042005f00430061006d0065007200610000000179000000350000000000000000fb00000018004d0069004400610053005f004f007500740070007500740000000383000000330000001600fffffffb0000001c004d0069004400610053005f004100620073006f006c007500740065000000020e000000670000001600fffffffb0000000a0049006d006100670065000000028c000000950000000000000000fb00000014005500550056002000430061006d00650072006100000002fe000000ba0000001600fffffffb0000000c00560049002000460049005301000002f6000000c00000000000000000fb000000240056005500200053005300530020004c004500430032005f004c0069007400650020004c01000001fc0000008f0000001600fffffffb000000240056005500200053005300530020004c004500430032005f004c00690074006500200052010000028f0000008e0000001600fffffffb000000200056005500200046004c00530020004c004500430033005f004c0069007400650100000321000000970000001600ffffff00000001000000fc000002e2fc020000000ffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000d4000002e20000008500fffffffb0000002400490041004900200053006f006e006100720020005200690067006800740020004700540000000356000000160000000000000000fb00000024004e0047004300200053006f006e006100720020007200690067006800740020004700540000000370000000160000000000000000fb000000160053006f006e0061007200200052006900670068007401000002110000001a0000000000000000fb00000038004c004500430032002000520069006700680074002000730065006d00730065006700200063006f006e0066006900640065006e0063006500000001b1000000820000000000000000fb0000001e004e0047004300200053006f006e00610072002000520069006700680074000000038a000000160000000000000000fb00000024004e0047004300200053006f006e006100720020007200690067006800740020004700540000000290000001280000000000000000fb0000002400490041004900200053006f006e006100720020005200690067006800740020004700540000000304000000b40000000000000000fb0000001e004e0047004300200053006f006e006100720020005200690067006800740000000323000000950000000000000000fb00000022004c004500430032002000520069006700680074002000730065006d007300650067000000032c000000530000000000000000fb0000001600530065006d0073006500670052006900670068007400000002d0000000c40000000000000000fb0000002c0053006f006e006100720020005300740061007200740062006f00610072006400200049006d00610067006501000002ca000000ca0000000000000000fb0000002a0053006f006e00610072002000530074006100720062006f00610072006400200049006d00610067006500000002ec000000ca0000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000002000003b0000000a0fc0100000012fb000000100056005500200053005300530020004c0100000000000002090000005c00fffffffb0000001000560055002000530053005300200052010000020d000001a30000005d00fffffffb0000000a0049006d0061006700650000000000000001e10000000000000000fb0000000a0049006d0061006700650000000000000003be0000000000000000fb0000000a0049006d0061006700650100000000000001ef0000000000000000fb0000000a0049006d00610067006501000001f3000001cb0000000000000000fb0000000a0049006d0061006700650000000000000003a60000000000000000fb0000000a0049006d0061006700650100000000000000630000000000000000fb0000000a0049006d00610067006501000000670000006d0000000000000000fb0000000a0049006d00610067006501000000d8000000d00000000000000000fb0000000a0049006d00610067006501000001ac000000d00000000000000000fb00000018004d0069004400610053005f004f007500740070007500740000000288000002740000000000000000fb0000001c004d0069004400610053005f004100620073006f006c0075007400650000000500000002800000000000000000fb00000020004c0045004300320020004c006500660074002000730065006d0073006500670000000000000000ae0000000000000000fb0000000a0049006d0061006700650100000000000002540000000000000000fb0000000a0049006d0061006700650100000258000001660000000000000000fb00000022004c004500430032002000520069006700680074002000730065006d0073006500670000000301000000d10000000000000000fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000003b000000046fc0100000002fb0000000800540069006d00650100000000000003b00000027300fffffffb0000000800540069006d006501000000000000045000000000000000000000025c000002e400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  UUV Camera:
+    collapsed: false
+  VU FLS LEC3_Lite:
+    collapsed: false
+  VU SSS L:
+    collapsed: false
+  VU SSS LEC2_Lite L:
+    collapsed: false
+  VU SSS LEC2_Lite R:
+    collapsed: false
+  VU SSS R:
+    collapsed: false
+  Views:
+    collapsed: true
+  Width: 944
+  X: 2896
+  Y: 0

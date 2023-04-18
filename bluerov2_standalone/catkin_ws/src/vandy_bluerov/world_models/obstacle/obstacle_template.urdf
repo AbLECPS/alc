@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot name="box{n}">
+
+  <link name="box{n}/base_link">
+    <visual>
+      <geometry>
+       <box size="{x} {y} {z}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+       <box size="{x} {y} {z}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="99999999999999999"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+  
+  <link name="box{n}/pose_sensor_link_default">
+    <inertial>
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      <mass value="0.001" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </inertial>
+  </link>
+  
+  <joint name="box{n}/pose_sensor_default_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <parent link="box{n}/base_link"/>
+    <child link="box{n}/pose_sensor_link_default"/>
+  </joint>
+  
+  <gazebo>
+    <plugin name="dynamic_obstacles" filename="libuuv_dynamics.so">
+      <velocity>{vx} {vy} {vz}</velocity>
+      <spawn_num>{n}</spawn_num>
+    </plugin>
+    
+    <plugin name="box_uuv_plugin" filename="libuuv_underwater_object_ros_plugin.so">
+      <link name="box{n}/base_link">
+        <neutrally_buoyant>1</neutrally_buoyant>
+        <hydrodynamic_model>
+          <type>box</type>
+          <length>{x}</length>
+          <width>{y}</width>
+          <height>{z}</height>
+        </hydrodynamic_model>
+      </link>
+    </plugin>
+    
+    <plugin name="pose_3d_plugin" filename="libuuv_gazebo_ros_pose_gt_plugin.so">
+      <robot_namespace>box{n}</robot_namespace>
+      <link_name>box{n}/base_link</link_name>
+      <sensor_topic>pose_gt</sensor_topic>
+      <static_reference_frame>world</static_reference_frame>
+      <noise_sigma>0.0</noise_sigma>
+      <noise_amplitude>0.0</noise_amplitude>
+      <update_rate>20</update_rate>
+      <enable_gazebo_messages>false</enable_gazebo_messages>
+      <publish_ned_odom>false</publish_ned_odom>
+    </plugin>
+  </gazebo>
+  
+</robot>

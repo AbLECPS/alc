@@ -1,0 +1,895 @@
+{
+    "BlueROV": {
+        "Choices": "Waypoint,Pipeline,Obstacles,Degradation,AIS,NoGoZones",
+        "Exclusive": false,
+        "name": "BlueROV",
+        "Category": "DataGeneration",
+        "parameters": {
+            
+            "Autonomy": {
+                "name": "Autonomy",
+                "description":"Parameters for higher-level autonomy (implemented with BTree)",
+                "parameters": {
+                    "batt_charge": {
+                        "min": "0.0",
+                        "max": "1.0",
+                        "type": "float",
+                        "defaultValue": "0.99",
+                        "description":"Initial charge remaining in the battery (max = 1.0)",
+                        "index": 1,
+                        "name": "batt_charge"
+                    },
+                    "failsafe_battery_low_threshold": {
+                        "defaultValue": "0.1",
+                        "description":"Battery charge that triggers failsafe warning",
+                        "index": 2,
+                        "name": "failsafe_battery_low_threshold"
+                    },
+                    "failsafe_rth_enable": {
+                        "type": "boolean",
+                        "defaultValue": "True",
+                        "description":"Enables Return to Home (RTH) if battery level is low, but it is enough to reach home.",
+                        "index": 3,
+                        "name": "failsafe_rth_enable"
+                    },
+                    "failsafe_tracking_lost_threshold": {
+                        "defaultValue": "30",
+                        "type": "float",
+                        "description":"Time out(in seconds) for triggering Pipe lost failsafe warning.",
+                        "index": 4,
+                        "name": "failsafe_tracking_lost_threshold"
+                    },
+                    "geofence_threshold": {
+                        "type": "float",
+                        "defaultValue": "500",
+                        "description":"Distance (in meters) of the geo-fence boundary from home.",
+                        "index": 5,
+                        "name": "geofence_threshold"
+                    },
+                    "home_radius": {
+                        "defaultValue": "15",
+                        "description":"Tolerance (in meters) for return to home",
+                        "name": "home_radius",
+                        "index": 6
+                    },
+
+                    "fls_in_view_window": {
+                        "min": "1",
+                        "max": "100",
+                        "type": "integer",
+                        "defaultValue": "20",
+                        "description":"Size of rolling window to check if obstacle is present",
+                        "index": 7,
+                        "name": "fls_in_view_window"
+                    },
+
+                    "fls_in_view_limit": {
+                        "min": "1",
+                        "max": "200",
+                        "type": "integer",
+                        "defaultValue": "100",
+                        "description":"Threshold for detected obstacle in FLS-Window to trigger assurance action (emergency stop). Select higher number than 'fls_in_view_window' to disable",
+                        "index": 8,
+                        "name": "fls_in_view_limit"
+                    },
+
+                    "pipe_estimation_good_log_val": {
+                        "ChoiceList": "",
+                        "defaultValue": "7.5",
+                        "description":"Maximum value of the assurance monitor output (log(martingale)) for which pipe estimation is considered good",
+                        "index": 9,
+                        "name": "pipe_estimation_good_log_val"
+                    },
+                    "speed_good_log_val": {
+                        "defaultValue": "10",
+                        "description":"Maximum threshold of LEC2 assurance monitor when the speed is considered good for perception quality",
+                        "index": 11,
+                        "name": "speed_good_log_val"
+                    },
+                    "uuv_min_speed": {
+                        "defaultValue": "0.4",
+                        "description":"Minimum speed of uuv",
+                        "index": 13,
+                        "name": "uuv_min_speed"
+                    },
+                    "uuv_max_speed": {
+                        "defaultValue": "0.9",
+                        "description":"Maximum commanded speed of Bluerov",
+                        "index": 14,
+                        "name": "uuv_max_speed"
+                    },
+                    "enable_rpm_sensor_check": {
+                        "ChoiceList": "",
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description":"Enable checking of rpm sensor faults",
+                        "index": 15,
+                        "name": "enable_rpm_sensor_check"
+
+                    }
+                }
+            },
+            "Degradation": {
+                "name": "Degradation",
+                "ChoiceList":"Degradation",
+                "description":"Parameters for configuring degradation in simulation",
+                "parameters": {
+                    "thruster_motor_failure": {
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enable primary thruster failure",
+                        "index":1,
+                        "name": "thruster_motor_failure"
+                    },
+                    "thruster_id": {
+                        "value_choices": "0\n1\n2\n3\n4\n5",
+                        "max": "5",
+                        "min": "0",
+                        "type": "integer",
+                        "description": "ID of the primary failed thruster",
+                        "defaultValue": "0",
+                        "index":2,
+                        "name": "thruster_id"
+                    },
+                    "thruster_thrust_force_efficiency": {
+                        "max": "1",
+                        "min": "0",
+                        "type": "float",
+                        "defaultValue": "0.81",
+                        "description": "Efficiency of the primary failed thruster",
+                        "index":3,
+                        "name": "thruster_thrust_force_efficiency"
+                    },
+
+                    "thruster_motor_fail_starting_time": {
+                        "min": "1",
+                        "type": "float",
+                        "defaultValue": "50",
+                        "description": "Primary failure starting time",
+                        "index":4,
+                        "name": "thruster_motor_fail_starting_time"
+                    },
+                    
+                    "thruster_motor_fail_duration": {
+                        "min": "1",
+                        "type": "float",
+                        "defaultValue": "65535",
+                        "description": "Duration of the primary thruster failure",
+                        "index":5,
+                        "name": "thruster_motor_fail_duration"
+                    },
+
+                    "dual_thruster_failure": {
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enable secondary thruster failure",
+                        "index":6,
+                        "name": "dual_thruster_failure"
+                    },
+
+                    "second_thruster_id": {
+                        "value_choices": "0\n1\n2\n3\n4\n5",
+                        "max": "5",
+                        "min": "0",
+                        "type": "integer",
+                        "description": "ID of secondary thruster to fail",
+                        "index":7,
+                        "defaultValue": "1",
+                        "name": "second_thruster_id"
+                    },
+
+                    "second_thruster_thrust_force_efficiency": {
+                        "max": "1",
+                        "min": "0",
+                        "type": "float",
+                        "defaultValue": "0.31",
+                        "description": "Efficiency of the secondary thruster failure",
+                        "index":8,
+                        "name": "second_thruster_thrust_force_efficiency"
+                    },
+
+
+                    "second_thruster_motor_fail_starting_time": {
+                        "ChoiceList": "",
+                        "min": "1",
+                        "type": "float",
+                        "defaultValue": "100",
+                        "description": "Starting time of secondary thruster failure",
+                        "index":9,
+                        "name": "second_thruster_motor_fail_starting_time"
+                    },
+                    "second_thruster_motor_fail_duration": {
+                        "ChoiceList": "",
+                        "min": "1",
+                        "type": "float",
+                        "defaultValue": "65535",
+                        "description": "Duration of secondary thruster failure",
+                        "index":10,
+                        "name": "second_thruster_motor_fail_duration"
+                    },
+                    
+                    "classification_threshold": {
+                        "ChoiceList": "",
+                        "max": "1",
+                        "min": "0",
+                        "type": "float",
+                        "defaultValue": "0.99",
+                        "description": "DD-LEC softmax classification threshold",
+                        "index":14,
+                        "name": "classification_threshold"
+                    },
+                    
+                    "failed_rpm_sensor_enable": {
+                        "ChoiceList": "",
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enable failures in RPM sensor",
+                        "index":11,
+                        "name": "failed_rpm_sensor_enable"
+                    },
+                    
+                    
+                    "failed_rpm_sensor": {
+                        "ChoiceList": "",
+                        "max": "5",
+                        "min": "0",
+                        "type": "integer",
+                        "defaultValue": "2",
+                        "description": "ID of the failed RPM sensor",
+                        "index":12,
+                        "name": "failed_rpm_sensor"
+                    },
+
+                    
+                    "failed_rpm_sensor_start": {
+                        "ChoiceList": "",
+                        "min": "0",
+                        "type": "float",
+                        "defaultValue": "50",
+                        "description": "Starting time of the failed RPM sensor",
+                        "index":13,
+                        "name": "failed_rpm_sensor_start"
+                    }
+                    
+                    
+                }
+            },
+            "Obstacles": {
+                "name": "Obstacles",
+                "ChoiceList": "Obstacles",
+                "description":"Parameters for obstacle generation in simulation",
+                "parameters": {
+                    "enable_obstacles": {
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enable static obstacles",
+                        "index":1,
+                        "name": "enable_obstacles"
+                    },
+                    "enable_dynamic_obstacles": {
+                        "type": "boolean",
+                        "defaultValue": "False", 
+                        "description": "Enable dynamic obstacles",
+                        "index":2,
+
+                        "name": "enable_dynamic_obstacles"
+                    },
+                    "enable_debris": {
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enable debris on seafloor (if static obstacles are enabled)",
+                        "index":3,
+                        "name": "enable_debris"
+                    },
+                    "generate_ais_data": {
+                        "ChoiceList": "",
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Simulate ais vessels",
+                        "index":4,
+                        "name": "generate_ais_data"
+                    },
+
+                    "box_max_cnt": {
+                        "defaultValue": "10",
+                        "min": "0",
+                        "desciption":"Maximum number of obstacles in each class (static/ dynamic)",
+                        "type": "integer",
+                        "index":5,
+                        "name": "box_max_cnt"
+                    },
+                    "lambda_low_static": {
+                        "defaultValue": "30",
+                        "min": "1",
+                        "type": "float",
+                        "description": "Lower bound of the static obstacle spawning interval",
+                        "index":6,
+                        "name": "lambda_low_static"
+                    },
+                    "lambda_high_static": {
+                        "defaultValue": "60",
+                        "min": "10",
+                        "type": "float",
+                        "description": "Upper bound of the static obstacle spawning interval",
+                        "index":7,
+                        "name": "lambda_high_static"
+                    },
+                    "box_distance_static": {
+                        "defaultValue": "65",
+                        "min": "30",
+                        "type": "float",
+                        "description": "Distance (in m) at which static obstacles are spawned ahead of the uuv.",
+                        "index":8,
+                        "name": "box_distance_static"
+                    },
+                    "box_size_x": {
+                        "defaultValue": "10",
+                        "type": "float",
+                        "desciption":"X-axis size for obstacles",
+                        "value_choices":"1\n5\n10",
+                        "index":9,
+                        "name": "box_size_x"
+                    },
+                    "box_size_y": {
+                        "defaultValue": "10",
+                        "type": "float",
+                        "value_choices":"1\n5\n10",
+                        "desciption":"Y-axis size for obstacles",
+                        "index":10,
+                        "name": "box_size_y"
+                    },
+                    "box_size_z": {
+                        "defaultValue": "10",
+                        "type": "float",
+                        "desciption":"Z-axis size for obstacles",
+                        "value_choices":"1\n5\n10",
+                        "index":11,
+                        "name": "box_size_z"
+                    },
+                    "box_distance_variance": {
+                        "defaultValue": "0",
+                        "min": "0",
+                        "type": "float",
+                        "description": "Randomize box distance if greater than 0 (added to box_distance) for both static and dynamic obstacles (random number between [-box_distance_variance, box_distance_variance]",
+                        "index":12,
+                        "name": "box_distance_variance"
+                    },
+                    "enable_random": {
+                        "defaultValue": "False",
+                        "type": "boolean",
+                        "desciption":"Randomizes y-axis position of static obstacles (not spawned directly ahead of uuv)",
+                        "index":13,
+                        "name": "enable_random"
+                    },
+                    "dynamic_obstacles_count": {
+                        "defaultValue": "8",
+                        "min": "1",
+                        "type": "integer",
+                        "description": "Maximum number of dynamic obstacles",
+                        "index":14,
+                        "name": "dynamic_obstacles_count"
+                    },
+                    
+                    "lambda_low": {
+                        "defaultValue": "30",
+                        "min": "1",
+                        "type": "float",
+                        "description": "Lower bound of the dynamic obstacle spawning interval",
+                        "index":15,
+                        "name": "lambda_low"
+                    },
+                    "lambda_high": {
+                        "defaultValue": "60",
+                        "min": "10",
+                        "type": "float",
+                        "index":16,
+                        "description": "Upper bound of the dynamic obstacle spawning interval",
+                        "name": "lambda_high"
+                    },
+                    
+                    "box_distance_x": {
+                        "defaultValue": "40",
+                        "type": "float",
+                        "desciption":"Distance (in m) on x-axis at which dynamic obstacles are spawned relative to the UUV",
+                        "index":17,
+                        "name": "box_distance_x"
+                    },
+                    "box_distance_y": {
+                        "defaultValue": "25",
+                        "type": "float",
+                        "desciption":"Distance (in m) on y-axis at which dynamic obstacles are spawned relative to the UUV",
+                        "index":18,
+                        "name": "box_distance_y"
+                    },
+                    "box_velocity_x": {
+                        "defaultValue": "0",
+                        "type": "float",
+                        "desciption":"Velocity (in m/s) along x-axis for  dynamic obstacles",
+                        "index":19,
+                        "name": "box_velocity_x"
+                    },
+                    "box_velocity_y": {
+                        "defaultValue": "-2.5",
+                        "type": "float",
+                        "desciption":"Velocity (in m/s) along y-axis for  dynamic obstacles",
+                        "index":20,
+                        "name": "box_velocity_y"
+                    },
+                    
+                    
+                    "enable_wall": {
+                        "defaultValue": "False",
+                        "type": "boolean",
+                        "desciption":"Prevents randomized orientation of static obstacles. used for creating wall of obstacles scenario",
+                        "index":21,
+                        "name": "enable_wall"
+                    }
+                    
+                }
+            },
+            "Execution": {
+                "category": "Execution",
+                "category_choices": "Execution",
+                "name": "Execution",
+                "description":"Parameters for simulation execution",
+                "parameters": {
+                    "num_episodes": {
+                        "defaultValue": "1",
+                        "type": "integer",
+                        "max": "-1",
+                        "min": "1",
+                        "description":"Number of episodes to run (typically set to 1)",
+                        "name": "num_episodes"
+                    },
+                    "gui": {
+                        "defaultValue": "False",
+                        "type": "boolean",
+                        "description":"Enable gui for simulation. set to false for headless run",
+                        "name": "gui"
+                    },
+                    "headless": {
+                        "defaultValue": "True",
+                        "required": false,
+                        "name": "headless",
+                        "description":"Run simulation in headless mode",
+                        "type": "boolean"
+                    },
+                    "record": {
+                        "defaultValue": "True",
+                        "isTable": false,
+                        "name": "record",
+                        "index":4,
+                        "description":"Record topics in bag file",
+                        "type": "boolean"
+                    },
+                    "unpause_timeout": {
+                        "type": "float",
+                        "defaultValue": "15",
+                        "min": "5",
+                        "index":3,
+                        "description":"Time for the simulation to be paused at startup",
+                        "name": "unpause_timeout"
+                    },
+                    "timeout": {
+                        "min": "30",
+                        "defaultValue": "120",
+                        "isTable": false,
+                        "type": "float",
+                        "index":2,
+                        "description":"Maximum simulation time (s)",
+                        "name": "timeout"
+                    },
+                    "random_val": {
+                        "defaultValue": "27168",
+                        "type": "integer",
+                        "description":"Random number generator seed to be set for the simulation",
+                        "index":1,
+                        "name": "random_val"
+                    },
+                    "termination_topic": {
+                        "defaultValue": "/alc/stopsim",
+                        "name": "termination_topic",
+                        "description":"Termination topic to stop the simulation (not used currently)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    "use_cuda": {
+                        "defaultValue": "True",
+                        "name": "use_cuda",
+                        "description":"CUDA for PyTorch",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                    
+                }
+            },
+            "RTReach":{
+                "category": "RTReach",
+                "category_choices": "RTReach",
+                "ChoiceList":"AIS\nObstacles",
+                "name": "RTReach",
+                "description":"Parameters for real-time reachability",
+                "parameters": {
+                    "use_rtreach": {
+                        "defaultValue": "False",
+                        "name": "use_rtreach",
+                        "required": false,
+                        "description":"Enables use of RTReach for assurance",
+                        "index":1,
+                        "type": "boolean"
+                    },
+                    "uuv_sim_time": {
+                        "min": "1",
+                        "defaultValue": "10",
+                        "isTable": false,
+                        "type": "float",
+                        "description":"Sets the time (in seconds) for projecting the trajectory of the uuv",
+                        "index":2,
+                        "name": "uuv_sim_time"
+                    },
+                    "uuv_wall_time": {
+                        "min": "1",
+                        "defaultValue": "10",
+                        "isTable": false,
+                        "type": "float",
+                        "description":"Sets computational time (in ms) for projecting uuv trajectory",
+                        "index":3,
+                        "name": "uuv_wall_time"
+                    },
+
+                    "rtreach_debug": {
+                        "defaultValue": "0",
+                        "min":"0",
+                        "max":"1",
+                        "type": "integer",
+                        "description":"Provide additional logs when set to true",
+                        "index":4,
+                        "name": "rtreach_debug"
+                    },
+                    "standard_output": {
+                        "defaultValue": "log",
+                        "type": "string",
+                        "value_choices":"log\nscreen",
+                        "description":"Output to screen or log",
+                        "index":5,
+                        "name": "standard_output"
+                    }
+                }
+            },
+            "Pipe": {
+                "ChoiceList":"Pipeline",
+                "category_choices": "",
+                "category": "",
+                "name": "Pipe",
+                "description":"Parameters for pipe generation ",
+                "parameters": {
+                    "pipe_posx": {
+                        "isTable": false,
+                        "type": "float",
+                        "defaultValue": "10",
+                        "index":1,
+                        "description": "Starting x coordinate of pipe",
+                        "name": "pipe_posx"
+                    },
+                    "pipe_posy": {
+                        "isTable": false,
+                        "type": "float",
+                        "defaultValue": "2",
+                        "index":2,
+                        "description": "Starting y coordinate of pipe",
+                        "name": "pipe_posy"
+                    },
+                    "length_min": {
+                        "isTable": false,
+                        "type": "float",
+                        "defaultValue": "50",
+                        "index":3,
+                        "description": "Minimum length of each pipe",
+                        "name": "length_min"
+                    },
+                    "length_max": {
+                        "isTable": false,
+                        "type": "float",
+                        "defaultValue": "100",
+                        "index":4,
+                        "description": "Maximum length of each pipe",
+                        "name": "length_max"
+                    },
+                    "angle_min": {
+                        "isTable": false,
+                        "type": "float",
+                        "defaultValue": "-0.7854",
+                        "index":5,
+                        "description": "Minimum angle between connecting pipes",
+                        "name": "angle_min"
+                    },
+                    "angle_max": {
+                        "isTable": false,
+                        "type": "float",
+                        "index":6,
+                        "defaultValue": "0.7854",
+                        "description": "Maximum angle between connecting pipes",
+                        "name": "angle_max"
+                    }
+                    ,
+                    "pipe_scale": {
+                        "isTable": false,
+                        "type": "float",
+                        "index":7,
+                        "defaultValue": "3",
+                        "description": "Pipe diameter scale",
+                        "name": "pipe_scale"
+                    }
+                }
+            },
+            "Waypoint": {
+                "ChoiceList":"Waypoint",
+                "name": "Waypoint",
+                "description":"Parameters for waypoint following mission",
+                "parameters": {
+                    "waypoint_filename": {
+                        "ChoiceList": "",
+                        "value_choices": "search_pattern_cp4.yaml\ntraining_pattern.yaml\nsearch_pattern.yaml\nsimple_waypoints.yaml\nsearch_pattern_cp3_parallel.yaml\nsearch_pattern_cp3_perpendicular.yaml\nsearch_pattern_cp3_perpendicular_wide.yaml\n",
+                        "type": "string",
+                        "index":1,
+                        "description": "Preset waypoint files to choose from",
+                        "defaultValue": "training_pattern.yaml",
+                        "name": "waypoint_filename"
+                    },
+                    "random_waypoints": {
+                        "ChoiceList": "",
+                        "type": "boolean",
+                        "description":"Enables randomized waypoint generation (instead of loading them from mission file)",
+                        "defaultValue": "False",
+                        "index":2,
+                        "name": "random_waypoints"
+                    },
+                    "num_waypoints": {
+                        "ChoiceList": "",
+                        "type": "integer",
+                        "min": "2",
+                        "defaultValue": "10",
+                        "description":"Number of random waypoints generated",
+                        "index":3,
+                        "name": "num_waypoints"
+                    },
+
+                    "min_distance": {
+                        "ChoiceList": "",
+                        "type": "float",
+                        "defaultValue": "15.0",
+                        "description":"Minimum distance (in m) for the next randomly generated waypoint (from uuv)",
+                        "index":4,
+                        "name": "min_distance"
+                    },
+
+                    "max_distance": {
+                        "ChoiceList": "",
+                        "type": "float",
+                        "defaultValue": "30.0",
+                        "description":"Maximum distance (in m) for the next randomly generated waypoint (from uuv)",
+                        "index":5,
+                        "name": "max_distance"
+                    },
+
+                    "min_heading": {
+                        "ChoiceList": "",
+                        "type": "float",
+                        "defaultValue": "1.5708",
+                        "description":"Minimum heading (in radians) for the next randomly generated waypoint (from uuv)",
+                        "name": "min_heading"
+                    },
+
+                    "max_heading": {
+                        "ChoiceList": "",
+                        "type": "float",
+                        "defaultValue": "1.5708",
+                        "description":"Maximum heading (in radians) for the next randomly generated waypoint (from uuv)",
+                        "index":6,
+                        "name": "max_heading"
+                    }
+                }
+            },
+            "PostProcessScript": {
+                "name": "PostProcessScript",
+                "description":"Parameters for post processing",
+                "parameters": {
+                    "PostProcess": {
+                        "defaultValue": "import os\nfrom alc_utils.routines import plot_bluerov_results\n\n\n#get the current execution folder\ncur_folder = os.getcwd();\n\n##searches for bag files inside the current folder (execution folder)\n##plot the iver simulation results\nplot_bluerov_results.plot(cur_folder)",
+                        "type": "code",
+                        "description":"Post-processing script",
+                        "isTable": false,
+                        "name": "PostProcess"
+                    }
+                }
+            },
+            "Mission": {
+                "name": "Mission",
+                "description":"Parameters for mission configuration",
+                "parameters": {
+                    "mission_file": {
+                        "ChoiceList": "",
+                        "type": "string",
+                        "value_choices": "mission_pipe_track.yaml\nmission_04.yaml\nmission_04_wall.yaml\nmission_05_straight.yaml",
+                        "defaultValue": "mission_pipe_track.yaml",
+                        "description":"Mission choices",
+                        "index":1,
+                        "name": "mission_file"
+                    },                    
+                    "enable_obstacle_avoidance": {
+                        "ChoiceList": "Obstacles\nAIS\nNoGoZones",
+                        "type": "boolean",
+                        "defaultValue": "True",
+                        "description": "Enable obstacle avoidance",
+                        "index":2,
+                        "name": "enable_obstacle_avoidance"
+                    },
+                    "predict_ais_data": {
+                        "ChoiceList": "AIS",
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Predict ais vessel movement onto the obstacle map",
+                        "index":3,
+                        "name": "predict_ais_data"
+                    },
+                    "obstacle_avoidance_source": {
+                        "ChoiceList": "Obstacles",
+                        "type": "string",
+                        "defaultValue": "fls_lec3lite",
+                        "value_choices":"fls_echosounder\nfls_lec3lite",
+                        "description": "Sensor choices for Forward Looking Sonar",
+                        "index":4,
+                        "name": "obstacle_avoidance_source"
+                    },
+                    "x_track_error": {
+                        "ChoiceList": "",
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enables cross-tracking error minimization.",
+                        "index":5,
+                        "name": "x_track_error"
+                    },
+                   "enable_training_data_collection": {
+                        "ChoiceList": "Degradation",
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enables data collection for training DD-LEC",
+                        "index":6,
+                        "name": "enable_training_data_collection"
+                    },
+                    "no_go_zone_list": {
+                        "ChoiceList": "NoGoZones",
+                        "type": "string",
+                        "defaultValue": "[]",
+                        "description": "Specify coordinates of no-go-zone polygons",
+                        "index":7,
+                        "name": "no_go_zone_list"
+                    }
+                }
+            },
+            "FDIR": {
+                "name": "FDIRDegradationDetection",
+                "ChoiceList": "Degradation",
+                "description":"Parameters for degradation detection (FDIR)",
+                "parameters": {
+                    "enable_fault_detection": {
+                        "ChoiceList": "",
+                        "type": "boolean",
+                        "defaultValue": "False",
+                        "description": "Enable control reallocation for FDIR",
+                        "index":1,
+                        "name": "enable_fault_detection"
+                    },
+                    "decision_source": {
+                        "ChoiceList": "",
+                        "type": "string",
+                        "value_choices":"softmax\nsnapshot_am\ncombination_am",
+                        "defaultValue": "snapshot_am",
+                        "description": "Choice of decision input to FDIR",
+                        "index":2,
+                        "name": "decision_source"
+                    },
+                    "comb_am_choice": {
+                        "ChoiceList": "",
+                        "type": "string",
+                        "value_choices":"trained_best\noverride_threshold\noverride_all",
+                        "defaultValue": "trained_best",
+                        "description": "Threshold choices for FDIR LEC assurance monitor.",
+                        "index":3,
+                        "name": "comb_am_choice"
+                    },
+                    "comb_am_window_size": {
+                        "ChoiceList": "",
+                        "type": "integer",
+                        "min": "2",
+                        "defaultValue": "10",
+                        "description": "Size of the window to be used for sequence based AM",
+                        "index":5,
+                        "name": "comb_am_window_size"
+                    },
+                    "comb_type": {
+                        "ChoiceList": "",
+                        "type": "string",
+                        "value_choices":"merge\ncdf",
+                        "defaultValue": "merge",
+                        "description": "Combination function type to be used for sequence based AM",
+                        "index":6,
+                        "name": "comb_type"
+                    },
+                    "comb_fun_merge": {
+                        "ChoiceList": "",
+                        "type": "string",
+                        "value_choices":"arith_avg\ngeom_avg\npmin\npmax",
+                        "defaultValue": "arith_avg",
+                        "description": "Combination function to be used for merge type combination function",
+                        "index":7,
+                        "name": "comb_fun_merge"
+                    },
+                    "comb_fun_cdf": {
+                        "ChoiceList": "",
+                        "type": "string",
+                        "value_choices":"fisher\nstouffer\nweighted_stouffer\nmin_cdf\nord_stat_cdf\ncauchi",
+                        "defaultValue": "fisher",
+                        "description": "Combination function to be used for for cdf type combination function",
+                        "index":8,
+                        "name": "comb_fun_cdf"
+                    },
+                    "combined_am_threshold": {
+                        "ChoiceList": "",
+                        "type": "float",
+                        "defaultValue": "0.5",
+                        "description": "Value used to override trained threshold value in sequence AM",
+                        "index":4,
+                        "name": "combined_am_threshold"
+                    },
+                    "snapshot_am_threshold": {
+                        "ChoiceList": "",
+                        "type": "float",
+                        "defaultValue": "0.5",
+                        "description": "Value used to override trained threshold value in snapshot AM",
+                        "index":10,
+                        "name": "snapshot_am_threshold"
+                    },
+                    "snapshot_am_choice": {
+                        "ChoiceList": "",
+                        "type": "string",
+                        "value_choices":"trained_best\noverride_threshold",
+                        "defaultValue": "trained_best",
+                        "description": "Specify source of threshold value for snapshot AM",
+                        "index":9,
+                        "name": "snapshot_am_choice"
+                    }
+                    
+                }
+            }
+        },
+        "input": {
+            "fdir": {
+                "ChoiceList": "Degradation",
+                "name": "fdir",
+                "type": "LEC"
+            },
+            "lec2": {
+                "ChoiceList": "",
+                "type": "LEC",
+                "name": "lec2"
+            },
+            "lec3": {
+                "ChoiceList": "",
+                "type": "LEC",
+                "name": "lec3"
+            }
+        },
+        "output": {
+            "sim_output": {
+                "name": "sim_output",
+                "attributes": {
+                    "ROSFilePath": {
+                        "type": "string",
+                        "name": "ROSFilePath"
+                    }
+                }
+            }
+        }
+    }
+}

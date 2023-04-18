@@ -1,0 +1,21 @@
+<!--
+File:         task_rth.launch
+-->
+
+<launch>
+  <arg name="uuv_name" default="uuv0"/>
+  <arg name="rth_speed" default="0.4"/>
+  <arg name="rth_depth" default="45"/>
+  <arg name="rth_turnrate" default="30"/>
+  
+  <group ns="$(arg uuv_name)">
+    <remap from="odom" to="pose_gt_noisy_ned"/>
+    <node name="task_rth" pkg="vandy_bluerov" type="task_rth.py" output="screen">
+      <rosparam subst_value="true">
+            rth_speed: $(arg rth_speed)
+            rth_depth: $(arg rth_depth)
+            rth_turnrate: $(arg rth_turnrate)
+          </rosparam>
+      </node>
+  </group>
+</launch>

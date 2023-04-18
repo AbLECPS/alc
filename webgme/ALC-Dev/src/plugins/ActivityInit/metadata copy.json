@@ -1,0 +1,30 @@
+{
+  "id": "ActivityInit",
+  "name": "ActivityInit",
+  "version": "0.1.0",
+  "description": "Initialize Activity",
+  "icon": {
+    "class": "glyphicon glyphicon-cog",
+    "src": ""
+  },
+  "configWidget": "plugin/ActivityInit/ActivityInit/communication.js",
+  "disableServerSideExecution": false,
+  "disableBrowserSideExecution": true,
+  "dependencies": [],
+  "writeAccessRequired": false,
+  "configStructure": [
+    {
+      "name": "activity",
+      "displayName": "Activity Definition",
+      "readOnly": false
+    },
+    {
+      "name": "activity_json",
+      "displayName": "Activity Definition File",
+      "description": "",
+      "value": "",
+      "valueType": "asset",
+      "readOnly": false
+    }
+  ]
+}

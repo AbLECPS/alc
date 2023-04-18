@@ -1,0 +1,5 @@
+{"port": 22,
+"host": "172.17.0.2",
+"user": "fileshare",
+"key": "/home/alc/alc/docker/sftp/fileshare_rsa",
+"path_prefix": "alc_workspace/"}

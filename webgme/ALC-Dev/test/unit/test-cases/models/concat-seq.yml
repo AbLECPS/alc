@@ -1,0 +1,47 @@
+- type: Linear
+  id: /u/1
+  next:
+    - /u/T
+  attributes:
+    bias: ''
+    outputSize: 30
+    inputSize: 150
+- type: Linear
+  id: /u/2
+  next:
+    - /u/M
+  attributes:
+    bias: ''
+    outputSize: 150
+    inputSize: 100
+- type: Tanh
+  id: /u/G
+  next:
+    - /u/1
+  attributes: {}
+- type: Tanh
+  id: /u/M
+  next:
+    - /u/k
+  attributes: {}
+- type: Concat
+  id: /u/T
+  next: []
+  attributes:
+    dimension: 1
+- type: Linear
+  id: /u/k
+  next:
+    - /u/T
+  attributes:
+    bias: ''
+    outputSize: 50
+    inputSize: 150
+- type: Linear
+  id: /u/q
+  next:
+    - /u/G
+  attributes:
+    bias: ''
+    outputSize: 150
+    inputSize: 100

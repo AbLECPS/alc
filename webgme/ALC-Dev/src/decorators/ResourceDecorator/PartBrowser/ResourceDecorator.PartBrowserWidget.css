@@ -1,0 +1,10 @@
+/**
+ * @author rkereskenyi / https://github.com/rkereskenyi
+ */
+.part-browser .Resource-decorator .name {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+.part-browser .Resource-decorator .embeddedsvg {
+  width: 40px;
+  position: relative; }

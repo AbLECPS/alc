@@ -1,0 +1,54 @@
+disturbances:
+-
+  type: current
+  starting_time: 0
+  duration: -1
+  args:
+    wave_amp: # meters
+      mean:     # Uniform distribution for the mean of the Gauss Markov model. Mean is randomely set by the disturbance manager
+        min: 2
+        max: 4
+      mu: 0.1    # Process constant. Value = 0-1. 0 = Perfect correlation, 1 = Low correlation.
+      min: 1    # Minimum possible output
+      max: 6    # Maximum possible output
+      noise: 0.2 # Noise amplitude
+    wave_period: # seconds
+      mean:
+        min: 12.5
+        max: 17.5
+      mu: 0
+      min: 10
+      max: 20
+      noise: 0
+    wave_length: # meters
+      mean:
+        min: 50
+        max: 70
+      mu: 0
+      min: 50
+      max: 100
+      noise: 0
+    velocity:
+      mean:
+        min: 0.0
+        max: 0.05
+      mu: 0.0001
+      min: 0
+      max: 2
+      noise: 0.0001
+    horizontal_angle: # RADIANS
+      mean:
+        min: -0.7854
+        max: 0.7854
+      mu: 0.1
+      min: -3.14159
+      max: 3.14159
+      noise: 0.03
+    vertical_angle:
+      mean:
+        min: 0
+        max: 0.7
+      mu: 0.1
+      min: -0.7854 # 3.14159
+      max: 0.7854 # -3.14159
+      noise: 0.03

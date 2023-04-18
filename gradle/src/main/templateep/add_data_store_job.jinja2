@@ -1,0 +1,3 @@
+{{ parent_job }}.add_data_store_job("{{ job_name }}", {{ next_job_name_list }}, json.loads("""\
+{{ json_data }}""")
+)

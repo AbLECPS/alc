@@ -1,0 +1,85 @@
+<launch>
+
+	<!-- LEC2 AM paths -->
+	<!-- <arg name="vae_path" default="/jupyter/admin_BlueROV/LEC2Lite_AM/vae/SLModel"/> -->
+	<arg name="vae_path" default="/jupyter/admin_BlueROV/LEC2Lite_AM/vae"/>
+	<arg name="svdd_path" default="/jupyter/admin_BlueROV/LEC2Lite_AM/svdd/SLModel"/>
+
+	<!-- LEC2 TFLite filename -->
+	<arg name="filename" default="lec2.tflite"/>
+
+	<!-- Side Scan Sonar noise -->
+	<arg name="sss_sonar_noise" default="0.5"/>
+
+	<!-- Forward Imaging Sonar noise -->
+	<arg name="fis_sonar_noise" default="25"/>
+	
+	<!-- publish static transform between pipeline map and world -->
+	<arg name="uuv_name" default="uuv0"/>
+    <group ns="$(arg uuv_name)">
+		<node pkg="tf" type="static_transform_publisher" name="fixed_pipeline_map" args="0 0 0 0 0 0   /uuv0/pipeline_map /uuv0/obstacle_map 100" />
+		<node pkg="vandy_bluerov" type="pipe_mapping.py" name="pipeline_map_publisher" output="screen"/>
+	
+		<arg name="laser_topic" value="/vu_sss"/>
+		<arg name="num_range_bins" value="360"/>
+		<arg name="beam_width" value="0.9599"/>
+		<arg name="sss_lines" value="16"/>
+		<arg name="z_scale" value="20"/>
+		<arg name="y_scale" value="8"/>
+		
+		
+		<arg name="fis_laser_topic" value="/vu_fis"/>
+
+		<node name="vu_sss" pkg="vandy_bluerov" type="side_scan_sonar_vu.py" output="screen">
+                <rosparam subst_value="true">
+                laser_topic: $(arg laser_topic)
+                num_range_bins: $(arg num_range_bins)
+                beam_width: $(arg beam_width)
+                sss_lines: $(arg sss_lines)
+                y_scale: $(arg y_scale)
+                z_scale: $(arg z_scale)
+                sonar_noise: $(arg sss_sonar_noise)
+                </rosparam>
+		</node>			
+
+		<node name="vu_forward_imaging_sonar" pkg="vandy_bluerov" type="forward_imaging_sonar.py" output="screen">
+                <rosparam subst_value="true">
+                laser_topic: $(arg fis_laser_topic)
+                sonar_noise: $(arg fis_sonar_noise)
+                </rosparam>
+		</node>	
+	</group>
+
+	
+
+	<include file="$(find lec2lite)/launch/lec2lite_docker.launch">
+       <arg name="filename" value="$(arg filename)"/>
+	</include>
+
+	<!-- AM for LEC2LITE input (SSS Scan) -->
+	
+	<node name="lec2lite_am_vae_r" pkg="lec2lite" type="lec2lite_am.py" output="screen" >
+        <param name="~side" type="str" value="r" />
+		<param name="~am_type" type="str" value="vae" />
+		<param name="~path" type="str" value="$(arg vae_path)" />
+    </node>
+	<node name="lec2lite_am_vae_l" pkg="lec2lite" type="lec2lite_am.py" output="screen" >
+		<param name="~side" type="str" value="l" />
+		<param name="~am_type" type="str" value="vae" />
+		<param name="~path" type="str" value="$(arg vae_path)"/>
+    </node>
+	
+<!-- 
+	<node name="lec2lite_am_svdd_r" pkg="lec2lite" type="lec2lite_am.py" output="screen" >
+        <param name="~side" type="str" value="r" />
+		<param name="~am_type" type="str" value="svdd" />
+		<param name="~path" type="str" value="$(arg svdd_path)" />
+    </node>
+	<node name="lec2lite_am_svdd_l" pkg="lec2lite" type="lec2lite_am.py" output="screen" >
+		<param name="~side" type="str" value="l" />
+		<param name="~am_type" type="str" value="svdd" />
+		<param name="~path" type="str" value="$(arg svdd_path)" />
+    </node> 
+-->
+	
+</launch>

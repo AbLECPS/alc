@@ -1,0 +1,7 @@
+{{ parent_job }}.add_branch_point(
+    "{{ job_name }}",
+    {{ previous_job_name_list }},
+    {{ next_job_name_list }},
+    {{ condition }},
+    {{ branch_job_name_list }}
+)

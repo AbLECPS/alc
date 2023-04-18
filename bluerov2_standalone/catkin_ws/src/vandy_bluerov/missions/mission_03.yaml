@@ -1,0 +1,142 @@
+home: [ 38.971203, -76.398464 ]
+missions:
+  - type: waypoint_following
+    waypoints:
+      #- [ latitude, longitude, depth, speed ]
+      - [ 38.971203, -76.398464, -45.0, 1.5 ]
+      - [ 38.971203, -76.398264, -45.0, 1.5 ] #393064
+      - [ 38.971203, -76.398064, -45.0, 1.5 ]
+    waypoint_reached_distance: 5.0
+    avoidance_operating_depth: 10
+    avoidance_learning: true
+    loiter_box_size: 9.0
+    termination_conditions:
+      - type: final_waypoint_reached
+        distance: 5.0
+        actions:
+          - surface
+      - type: min_obstacle_standoff
+        distance: 4.0
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home
+
+  - type: path_following
+    segments:
+      #- [ heading (in degrees), range (in meters), depth (in meters), speed (in knots) ]
+      - [ 045, 20, 45, 1.5 ]
+      - [ 135, 20, 45, 1.5 ]
+      - [ 225, 20, 45, 1.5 ]
+      - [ 315, 20, 45, 1.5 ]
+      # - [ 000, 40, 45, 1.5 ]
+      # - [ 090, 40, 45, 1.5 ]
+      # - [ 000, 40, 45, 1.5 ]
+      # - [ 270, 40, 45, 1.5 ]
+      # - [ 000, 40, 45, 1.5 ]
+      # - [ 090, 40, 45, 1.5 ]
+      # - [ 000, 40, 45, 1.5 ]
+      # - [ 270, 40, 45, 1.5 ]
+    waypoint_reached_distance: 5.1
+    avoidance_operating_depth: 10.1
+    avoidance_learning: false
+    loiter_box_size: 9.1
+    termination_conditions:
+      - type: final_waypoint_reached
+        distance: 5.1
+        actions:
+          - next_mission
+      - type: min_obstacle_standoff
+        distance: 4.1
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home
+
+  - type: pipe_following
+    waypoint_reached_distance: 5.1
+    avoidance_operating_depth: 10.1
+    avoidance_learning: false
+    loiter_box_size: 9.1
+    termination_conditions:
+      - type: min_obstacle_standoff
+        distance: 4.1
+        actions::
+          - surface
+          - go_home
+    assurance_technologies:
+      - topic: "/assurance/degradation"
+        contingency_action:
+          - surface
+          - go_home
+
+
+  # - type: path_following
+  #   segments:
+  #     #- [ heading (in degrees), range (in meters), depth (in meters), speed (in knots) ]
+  #     # - [ 000, 40, 45, 1.5 ]
+  #     # - [ 090, 40, 45, 1.5 ]
+  #     # - [ 000, 40, 45, 1.5 ]
+  #     - [ 270, 40, 45, 1.5 ]
+  #     - [ 000, 40, 45, 1.5 ]
+  #     - [ 090, 40, 45, 1.5 ]
+  #     - [ 000, 40, 45, 1.5 ]
+  #     - [ 270, 40, 45, 1.5 ]
+  #     - [ 000, 40, 45, 1.5 ]
+  #     - [ 090, 40, 45, 1.5 ]
+  #     - [ 000, 40, 45, 1.5 ]
+  #     - [ 270, 40, 45, 1.5 ]
+  #   waypoint_reached_distance: 5.1
+  #   avoidance_operating_depth: 10.1
+  #   avoidance_learning: false
+  #   loiter_box_size: 9.1
+  #   termination_conditions:
+  #     - type: final_waypoint_reached
+  #       distance: 5.1
+  #       actions:
+  #         - next_mission
+  #     - type: min_obstacle_standoff
+  #       distance: 4.1
+  #       actions::
+  #         - surface
+  #         - go_home
+  #   assurance_technologies:
+  #     - topic: "/assurance/degradation"
+  #       contingency_action:
+  #         - surface
+  #         - go_home
+
+  # - type: waypoint_following
+  #   waypoints:
+  #     #- [ latitude, longitude, depth, speed ]
+  #     - [ 38.971403, -76.398064, -45.0, 1.5 ]
+  #     - [ 38.971403, -76.398264, -45.0, 1.5 ]
+  #     - [ 38.971403, -76.398464, -45.0, 1.5 ]
+  #   waypoint_reached_distance: 5.0
+  #   avoidance_operating_depth: 10
+  #   avoidance_learning: true
+  #   loiter_box_size: 9.0
+  #   termination_conditions:
+  #     - type: final_waypoint_reached
+  #       distance: 5.0
+  #       actions:
+  #         - surface
+  #     - type: min_obstacle_standoff
+  #       distance: 4.0
+  #       actions::
+  #         - surface
+  #         - go_home
+  #   assurance_technologies:
+  #     - topic: "/assurance/degradation"
+  #       contingency_action:
+  #         - surface
+  #         - go_home
+

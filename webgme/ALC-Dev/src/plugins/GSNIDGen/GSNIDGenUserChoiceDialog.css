@@ -1,0 +1,11 @@
+/**
+ * @author rkereskenyi / https://github.com/rkereskenyi
+ */
+#modal-content{  
+    position:relative;
+    margin:0 auto;
+    clear:left;
+    height:auto;
+    z-index: 0;
+    text-align:center;/* Add This*/
+}?

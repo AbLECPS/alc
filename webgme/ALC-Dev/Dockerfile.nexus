@@ -1,0 +1,11 @@
+FROM node:8.9.0
+
+RUN echo '{"allow_root": true}' > /root/.bowerrc && mkdir -p /root/.config/configstore/ && \
+     echo '{}' > /root/.config/configstore/bower-github.json
+
+# Copy build directory contents to webgme directory and install npm packages
+RUN mkdir -p /webgme
+ADD . /webgme
+WORKDIR /webgme
+RUN npm install
+

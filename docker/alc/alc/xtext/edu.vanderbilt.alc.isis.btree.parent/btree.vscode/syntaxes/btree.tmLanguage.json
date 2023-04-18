@@ -1,0 +1,43 @@
+{
+    "name": "btree",
+    "scopeName": "text.bt",
+    "fileTypes": [
+        "bt"
+    ],
+    "repository": {
+        "general": {
+            "patterns": [
+                {
+                    "include": "#linecomment"
+                },
+                {
+                    "include": "#blockcomment"
+                },
+                {
+                    "include": "#keyword"
+                }
+            ]
+        },
+        "linecomment": {
+            "name": "comment.line.double-dash.btree",
+            "begin": "(^[ \\t]+)?(?=//)",
+            "end": "(?=$)"
+        },
+        "blockcomment": {
+            "name": "comment.block.btree",
+            "begin": "/\\*(\\*)?(?!/)",
+            "end": "\\*/"
+        },
+        
+        "keyword": {
+            "name": "keyword.control.btree",
+            "match": "\\b(system|tree|updatetime|timeout|type|message|topic|var|event|arg|input|check|task|in|out|par|sel|do|if|then|mon|exec|timer|chk|comment|success| failure| running|invalid|True|False|end|;)\\b|!"
+        }
+    },
+    "patterns": [
+        {
+            "include": "#general"
+        }
+    ],
+    "uuid": "f897f02d-7879-4fdb-8932-aa48cdbd8030"
+}

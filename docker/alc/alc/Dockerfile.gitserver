@@ -1,0 +1,8 @@
+From alc_3:latest
+
+ADD install_gitserver.sh /
+RUN chmod +x install_gitserver.sh &&  /install_gitserver.sh 
+COPY git-shell-commands /home/git/git-shell-commands
+COPY sshd_config /etc/ssh/sshd_config
+COPY start.sh /git-server/start.sh
+EXPOSE 22

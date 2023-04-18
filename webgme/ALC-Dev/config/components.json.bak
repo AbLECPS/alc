@@ -1,0 +1,428 @@
+{
+	"GenericUIProjectNavigatorController": {
+        "disableProjectActions": false,
+        "rootMenuClass": "gme-root",
+        "rootDisplayName": "ALC",
+        "projectMenuClass": "",
+        "branchMenuClass": ""
+    },
+    "GenericUIWebGMEStart": {
+        "pageTitle": "ALC",
+        "disableProjectsDialog": false,
+        "nodeAtOpen": "",
+		 "nodeAtOpen": "",
+		"layout": "DefaultLayout",
+		"byProjectKind": {
+			"layout": {"deepforge":"SidebarLayout"}
+		}
+		
+    },
+    "GenericUITreeBrowserControl": {
+        "filters": {
+            "toggled": {
+                "hideConnections": false,
+                "hideAbstracts": false,
+                "hideLeaves": false,
+                "hideLibraries": false
+            }
+        },
+        "treeRoot": ""
+    },
+    "GenericUIDocumentDecorator": {
+	   "parserOptions": {
+	      "gfm": true,
+	      "tables": true,
+	      "breaks": false,
+	      "pedantic": false,
+	      "sanitize": false,
+	      "smartLists": true,
+	      "smartypants": false
+	    }
+    },
+	"AutoViz": {
+        "preloadIds": [
+            "ArchEditor",
+            "ArchIndex",
+            "PipelineIndex",
+            "PipelineEditor",
+            "OperationEditor",
+            "ExecutionView"
+        ],
+        "visualizerOverrides": {
+            "": "ForwardViz",
+            "MyArtifacts": "ArtifactIndex",
+            "MyArchitectures": "ArchIndex",
+            "MyExecutions": "ExecutionIndex",
+            "MyPipelines": "PipelineIndex"
+        }
+    },
+    "PipelineEditor": {
+        "itemName": "operation"
+    },
+    "ExecutionView": {
+        "itemName": "job"
+    },
+    "ArchEditor": {
+        "hotkeys": "none",
+        "itemName": "layer",
+        "LayerColors": {}
+    },
+    "BreadcrumbHeader": {
+        "pathRule": "history",
+        "disableUserProfile": false,
+        "cachePrefix": "deepforge-header"
+    },
+    "FloatingActionButton": {
+        "hideOnEmpty": true,
+        "pluginUIConfigs": {
+            "GenerateArchitecture": {
+                "icon": "description",
+                "hotkey": "shift enter",
+                "priority": -1
+            },
+            "ExecutePipeline": {
+                "icon": "play_arrow",
+                "hotkey": "shift enter",
+                "color": "green",
+                "priority": 1
+            },
+            "ImportTorch": {
+                "icon": "import_export",
+                "priority": -1
+            }
+        }
+    },
+	"RootViz": {
+        "nodes": [
+            {
+                "nodeName": "MyArchitectures",
+                "title": "Architectures",
+                "icon": "shuffle",
+                "rank": 1,
+                "description": "Neural network architectures are stored here and can be used in pipelines."
+            },
+            {
+                "nodeName": "MyPipelines",
+                "title": "Pipelines",
+                "color": "blue-grey",
+                "icon": "input",
+                "rank": 3,
+                "description": "Pipelines compose operations together to effectively train, test and/or ensemble models."
+            },
+            {
+                "nodeName": "MyArtifacts",
+                "title": "Artifacts",
+                "icon": "view_quilt",
+                "color": "blue-grey",
+                "rank": 5,
+                "description": "Artifacts from pipeline executions are stored here."
+            }
+        ]
+    },
+    "SidebarLayout": {
+        "panels": [
+            {
+                "id": "WorkerHeader",
+                "panel": "WorkerHeader/WorkerHeaderPanel",
+                "container": "header",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "Footer",
+                "panel": "Footer/FooterPanel",
+                "container": "footer",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "MainPanel",
+                "panel": "AutoViz/AutoVizPanel",
+                "container": "center",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "Sidebar",
+                "panel": "Sidebar/SidebarPanel",
+                "container": "sidebar",
+                "DEBUG_ONLY": false
+            },
+            {
+                "id": "ForgeActionButton",
+                "panel": "ForgeActionButton/ForgeActionButton",
+                "container": "float",
+                "DEBUG_ONLY": false
+            }
+            
+        ]
+    },
+    "DefFloatLayout": {
+        "panels": [
+     /*       {
+                "id": "Header",
+				"panel": "Header/HeaderPanel",
+				"container": "header",
+				"DEBUG_ONLY": false
+            },
+            {
+                "id": "Footer",
+                "panel": "FooterControls/FooterControlsPanel",
+                "container": "footer",
+                "DEBUG_ONLY": false
+            },*/
+            
+            {
+                "id": "ForgeActionButton",
+                "panel": "ForgeActionButton/ForgeActionButton",
+                "container": "float",
+                "DEBUG_ONLY": false
+            }
+/*,
+	  	    {
+				"id": "ObjectBrowserPanel",
+				"panel": "ObjectBrowser/ObjectBrowserPanel",
+				"container": "east",
+				"DEBUG_ONLY": false
+			},
+			{
+				"id": "VisualizerPanel",
+				"panel": "Visualizer/VisualizerPanel",
+				"container": "west",
+				"DEBUG_ONLY": false
+			},
+			{
+				"id": "PartBrowserPanel",
+				"panel": "PartBrowser/PartBrowserPanel",
+				"container": "west",
+				"DEBUG_ONLY": false
+			},
+			{
+				"id": "PropertyEditorPanel",
+				"panel": "PropertyEditor/PropertyEditorPanel",
+				"container": "east",
+				"DEBUG_ONLY": false
+			}*/
+		]/*,
+		"paneOptionsOverwrites": {
+			"east": {
+			"initClosed": false
+			},
+			"west": {
+			"initClosed": false
+			}
+		}*/
+            
+    },
+	"CodeEditor": {
+	"theme": "default",
+	"enableThemeSelection": true,
+	"keyBinding": "sublime",
+	"enableKeybindingSelection": true,
+	"lineWrapping": false,
+	"enableLineWrappingToggle": true,
+        "autoSaveInterval": "2000",
+	"rootTypes": [
+			"Project",
+			"Environment",
+			"Scenario",
+			"Scenario_Model",
+			"Exec_Node",
+			"Message_Type"
+        ],
+	"excludeTypes": [
+        "Projects",
+	    "Experiments",
+	    "Systems",
+	    "Pseudo State",
+	    "Initial",
+	    "End State"
+	],
+	"loadDepth": 0,
+	"syntaxToModeMap": {
+	    "C++": { "name": "text/x-c++src", "useCPP": true },
+	    "JSON": { "name": "application/json" },
+	    "Javascript": {"name":"text/javascript"},
+	    "gfm": { "name": "gfm" },
+	    "ROS": { 
+		"name":"text/x-c++src", 
+		"keywords": {
+		    "int8": "int8",
+		    "int16": "int16",
+		    "int32": "int32",
+		    "int64": "int64",
+		    "uint8": "uint8",
+		    "uint16": "uint16",
+		    "uint32": "uint32",
+		    "uint64": "uint64",
+		    "bool": "bool",
+		    "string": "string",
+		    "float32": "float32",
+		    "float64": "float64",
+		    "time": "time",
+		    "duration": "duration"
+		},
+		"useCPP":true
+	    },
+		"python": {"name": "text/x-python","singleLineStringErrors":true}
+	},
+	"attrToSyntaxMap": {
+	    "Documentation": {
+		"documentation": "gfm"
+	    },
+	    "Project": {
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm"
+	    },	
+	    "Package": {
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm"
+	    },
+	    "Message": {
+		"Definition": "ROS"
+	    },
+		"Service": {
+		"Definition": "ROS"
+	    },
+	    "Action": {
+		"Definition": "ROS"
+	    },
+	    "Component": {
+		"Forwards": "C++",
+		"Members": "C++",
+		"Definitions": "C++",
+		"Initialization": "C++",
+		"Destruction": "C++",
+		"User Configuration": "JSON",
+		"User Artifacts": "JSON",
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm"
+	    },
+	    "Timer": {
+		"Operation": "C++",
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm",
+		"AbstractBusinessLogic": "C++"
+	    },
+	    "Server": {
+		"Operation": "C++",
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm",
+		"AbstractBusinessLogic": "C++"
+	    },
+	    "Subscriber": {
+		"Operation": "C++",
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm",
+		"AbstractBusinessLogic": "C++"
+	    },
+	    "Action Client": {
+		"Active Callback": "C++",
+		"Done Callback": "C++",
+		"Feedback Callback": "C++",
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm",
+		"AbstractBusinessLogic": "C++"
+	    },
+	    "Action Server": {
+		"Goal Callback": "C++",
+		"Preempt Callback": "C++",
+		"Execute Callback": "C++",
+		"Authors": "gfm",
+		"Brief Description": "gfm",
+		"Detailed Description": "gfm",
+		"AbstractBusinessLogic": "C++"
+	    },
+            "External Node": {
+                "Arguments": "JSON"
+            },
+            "Node": {
+                "Arguments": "JSON"
+            },
+	    "State Machine": {
+		"Includes": "C++",
+		"Initialization": "C++",
+		"Definitions": "C++",
+		"Declarations": "C++"
+	    },
+	    "State": {
+		"Entry": "C++",
+		"Exit": "C++",
+		"Tick": "C++"
+	    },
+	    "Internal Transition": {
+		"Guard": "C++",
+		"Action": "C++"
+	    },
+	    "External Transition": {
+		"Guard": "C++",
+		"Action": "C++"
+	    },
+	    "Local Transition": {
+		"Guard": "C++",
+		"Action": "C++"
+	    },
+	    "Environment": {
+		"envProps": "C++"
+		},
+		"Scenario": {
+		"Includes": "C++",
+		"Initialization": "C++",
+		"Definitions": "C++",
+		"Declarations": "C++"
+		},
+   	    "Message_Type": {
+		"Definition": "ROS"
+	    },
+	    "Scenario_Model": {
+		"Script_Exec": "python",
+		"Script_Setup": "python",
+		"Script_Shutdown": "python",
+		"Spec": "JSON"
+	    },
+	    "Exec_Node": {
+                "LibraryName": "python",
+		"Script_Exec": "python",
+		"Script_Setup": "python",
+		"Script_Shutdown": "python",
+		"ParamList": "JSON",
+		"PortTopicSpec": "JSON"
+             }
+	},
+        "defaultAttributeMap": {
+            "Documentation": "documentation",
+            "Project": "Authors",
+            "Package": "Authors",
+            "Message": "Definition",
+            "Service": "Definition",
+            "Action": "Definition",
+            "Component": "Initialization",
+            "Timer": "Operation",
+            "Server": "Operation",
+            "Subscriber": "Operation",
+            "Action Client": "Feedback Callback",
+            "Action Server": "Execute Callback",
+            "Node": "Arguments",
+            "External Node": "Arguments",
+            "State Machine": "Initialization",
+            "State": "Entry",
+            "Internal Transition": "Action",
+            "External Transition": "Action",
+            "Local Transition": "Action",
+	    "Environment": "envProps",
+	    "Scenario": "Initialization",
+	    "Message_Type": "Definition",
+	    "Scenario_Model":"Spec",
+	    "Exec_Node":"PortTopicSpec"
+        },
+        "nameTemplateMap": {
+            "Internal Transition": "IT: {{{Event}}}",
+            "External Transition": "ET: {{{Event}}}",
+            "Local Transition": "LT: {{{Event}}}"
+        }
+    }
+}

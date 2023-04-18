@@ -1,0 +1,117 @@
+/**
+ * This file is for any scss that you may want for this visualizer.
+ */
+
+.params {
+  outline: none;
+
+  &.read-only {
+    .top-bar {
+      .create-btn {
+        display: none;
+      }
+    }
+
+    table {
+      .action-btn {
+        &.delete-btn {
+          cursor: not-allowed;
+          color: gray;
+        }
+      }
+    }
+  }
+
+  .top-bar {
+    display: inline-flex;
+    margin-bottom: 8px;
+    .top-bar-title {
+      font-size: 24px;
+    }
+    .input-group {
+      width: 200px;
+      position: absolute;
+      left: calc(50% - 200px);
+      .asset-filter {
+        border-radius: 10px;
+        font-size: 12px;
+      }
+    }
+    .create-btn {
+      position: absolute;
+      top: 18px;
+      right: 40px;
+      font-size: 24px;
+      color: green;
+      cursor: pointer;
+    }
+  }
+
+  table {
+    //table-layout: fixed;
+    width: 100%;
+    font-size: 14px;
+
+    .glyphicon {
+      padding: 5px;
+    }
+
+    .in-place-edit {
+      font-size: 14px !important;
+    }
+
+    .action-btn {
+      cursor: copy;
+      padding-top: 8px;
+      &.delete-btn {
+        cursor: pointer;
+      }
+      &:hover {
+        color: #3160ab;
+        &.delete-btn {
+          color: darkred;
+        }
+      }
+    }
+
+    th {
+      font-weight: bold;
+      &.header-name {
+        cursor: pointer;
+      }
+    }
+
+    td.row-name {
+      min-width: 80px;
+      width: calc(10% - 20px);
+    }
+
+    td.row-desc {
+      width: calc(45% - 20px);
+      font-style: italic;
+    }
+
+    td.row-asset {
+      min-width: 200px;
+      width: calc(35% - 20px);
+      .tree-parent {
+        width: 100%;
+        height: 40px;
+        background-color: transparent;
+        .blob-download-link {
+          padding-top: 14px;
+          font-size: 12px;
+        }
+      }
+    }
+
+    td.row-edit {
+      text-align: center;
+      width: 90px;
+    }
+
+    tr:hover {
+      background-color: #1b7ebb26;
+    }
+  }
+}

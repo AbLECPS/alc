@@ -1,0 +1,7 @@
+<launch>
+
+	<node name="mavlink_interface" pkg="vandy_bluerov" type="mavlink_interface.py" output="screen"/>
+
+    <arg name="uuv_name" default="uuv0"/>
+    <arg name="timeout" default="5"/>
+</launch>

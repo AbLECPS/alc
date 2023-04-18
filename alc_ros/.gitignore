@@ -1,0 +1,48 @@
+# IDE files
+.idea/
+
+# Python cache & compiled files
+__pycache__/
+*.pyc
+*.whl
+
+# Python virtual environments
+py_virtualenv/
+
+# Temporary and Autosave files
+*~
+\#*\#
+.\#*
+.~*
+.#*
+*#
+~$*
+*.~*
+
+# Local workspaces
+*workspace/
+
+# Build folders and flags.
+build/
+devel/
+BUILT
+
+# Videos
+*.mp4
+
+# Subtitle/caption files
+*.srt
+*.vtt
+
+# Gradle
+.gradle
+*.iml
+
+# Misc
+*.swp
+
+# Catkin resources
+.catkin_tools/
+
+# Log files
+logs/

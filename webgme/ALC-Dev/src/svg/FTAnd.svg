@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4721"
+   height="46.068504"
+   width="49.045086"
+   version="1.1"
+   viewBox="0 0 983.53289 923.84148"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="FTAnd.svg">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1181"
+     id="namedview16"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="20.306222"
+     inkscape:cx="24.67701"
+     inkscape:cy="22.943972"
+     inkscape:window-x="1916"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4721" />
+  <g
+     id="shape4-8"
+     v:mID="4"
+     v:groupContext="shape"
+     v:layerMember="0"
+     transform="matrix(33.625056,0,0,31.584325,37.828188,-7213.0703)"
+     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:#969696;fill-opacity:1;fill-rule:evenodd;stroke-linecap:square;stroke-miterlimit:3">
+    <title
+       id="title32">AND gate</title>
+    <v:userDefs>
+      <v:ud
+         v:nameU="visVersion"
+         v:prompt=""
+         v:val="VT0(14):26" />
+    </v:userDefs>
+    <path
+       d="M 27,243 A 13.5,13.5 -180 0 0 13.5,229.5 13.5,13.5 -180 0 0 0,243 l 0,13.5 27,0 0,-13.5 z"
+       class="st1"
+       id="path34"
+       inkscape:connector-curvature="0"
+       style="fill:#969696;fill-opacity:1;stroke:#000000;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round" />
+  </g>
+</svg>

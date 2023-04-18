@@ -1,0 +1,3 @@
+{{ parent_job }}.add_transform(
+    "{{ job_name }}", {{ previous_job_name_list }}, {{ next_job_name_list }}, {{ function }}
+)
